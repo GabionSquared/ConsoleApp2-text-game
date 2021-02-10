@@ -282,7 +282,18 @@ namespace REEEE
                     Tabgroup(); Console.Write("| {0,-22}|", weapon.name); //name
                     Tabgroup(); Console.Write("| {0,-22}|", "(" + WeaponCatagories[weapon.type] + ")"); //type
                     Tabgroup(); Console.Write("|");
-                    Tabgroup(); for (int i = 0; i < totalWidth; i++)
+
+                /* what is that -22 you ask? let me tell you, you'll be seeing them a lot in this function.
+                * it creates a virtual field. let's say i wanted a {0, 10}. 0 is still the next available peramater,
+                * but the 10 will take up space. 10 characters worth of space will be taken up, regardless of
+                * what the parameter is.
+                * print({0, 10}, "ass") would be like `-------ass`, and print({0, -10}, "ass") would be `ass-------`
+                * the - are visual aid, obviously. they'd be blank characters.
+                * a problem with this system is that you can't use variables in them, so everything has a character limit.
+                * That's why this switchcase exists: it uses different spacing depending on how long the flavour text is.
+                */
+
+                for(int i = 0; i < totalWidth; i++)
                     {
                         Console.Write("-");
                     }
@@ -352,16 +363,7 @@ namespace REEEE
                         int hold = (int)AttackData[attacks[attackIndex], dataIndex];
                         //if the data is string, this will throw an exception.
                         Console.Write("|{0,11}:\t{1,-5}|\t", AttackData[finalAddress, dataIndex], AttackData[attackIndex, dataIndex] + "%");
-                        /* what is that 10 and -4 you ask? let me tell you, you'll be seeing them a lot in this function.
-                            * they create virtual fields. let's say i wanted a {0, 10}. 0 is still the next available peramater,
-                            * but the 10 will take up space. 10 characters worth of space will be taken up, regardless of
-                            * what the parameter is.
-                            * print({0, 10}, "ass") would be like `-------ass`, and print({0, -10}, "ass") would be `ass-------`
-                            * the - are visual aid, obviously. they'd be blank characters.
-                            * a problem with  this system is that you can't use variables, so everything has a character limit.
-                        */
-                    }
-                    catch //it wasn't an int; and is therefore the name
+                    } catch //it wasn't an int; and is therefore the name
                     {
                         Console.Write("| {0,-19}|\t", AttackData[attacks[attackIndex], dataIndex]);
                         //unique print so it isn't `|Name:   name|` and get the name from the id

@@ -7,27 +7,17 @@ using System.Threading.Tasks;
 
 namespace REEEE
 {
-    //1275 lines
-
-    /* GIGA BRAIN ZONE
-     * 
-     * https://www.text-image.com/convert/ascii.html
+    /* 
      * 120*30 default console size
-     *      this is certianly a plan, if we were limiting ourselves to the console.
-     *      that being said, we can take some artistc lisense from that
-     *          https://grouflon.itch.io/veiled
-     *          
-     *          HEY KIDS WANNA BUY SOME HARDWRITTEN DX11
-     *          
-     *          https://stackoverflow.com/questions/9712932/2d-xna-game-mouse-clicking
-     *          
-     *  The FontStruction “7:12 Serif Italic” (https://fontstruct.com/fontstructions/show/413872) by Christian Munk is
-     *  licensed under a Creative Commons Attribution Share Alike license (http://creativecommons.org/licenses/by-sa/3.0/)
+     * 
+     * https://grouflon.itch.io/veiled
+     * 
+     * The FontStruction “7:12 Serif Italic” (https://fontstruct.com/fontstructions/show/413872) by Christian Munk is
+     * licensed under a Creative Commons Attribution Share Alike license (http://creativecommons.org/licenses/by-sa/3.0/)
      *  
      *  TODO:        
      *      > finish the attack system
      *      > special effect on moves (debuff or bonus vs type)
-     *      > graphics using Monogame
      *      > multi-enemy encounters
      *      > .txt -> .xml
      *      > give things sensible prices
