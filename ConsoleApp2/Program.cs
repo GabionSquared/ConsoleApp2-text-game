@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -94,12 +95,15 @@ namespace REEEE
         /// <returns></returns>
         public static object[,] ReadFile(string location1, string location2)
         {
+            string path = Directory.GetCurrentDirectory();
+            Console.WriteLine("The current directory is {0}", path);
+
             #region finding the file
             string[] File;
-            try { //for some reason it's [E:\] in college but [G:\] at home
+            try {
                 File = System.IO.File.ReadAllLines(location1);
                 System.Diagnostics.Debug.WriteLine(location1.Substring(location1.IndexOf("Ban This Man") + 13), " found in Location 1");
-
+                                                              //use substrings to get the name of the file in question for the debug
             } catch {
                 File = System.IO.File.ReadAllLines(location2);
                 System.Diagnostics.Debug.WriteLine(location2.Substring(location2.IndexOf("Ban This Man") + 13), " found in Location 2:");
@@ -123,8 +127,8 @@ namespace REEEE
             //finding the horizontal EOF
             string hold = File[0]; //the first line of the file as a string
             string[] Hold = hold.Split('|'); //the first line of the file as a string[]
-            //this gets those into their own lists
-            for (int i = 0; i < width; i++) //iterate through Hold
+
+            for (int i = 0; i < width; i++) //iterate through the string[]
             {
                 if (int.TryParse(Hold[i], out _)) //if it's int
                 {
