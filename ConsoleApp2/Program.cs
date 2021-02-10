@@ -95,8 +95,11 @@ namespace REEEE
         /// <returns></returns>
         public static object[,] ReadFile(string location1, string location2)
         {
-            string path = Directory.GetCurrentDirectory();
-            Console.WriteLine("The current directory is {0}", path);
+
+            System.Diagnostics.Debug.WriteLine("The current directory is {0}", Directory.GetCurrentDirectory());
+            System.Diagnostics.Debug.WriteLine("The current directory is {0}", Environment.CurrentDirectory);
+            System.Diagnostics.Debug.WriteLine("The current directory is {0}", AppContext.BaseDirectory);
+            
 
             #region finding the file
             string[] File;
@@ -130,11 +133,7 @@ namespace REEEE
 
             for (int i = 0; i < width; i++) //iterate through the string[]
             {
-                if (int.TryParse(Hold[i], out _)) //if it's int
-                {
-                    break;
-                }
-                else if (Hold[i] == "%EOF%")
+                if (Hold[i] == "%EOF%")
                 {
                     width = i-1;
                     System.Diagnostics.Debug.WriteLine("%EOF% on columnbn't {0}", i);
