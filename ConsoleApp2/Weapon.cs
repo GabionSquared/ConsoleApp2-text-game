@@ -60,24 +60,28 @@ namespace REEEE
             MovesetData[12] = new int[] { 10, 5, 7, 14 };             //scythe      //withstand, puncture, lacerate, intimidate, sweep
         }
 
+
         /// <summary>
         /// make a new weapon object from id <para>This summary block is longer than the actual function</para>
         /// </summary>
         /// <param name="id">ID for the weapon being generated</param>
         /// <returns>weapon from id as Weapon type</returns>
+        /*
         public Weapon CreateWeapon(int id = 0)
         {
-            Weapon weapon = new Weapon();
-            Assign(id, weapon);
+            Weapon weapon = Assign(id);
+
             return weapon;
         }
-
+        */
         /// <summary>
         /// defining all the variables using WeaponData and some bell curves
         /// </summary>
         /// <param name="passedID">The id that WeaponController.CreateWeapon, used for indexing WeaponData</param>
-        void Assign(int passedID, Weapon weapon)
+        public Weapon CreateWeapon(int passedID)
         {
+            Weapon weapon = new Weapon();
+
             weapon.id = passedID;
             weapon.name = Convert.ToString(WeaponData[passedID, 1]);
             weapon.type = Convert.ToInt32(WeaponData[passedID, 2]);
@@ -105,6 +109,7 @@ namespace REEEE
 
             weapon.attacks = attacks;
 
+            return weapon;
         }
         #region Flavourtext shenanigans
 
