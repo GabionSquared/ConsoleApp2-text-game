@@ -287,10 +287,11 @@ namespace REEEE
                 Console.Write("> ");
                 tempname = Console.ReadLine();
                 Console.WriteLine();
-                try//because of the split and parse, this might cause an error
+                //try//because of the split and parse, this might cause an error
                 {
                     string[] nameSplit = tempname.Split(' ');
                     if(nameSplit[0] == "devskip") {
+
                         Funds = 100;
                         System.Diagnostics.Debug.WriteLine("NAME {0}; {1}", nameSplit[0], nameSplit[1]);
                         AddItem(1, Inventory); //add map
@@ -304,9 +305,9 @@ namespace REEEE
 
                         return;
                     }
-                } catch {
+                } //catch {
                     System.Diagnostics.Debug.WriteLine("GENERATE authentic input");
-                }
+                //}
                 Program.Scroll("You're certian?");
                 Program.Scroll("[Y / N]", 0, 0, 2, 2);
                 Console.Write("> ");

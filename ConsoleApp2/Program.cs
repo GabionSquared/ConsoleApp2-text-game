@@ -135,7 +135,7 @@ namespace REEEE
             {
                 if (Hold[i] == "%EOF%")
                 {
-                    width = i-1;
+                    width = i;
                     System.Diagnostics.Debug.WriteLine("%EOF% on columnbn't {0}", i);
                     break;
                 }

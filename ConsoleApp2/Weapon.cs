@@ -89,6 +89,7 @@ namespace REEEE
             weapon.Flavour = Convert.ToString(WeaponData[passedID, 10]);
 
             System.Diagnostics.Debug.WriteLine("\n\n" + weapon.Flavour);
+            weapon.BrokenFlavour = BreakFlavour(weapon.Flavour);
 
             int[] attacks = new int[4];
             //assign the first one
@@ -104,7 +105,6 @@ namespace REEEE
 
             weapon.attacks = attacks;
 
-            weapon.BrokenFlavour = BreakFlavour();
         }
         #region Flavourtext shenanigans
 
@@ -112,7 +112,7 @@ namespace REEEE
         /// size tiers of description: 80 (20), 120 (30) 200 (50)
         /// </summary>
         /// <returns></returns>
-        int FlavourBracket()
+        int FlavourBracket(string Flavour)
         {
             int flavourBracket;
             System.Diagnostics.Debug.WriteLine("len = {0}", Flavour.Length);
@@ -136,10 +136,10 @@ namespace REEEE
         /// </summary>
         /// <param name="debug">if the debug log is shown</param>
         /// <returns></returns>
-        string[] BreakFlavour(bool debug = false)
+        string[] BreakFlavour(string Flavour, bool debug = false)
         {
             string[] BrokenFlavour = new string[4];
-            int flavourBracket = FlavourBracket();
+            int flavourBracket = FlavourBracket(Flavour);
             System.Diagnostics.Debug.WriteLine("\nBREAKFLAVOUR");
             string[] Hold;
             string[] Punctuation = { ".", ",", ";", ":", "-", "(", ")", "!", "?" };
@@ -265,7 +265,7 @@ namespace REEEE
                 #endregion
             }
 
-            int totalWidth = 24 + FlavourBracket();
+            int totalWidth = 24 + FlavourBracket(weapon.Flavour);
             //size tiers of description: 80 (20), 120 (30), 200 (50)
 
             Tabgroup();
@@ -277,7 +277,7 @@ namespace REEEE
             Console.Write("\n");
 
             #endregion
-            switch (FlavourBracket())
+            switch (FlavourBracket(weapon.Flavour))
             {
                 case 20:
                     Tabgroup(); Console.Write("| {0,-22}|", weapon.name); //name
