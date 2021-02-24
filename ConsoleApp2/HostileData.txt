@@ -1,0 +1,7 @@
+0|Prisoner|2|1|10|0|0|0|0|A prisoner lunges at you!|You hear the rattling of chains...|The light scrape of chain on the cold ground echos through the room...|%EOF%
+1|Merchant|2|1|30|5|0|5|0|The merchant grabs you from across the table|You've really done it now...|You raise your weapon above your head|%EOF%
+%EOF%
+
+ID|Name|WeaponID|ItemID|Max Health|physical|psn|bld|stun|DeclareMessage|spawn message(s)
+0   1   2         3       4           5      6   7   8        9           10
+all armour does is hp and dodge

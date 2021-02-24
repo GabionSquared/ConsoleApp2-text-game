@@ -16,7 +16,7 @@ namespace REEEE
         public WeaponController WeaponInterpreter = new WeaponController();
         //names, default gear and resistances
         protected readonly static int hostileWidth = 12;
-        protected readonly static object[,] HostileData = Program.ReadFile(Path.Combine(Directory.GetCurrentDirectory(), "HostileData.txt"), @"G:\My Drive\Ban This Man\HostileData.txt");
+        protected readonly static object[,] HostileData = Program.ReadFile("HostileData.txt", @"G:\My Drive\Ban This Man\HostileData.txt");
         protected Dictionary<string, int> Stats;
 
         protected static Dictionary<string, int>.KeyCollection StatNames;

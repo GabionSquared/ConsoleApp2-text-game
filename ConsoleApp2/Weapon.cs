@@ -10,10 +10,10 @@ namespace REEEE
 {
     class WeaponController
     {
-        public static readonly object[,] AttackData = Program.ReadFile(Path.Combine(Directory.GetCurrentDirectory(), "AttackData.txt"), @"G:\My Drive\Ban This Man\AttackData.txt");
+        public static readonly object[,] AttackData = Program.ReadFile("AttackData.txt", @"G:\My Drive\Ban This Man\AttackData.txt");
         public readonly int finalAddress = (AttackData.Length / 7) - 1; // .length on a 2d array will give the ENTIRE LENGTH (length*width) so we're dividing by the width to get the last row
 
-        public object[,] WeaponData = Program.ReadFile(Path.Combine(Directory.GetCurrentDirectory(), "WeaponData.txt"), @"G:\My Drive\Ban This Man\WeaponData.txt");
+        public object[,] WeaponData = Program.ReadFile("WeaponData.txt", @"G:\My Drive\Ban This Man\WeaponData.txt");
         //the weapon names, text and attached moveset
         public static int[][] MovesetData = new int[13][];
         public string Flavour { get; set; }

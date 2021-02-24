@@ -96,10 +96,10 @@ namespace REEEE
         public static object[,] ReadFile(string location1, string location2)
         {
 
-            System.Diagnostics.Debug.WriteLine("The current directory is {0}", Directory.GetCurrentDirectory());
-            System.Diagnostics.Debug.WriteLine("The current directory is {0}", Environment.CurrentDirectory);
-            System.Diagnostics.Debug.WriteLine("The current directory is {0}", AppContext.BaseDirectory);
-            
+            using(var sr = new StreamReader(location1)) {
+                // Read the stream as a string, and write the string to the console.
+                Console.WriteLine(sr.ReadToEnd());
+            }
 
             #region finding the file
             string[] File;

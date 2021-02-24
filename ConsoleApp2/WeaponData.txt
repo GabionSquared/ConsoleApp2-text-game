@@ -1,0 +1,40 @@
+0|Broken Longsword|0|2|5|20|4|6|6|8|A Longsword with a snapped , worn blade . To consider this a viable weapon , one must be truly mad , or very afraid .|%EOF%
+1|Longsword|0|10|40|100|6|12|3|1|A balanced Longsword . It's not going to slay a God any time soon , but it's more than enough to save your life .
+2|Dagger|1|10|10|10|10|10|10|10|A small knife favoured by the stealthy and the dexterous . Ideal for slipping through defences, but only the brave would use this as a main weapon .
+3|Tailbone Dagger|1|10|10|10|10|10|10|10|The tail bone of a sad , deformed creature . The fact that this artifact is stiff and sharp enough to be a deadly weapon says much about the life it must have dead .
+4|Sorcerer's Candlestick|1|10|10|10|10|10|10|10|Used by the Menhir church during rituals , used as a dagger and channeling artifact my their frontline priests . Only once the most recent bishops rose to power , did these become sharp .
+5|Claymore|2|10|10|10|10|10|10|10|A blade unusually longer , thicker and heavier than normal ; demanding both hands to be properly controlled . Generally accociated with knights from the south , who used them as standard .
+6|Glacial Fracture|2|10|10|10|10|10|10|10|An unwieldy shard of ice and permafrost that , with great effort , could be used as a larger than usual blade or lance .
+7|Moonlight Greatsword|2|10|10|10|10|10|10|10|Said to be a piece of a once great being , rarely spoken of nowadays . 
+8|Zweihander|3|10|10|10|10|10|10|10|--Zweihander Placeholder--
+9|Log|3|10|10|10|10|10|10|10|--Log Placeholder--
+10|Sabre|4|10|10|10|10|10|10|10|--Sabre Placeholder--
+11|Katana|4|10|10|10|10|10|10|10|--Katana Placeholder--
+12|Edgy Katana|4|10|10|10|10|10|10|10|--Katana 2 Placeholder--
+13|Rapier|5|10|10|10|10|10|10|10|--Rapier Placeholder--
+14|Battle Axe|6|10|10|10|10|10|10|10|--Axe Placeholder--
+15|Butcher's Knife|6|10|10|10|10|10|10|10|--Knife Placeholder--
+16|Wooden Club|7|10|10|10|10|10|10|10|--Club Placeholder--
+17|Blacksmith's hammer|7|10|10|10|10|10|10|10|--Hammer Placeholder--
+18|Mace|7|10|10|10|10|10|10|10|--Mace Placeholder--
+19|Greathammer|8|10|10|10|10|10|10|10|--Ghammer Placeholder--
+20|Caestus|9|10|10|10|10|10|10|10|--Caestus Placeholder--
+21|Katar|9|10|10|10|10|10|10|10|--Katar Placeholder--
+22|Claw|9|10|10|10|10|10|10|10|--Claw Placeholder--
+23|Shrouded Fist|9|10|10|10|10|10|10|10|--Fist Placeholder--
+24|Burning Fist|9|10|10|10|10|10|10|10|--Fist Placeholder--
+25|Spear|10|10|10|10|10|10|10|10|--Spear Placeholder--
+26|Lance|10|10|10|10|10|10|10|10|--Lance Placeholder--
+27|War Banner|10|10|10|10|10|10|10|10|--Banner Placeholder--
+28|Halberd|11|10|10|10|10|10|10|10|--Halberd Placeholder--
+29|Halberd|11|10|10|10|10|10|10|10|--Halberd Placeholder--
+30|Scythe|12|10|10|10|10|10|10|10|--Scythe Placeholder--
+%EOF%
+ID|name|moveset|current Durability (lower)|current Durability (upper)|maxdurability|base damage lower|base damage upper|crit chance|speed|flavour
+	                                                                      (on upgrade +1             +2             +1        +1)
+                                                                                                          [%, highest possible +50%]
+20 character limit on names  
+Soulrender Kusabimaru, The Fallen Angel's Bloodspiller
+Said to be a piece of a once great being , rarely spoken of nowadays . 
+A Longsword with a snapped , worn blade . To consider this a viable weapon , one must be truly mad , or very afraid .
+Used by the Menhir church during rituals , used as a dagger and channeling artifact my their frontline priests . Only once the most recent bishops rose to power , did these become sharpened .
