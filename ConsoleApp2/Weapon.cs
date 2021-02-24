@@ -80,17 +80,17 @@ namespace REEEE
         /// <param name="passedID">The id that WeaponController.CreateWeapon, used for indexing WeaponData</param>
         public Weapon CreateWeapon(int passedID)
         {
-            Weapon weapon = new Weapon();
-
-            weapon.id = passedID;
-            weapon.name = Convert.ToString(WeaponData[passedID, 1]);
-            weapon.type = Convert.ToInt32(WeaponData[passedID, 2]);
-            weapon.Durability = Program.rnd.Next(Convert.ToInt32(WeaponData[passedID, 3]), Convert.ToInt32(WeaponData[passedID, 4])) + Program.rnd.Next(Convert.ToInt32(WeaponData[passedID, 3]), Convert.ToInt32(WeaponData[passedID, 4]));
-            weapon.DmgUp = Convert.ToInt32(WeaponData[passedID, 6]);
-            weapon.DmgDwn = Convert.ToInt32(WeaponData[passedID, 7]);
-            weapon.Crit = Convert.ToInt32(WeaponData[passedID, 8]);
-            weapon.Speed = Convert.ToInt32(WeaponData[passedID, 9]);
-            weapon.Flavour = Convert.ToString(WeaponData[passedID, 10]);
+            Weapon weapon = new Weapon {
+                id = passedID,
+                name = Convert.ToString(WeaponData[passedID, 1]),
+                type = Convert.ToInt32(WeaponData[passedID, 2]),
+                Durability = Program.rnd.Next(Convert.ToInt32(WeaponData[passedID, 3]), Convert.ToInt32(WeaponData[passedID, 4])) + Program.rnd.Next(Convert.ToInt32(WeaponData[passedID, 3]), Convert.ToInt32(WeaponData[passedID, 4])),
+                DmgUp = Convert.ToInt32(WeaponData[passedID, 6]),
+                DmgDwn = Convert.ToInt32(WeaponData[passedID, 7]),
+                Crit = Convert.ToInt32(WeaponData[passedID, 8]),
+                Speed = Convert.ToInt32(WeaponData[passedID, 9]),
+                Flavour = Convert.ToString(WeaponData[passedID, 10])
+            };
 
             System.Diagnostics.Debug.WriteLine("\n\n" + weapon.Flavour);
             weapon.BrokenFlavour = BreakFlavour(weapon.Flavour);
