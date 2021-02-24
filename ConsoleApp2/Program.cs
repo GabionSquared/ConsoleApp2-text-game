@@ -91,25 +91,24 @@ namespace REEEE
         /// Making files into 2D arrays. Can only detect Int32 and String, seperated by |. uses `%EOF%` to find end of file automatically
         /// </summary>
         /// <param name="location1">E:\My Drive\Ban This Man\name.txt</param>
-        /// <param name="location2">G:\My Drive\Ban This Man\name.txt</param>
         /// <returns></returns>
-        public static object[,] ReadFile(string location1, string location2)
+        public static object[,] ReadFile(string location1)
         {
-
-            using(var sr = new StreamReader(location1)) {
-                // Read the stream as a string, and write the string to the console.
-                Console.WriteLine(sr.ReadToEnd());
-            }
 
             #region finding the file
             string[] File;
             try {
-                File = System.IO.File.ReadAllLines(location1);
-                System.Diagnostics.Debug.WriteLine(location1.Substring(location1.IndexOf("Ban This Man") + 13), " found in Location 1");
-                                                              //use substrings to get the name of the file in question for the debug
+                File = System.IO.File.ReadAllLines(Path.Combine(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString(), location1));
+                //BASICALLY, GetCurrentDirectory() gives "C:\ [yadda yadda] \ConsoleApp2\bin\Debug". this get the parent twice to go to \ConsoleApp2,
+                //then grafts on the actual file name from the function call to find the file. I hate it too.
+
+                System.Diagnostics.Debug.WriteLine(location1, " found");
+                //get the name of the file in question for the debug
             } catch {
-                File = System.IO.File.ReadAllLines(location2);
-                System.Diagnostics.Debug.WriteLine(location2.Substring(location2.IndexOf("Ban This Man") + 13), " found in Location 2:");
+                Console.WriteLine("File {0} not found", location1);
+                File = new string[] {""};
+                System.Threading.Thread.Sleep(4000);
+                System.Environment.Exit(1);
             }
             #endregion
 
@@ -171,12 +170,11 @@ namespace REEEE
     /// </summary>
     class Globals
     {
-        //the "target" the player is in combat with. needs to be global so different objects can cha cha slide in and out.
+        ///<summary>the "target" the player is in combat with. needs to be global so different objects can cha cha slide in and out.</summary>
         public static Hostile Target;
-        ///<summary> names of the stats are universal </summary>
-
+        ///<summary>weapon held by the player</summary>
         public static Weapon HeldWeapon;
-
+        ///<summary>self explanitory</summary>
         public static bool InCombat { get; set; }
     }
 }

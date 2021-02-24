@@ -12,7 +12,7 @@ namespace REEEE
         static int currentLocation = 0;
 
 #pragma warning disable IDE0044 // Add readonly modifier
-        public static object[,] MapData = Program.ReadFile(Path.Combine(Directory.GetCurrentDirectory(), "MapData.txt"), @"G:\My Drive\Ban This Man\MapData.txt");
+        public static object[,] MapData = Program.ReadFile("MapData.txt");
 #pragma warning restore IDE0044 // Add readonly modifier
         /// <summary>
         /// prints the map.<para>What did you expect?</para>
