@@ -17,6 +17,26 @@
 16|Blunt|100|90|0|0|0
 id|name|Accuracy|Damage Mod|Poison|Bleed|Stun
 %EOF%
+17|whips their chain|
+18|tries to bite|		//cause poison
+19|claws at you|		//cause bleed
+20|covers their face|		//raises defence
+21|taunt|			
+22|kicks|			//makes you skip go
+23|Slashes a branding iron|	//reduces max hp
+24|goes to grapple you|		//makes you skip go
+25|cracks a lacerating whip|	//cause bleed
+26|snarls|
+27|Slashes their dagger|
+28|Tries to escape|		//end the fight. cannot be used first
+29|Raises their guard|		//take reduced damage
+30|hew|
+31|summons a poisonous mist|	//cause poison
+32|slams their fist|
+33|whips their tail|
+34|
+
+
 add special effect at the end like |ID|Flavour
 				   |10|+20% DMG vs Poisoned
 |100|90|0|0|0

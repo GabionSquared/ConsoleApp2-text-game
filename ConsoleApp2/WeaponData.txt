@@ -30,6 +30,25 @@
 29|Halberd|11|10|10|10|10|10|10|10|--Halberd Placeholder--
 30|Scythe|12|10|10|10|10|10|10|10|--Scythe Placeholder--
 %EOF%
+31|PrsnrWeapon|13|10|10|10|10|10|10|10|--0Prisoner
+32|SkltnWeapon|14|10|10|10|10|10|10|10|--2Skeleton
+33|JlrWeapon|15|10|10|10|10|10|10|10|--3The Jailer		
+34|DgWeapon|16|10|10|10|10|10|10|10|--4Dog			
+35|ThrllWeapon|17|10|10|10|10|10|10|10|--5Thrall	
+36|KnghtWeapon|18|10|10|10|10|10|10|10|--6Knight	
+37|PrstWeapon|19|10|10|10|10|10|10|10|--7Priest
+38|GrgylWeapon|20|10|10|10|10|10|10|10|--8The Gargoyle
+39|NtmbdGdWeapon|21|10|10|10|10|10|10|10|--9The Entombed God
+40|PprKnghtWeapon|22|10|10|10|10|10|10|10|--10Upper Knight
+41|CptnWeapon|23|10|10|10|10|10|10|10|--11The Captian
+42|KngWeapon|24|10|10|10|10|10|10|10|--12The King
+43|BldtngdKnghtWeapon|25|10|10|10|10|10|10|10|--13Bloodtinged Knight
+44|YngDrkWeapon|26|10|10|10|10|10|10|10|--14The Young Drake
+45|PsndDrgnWeapon|27|10|10|10|10|10|10|10|--15The Poisoned Dragon
+46|EggWeapon|28|10|10|10|10|10|10|10|--16Egg
+47|SldgWeapon|29|10|10|10|10|10|10|10|--17Crawling Black Sludge18Greater Black Sludge
+48|BlckMssWeapon|30|10|10|10|10|10|10|10|--19The Black Mass
+%EOF%
 ID|name|moveset|current Durability (lower)|current Durability (upper)|maxdurability|base damage lower|base damage upper|crit chance|speed|flavour
 	                                                                      (on upgrade +1             +2             +1        +1)
                                                                                                           [%, highest possible +50%]

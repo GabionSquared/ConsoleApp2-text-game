@@ -1,5 +1,26 @@
-0|Prisoner|2|1|10|0|0|0|0|A prisoner lunges at you!|You hear the rattling of chains...|The light scrape of chain on the cold ground echos through the room...|%EOF%
-1|Merchant|2|1|30|5|0|5|0|The merchant grabs you from across the table|You've really done it now...|You raise your weapon above your head|%EOF%
+0|Prisoner|1|1|10|0|0|0|0|A prisoner lunges at you!|You hear the rattling of chains...|The light scrape of chain on the cold ground echos through the room...|%EOF%
+1|Merchant|2|1|50|5|0|5|0|The merchant grabs you from across the table|You've really done it now...|You raise your weapon above your head|%EOF%
+%EOF%
+0|Prisoner|31|1|10|0|0|0|0|A prisoner lunges at you!|You hear the rattling of chains...|The light scrape of chain on the cold ground echos through the room...|%EOF%
+1|Merchant|2|1|50|5|0|5|0|The merchant grabs you from across the table|You've really done it now...|You raise your weapon above your head|%EOF%
+2|Skeleton		|32|1|
+3|The Jailer		|33|1|
+4|Dog			|34|1|
+5|Thrall		|35|1|
+6|Knight		|36|1|
+7|Priest		|37|1|
+8|The Gargoyle		|38|1|
+9|The Entombed God	|39|1|
+10|Upper Knight		|40|1|
+11|The Captian		|41|1|
+12|The King		|42|1|
+13|Bloodtinged Knight	|43|1|
+14|The Young Drake	|44|1|
+15|The Poisoned Dragon	|45|1|
+16|Egg			|46|1|
+17|Crawling Black Sludge|47|1|
+18|Greater Black Sludge |47|1|
+19|The Black Mass	|48|1|
 %EOF%
 
 ID|Name|WeaponID|ItemID|Max Health|physical|psn|bld|stun|DeclareMessage|spawn message(s)

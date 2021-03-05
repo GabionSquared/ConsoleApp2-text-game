@@ -50,14 +50,34 @@ namespace REEEE
             MovesetData[2] = new int[] { 10, 1, 11, 12, 2 };         //greatsword  //withstand, hew, intimidate, crush, zealous plunge
             MovesetData[3] = new int[] { 10, 1, 11, 12, 3, 13, 14 }; //UGreatsword //withstand, hew, intimidate, crush, bludgeon, charge, sweep
             MovesetData[4] = new int[] { 4, 1, 7, 8 };               //curvedsword //parry, hew, lacerate, feint
-            MovesetData[5] = new int[] { 4, 5, 2 };                  //rapier      //parry, puncture, zealous plunge
+            MovesetData[5] = new int[] { 4, 5, 2, 8  };              //rapier      //parry, puncture, zealous plunge, feint
             MovesetData[6] = new int[] { 0, 1, 3, 11 };              //axe         //grapple, hew, bludgeon, intimidate
             MovesetData[7] = new int[] { 10, 3, 15, 16 };            //hammer      //withstand, bludgeon, shatter, blunt (blunt the enemy weapon)
             MovesetData[8] = new int[] { 10, 3, 15, 14 };            //greathammer //withstand, bludgeon, shatter, sweep
             MovesetData[9] = new int[] { 0, 3, 7, 8 };               //fist/claw   //grapple, bludgeon, lacerate, feint
-            MovesetData[10] = new int[] { 10, 5, 2, 11 };             //spear       //withstand, puncture, zealous plunge, intimidate
-            MovesetData[11] = new int[] { 10, 5, 2, 14 };             //halberd     //withstand, puncture, zealous plunge, intimidate, sweep
-            MovesetData[12] = new int[] { 10, 5, 7, 14 };             //scythe      //withstand, puncture, lacerate, intimidate, sweep
+            MovesetData[10] = new int[] { 10, 5, 2, 11 };            //spear       //withstand, puncture, zealous plunge, intimidate
+            MovesetData[11] = new int[] { 10, 5, 2, 14 };            //halberd     //withstand, puncture, zealous plunge, intimidate, sweep
+            MovesetData[12] = new int[] { 10, 5, 7, 14 };            //scythe      //withstand, puncture, lacerate, intimidate, sweep
+	    /*AI weapons
+            MovesetData[13] = new int[] { 17, 18, 19, 20, 21 };      //0Prisoner
+            MovesetData[14] = new int[] { 19, 17, 21, 22 };          //2Skeleton
+            MovesetData[15] = new int[] { 23, 24, 17, 25 };          //3The Jailer
+            MovesetData[16] = new int[] { 26, 19, 18, 24, 28 };      //4Dog
+            MovesetData[17] = new int[] { 26, 20, 27, 28 };          //5Thrall
+            MovesetData[18] = new int[] { 21, 29, 22, 30 };          //6Knight
+            MovesetData[19] = new int[] { 27, 28, 31, 28 };          //7Priest
+            MovesetData[20] = new int[] { 32, 19, 33, 0 };           //8The Gargoyle
+            MovesetData[21] = new int[] { 0, 0, 0, 0 };           //9The Entombed God
+            MovesetData[22] = new int[] { 0, 0, 0, 0 };              //10Upper Knight
+            MovesetData[23] = new int[] { 21, 29, 22, 30 };          //11The Captian
+            MovesetData[24] = new int[] { 0, 0, 0, 0 };            //12The King
+            MovesetData[25] = new int[] { 0, 0, 0, 0 };            //13Bloodtinged Knight
+            MovesetData[26] = new int[] { 0, 0, 0, 0 };             //14The Young Drake
+            MovesetData[27] = new int[] { 0, 0, 0, 0 };           //15The Poisoned Dragon
+            MovesetData[28] = new int[] { 0, 0, 0, 0 };           //16Egg
+            MovesetData[29] = new int[] { 0, 0, 0, 0 };              //17Crawling Black Sludge18Greater Black Sludge
+            MovesetData[30] = new int[] { 0, 0, 0, 0 };            //19The Black Mass
+            */
         }
 
 
