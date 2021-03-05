@@ -15,28 +15,47 @@
 14|Sweep|100|90|0|0|0
 15|Shatter|100|90|0|0|0
 16|Blunt|100|90|0|0|0
+17|whips their chain|100|90|0|0|0
+18|tries to bite|100|90|0|0|0
+19|claws at you|100|90|0|0|0
+20|covers their face|100|90|0|0|0
+21|taunt|100|90|0|0|0			
+22|kicks|100|90|0|0|0
+23|Slashes a branding iron|100|90|0|0|0
+24|goes to grapple you|100|90|0|0|0
+25|cracks a lacerating whip|100|90|0|0|0
+26|snarls|100|90|0|0|0
+27|Slashes their dagger|100|90|0|0|0
+28|Tries to escape|100|90|0|0|0
+29|Raises their guard|100|90|0|0|0
+30|hew|100|90|0|0|0
+31|summons a poisonous mist|100|90|0|0|0
+32|slams their fist|100|90|0|0|0
+33|whips their tail|100|90|0|0|0
+34|gargph|100|90|0|0|0
+35|NtmbdGd|100|90|0|0|0
+36|NtmbdGd|100|90|0|0|0
+37|NtmbdGd|100|90|0|0|0
+38|NtmbdGd|100|90|0|0|0
+39|Kng|100|90|0|0|0
+40|Kng|100|90|0|0|0
+41|Kng|100|90|0|0|0
+42|Kng|100|90|0|0|0
+43|BldtngdKnght|100|90|0|0|0
+44|BldtngdKnght|100|90|0|0|0
+45|BldtngdKnght|100|90|0|0|0
+46|BldtngdKnght|100|90|0|0|0
+47|YngDrk|100|90|0|0|0
+48|YngDrk|100|90|0|0|0
+49|YngDrk|100|90|0|0|0
+50|YngDrk|100|90|0|0|0
+51|Egg|0|100|0|0|0
+52|Sldg|0|100|0|0|0
+53|Sldg|0|100|0|0|0
+54|Sldg|0|100|0|0|0
+55|Sldg|0|100|0|0|0
 id|name|Accuracy|Damage Mod|Poison|Bleed|Stun
 %EOF%
-17|whips their chain|
-18|tries to bite|		//cause poison
-19|claws at you|		//cause bleed
-20|covers their face|		//raises defence
-21|taunt|			
-22|kicks|			//makes you skip go
-23|Slashes a branding iron|	//reduces max hp
-24|goes to grapple you|		//makes you skip go
-25|cracks a lacerating whip|	//cause bleed
-26|snarls|
-27|Slashes their dagger|
-28|Tries to escape|		//end the fight. cannot be used first
-29|Raises their guard|		//take reduced damage
-30|hew|
-31|summons a poisonous mist|	//cause poison
-32|slams their fist|
-33|whips their tail|
-34|
-
-
 add special effect at the end like |ID|Flavour
 				   |10|+20% DMG vs Poisoned
 |100|90|0|0|0

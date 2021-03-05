@@ -45,6 +45,7 @@ namespace REEEE
     //assigns the moveset arrays into MovesetData. Jagged array (array of arrays), NOT a 2d array or list bs
         public static void AssignMovesetData()
         {//basic moveset is dependant on weapon class. 1 defense and 3 attack (first two will never be replaced)
+            //turn this into external data when you can
             MovesetData[0] = new int[] { 0, 1, 2, 3 };               //shortsword  //grapple, hew, zealous plunge, bludgeon
             MovesetData[1] = new int[] { 4, 5, 6, 7, 8, 9 };         //dagger      //parry, puncture, guardbreak, lacerate, feint, throw?
             MovesetData[2] = new int[] { 10, 1, 11, 12, 2 };         //greatsword  //withstand, hew, intimidate, crush, zealous plunge
@@ -58,7 +59,7 @@ namespace REEEE
             MovesetData[10] = new int[] { 10, 5, 2, 11 };            //spear       //withstand, puncture, zealous plunge, intimidate
             MovesetData[11] = new int[] { 10, 5, 2, 14 };            //halberd     //withstand, puncture, zealous plunge, intimidate, sweep
             MovesetData[12] = new int[] { 10, 5, 7, 14 };            //scythe      //withstand, puncture, lacerate, intimidate, sweep
-	    /*AI weapons
+            /*AI weapons*/
             MovesetData[13] = new int[] { 17, 18, 19, 20, 21 };      //0Prisoner
             MovesetData[14] = new int[] { 19, 17, 21, 22 };          //2Skeleton
             MovesetData[15] = new int[] { 23, 24, 17, 25 };          //3The Jailer
@@ -66,18 +67,18 @@ namespace REEEE
             MovesetData[17] = new int[] { 26, 20, 27, 28 };          //5Thrall
             MovesetData[18] = new int[] { 21, 29, 22, 30 };          //6Knight
             MovesetData[19] = new int[] { 27, 28, 31, 28 };          //7Priest
-            MovesetData[20] = new int[] { 32, 19, 33, 0 };           //8The Gargoyle
-            MovesetData[21] = new int[] { 0, 0, 0, 0 };           //9The Entombed God
-            MovesetData[22] = new int[] { 0, 0, 0, 0 };              //10Upper Knight
+            MovesetData[20] = new int[] { 32, 19, 33, 34 };          //8The Gargoyle
+            MovesetData[21] = new int[] { 35, 36, 37, 38 };          //9The Entombed God
+            MovesetData[22] = new int[] { 21, 29, 22, 30 };          //10Upper Knight
             MovesetData[23] = new int[] { 21, 29, 22, 30 };          //11The Captian
-            MovesetData[24] = new int[] { 0, 0, 0, 0 };            //12The King
-            MovesetData[25] = new int[] { 0, 0, 0, 0 };            //13Bloodtinged Knight
-            MovesetData[26] = new int[] { 0, 0, 0, 0 };             //14The Young Drake
-            MovesetData[27] = new int[] { 0, 0, 0, 0 };           //15The Poisoned Dragon
-            MovesetData[28] = new int[] { 0, 0, 0, 0 };           //16Egg
-            MovesetData[29] = new int[] { 0, 0, 0, 0 };              //17Crawling Black Sludge18Greater Black Sludge
-            MovesetData[30] = new int[] { 0, 0, 0, 0 };            //19The Black Mass
-            */
+            MovesetData[24] = new int[] { 39, 40, 41, 42 };          //12The King
+            MovesetData[25] = new int[] { 43, 44, 45, 46 };          //13Bloodtinged Knight
+            MovesetData[26] = new int[] { 47, 48, 49, 50 };          //14The Young Drake
+            MovesetData[27] = new int[] { 47, 48, 49, 50 };          //15The Poisoned Dragon
+            MovesetData[28] = new int[] { 51, 51, 51, 51 };          //16Egg
+            MovesetData[29] = new int[] { 52, 53, 54, 55 };          //17Crawling Black Sludge18Greater Black Sludge
+            MovesetData[30] = new int[] { 52, 53, 54, 55 };          //19The Black Mass
+            /**/
         }
 
 

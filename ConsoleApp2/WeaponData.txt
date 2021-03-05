@@ -29,7 +29,6 @@
 28|Halberd|11|10|10|10|10|10|10|10|--Halberd Placeholder--
 29|Halberd|11|10|10|10|10|10|10|10|--Halberd Placeholder--
 30|Scythe|12|10|10|10|10|10|10|10|--Scythe Placeholder--
-%EOF%
 31|PrsnrWeapon|13|10|10|10|10|10|10|10|--0Prisoner
 32|SkltnWeapon|14|10|10|10|10|10|10|10|--2Skeleton
 33|JlrWeapon|15|10|10|10|10|10|10|10|--3The Jailer		
