@@ -1,7 +1,7 @@
 0|Grapple|100|90|0|0|0|%EOF%
-1|Hew|100|90|0|0|0
-2|Zealous Plunge|100|90|0|0|0
-3|Bludgeon|100|90|0|0|0
+1|Hew|99|90|0|0|0
+2|Zealous Plunge|98|90|0|0|0
+3|Bludgeon|97|90|0|0|0
 4|Parry|100|90|0|0|0
 5|Puncture|100|90|0|0|0
 6|Guardbreak|100|90|0|0|0

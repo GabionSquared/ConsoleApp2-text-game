@@ -324,10 +324,10 @@ namespace REEEE
                         Console.Write("-");
                     }
                     Console.Write("|\n");
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-39} |", "Durability", weapon.Durability, BrokenFlavour[0]); //durability
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t {1,2}-{2,-3}|{3,-39} |", "DMG Base", weapon.DmgDwn, weapon.DmgUp, BrokenFlavour[1]); //damage
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-39} |", "CRT base", weapon.Crit, BrokenFlavour[2]); //crit
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-39} |", "SPD base", weapon.Speed, BrokenFlavour[3]); //speed
+                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-39} |", "Durability", weapon.Durability, weapon.BrokenFlavour[0]); //durability
+                    Tabgroup(); Console.WriteLine("|{0,11}:\t {1,2}-{2,-3}|{3,-39} |", "DMG Base", weapon.DmgDwn, weapon.DmgUp, weapon.BrokenFlavour[1]); //damage
+                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-39} |", "CRT base", weapon.Crit, weapon.BrokenFlavour[2]); //crit
+                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-39} |", "SPD base", weapon.Speed, weapon.BrokenFlavour[3]); //speed
                     break;
                 case 36:
                     Tabgroup(); Console.WriteLine("| {0,-59}|", weapon.name); //name
@@ -338,10 +338,10 @@ namespace REEEE
                         Console.Write("-");
                     }
                     Console.Write("|\n");
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-36} |", "Durability", weapon.Durability, BrokenFlavour[0]); //durability
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t {1,2}-{2,-3}|{3,-36} |", "DMG Base", weapon.DmgDwn, weapon.DmgUp, BrokenFlavour[1]); //damage
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-36} |", "CRT base", weapon.Crit, BrokenFlavour[2]); //crit
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-36} |", "SPD base", weapon.Speed, BrokenFlavour[3]); //speed
+                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-36} |", "Durability", weapon.Durability, weapon.BrokenFlavour[0]); //durability
+                    Tabgroup(); Console.WriteLine("|{0,11}:\t {1,2}-{2,-3}|{3,-36} |", "DMG Base", weapon.DmgDwn, weapon.DmgUp, weapon.BrokenFlavour[1]); //damage
+                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-36} |", "CRT base", weapon.Crit, weapon.BrokenFlavour[2]); //crit
+                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-36} |", "SPD base", weapon.Speed, weapon.BrokenFlavour[3]); //speed
                     break;
                 case 50:
                     Tabgroup(); Console.WriteLine("| {0,-73}|", weapon.name); //name
@@ -352,10 +352,10 @@ namespace REEEE
                         Console.Write("-");
                     }
                     Console.Write("|\n");
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-50} |", "Durability", weapon.Durability, BrokenFlavour[0]); //durability
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t {1,2}-{2,-3}|{3,-50} |", "DMG Base", weapon.DmgDwn, weapon.DmgUp, BrokenFlavour[1]); //damage
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-50} |", "CRT base", weapon.Crit, BrokenFlavour[2]); //crit
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-50} |", "SPD base", weapon.Speed, BrokenFlavour[3]); //speed
+                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-50} |", "Durability", weapon.Durability, weapon.BrokenFlavour[0]); //durability
+                    Tabgroup(); Console.WriteLine("|{0,11}:\t {1,2}-{2,-3}|{3,-50} |", "DMG Base", weapon.DmgDwn, weapon.DmgUp, weapon.BrokenFlavour[1]); //damage
+                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-50} |", "CRT base", weapon.Crit, weapon.BrokenFlavour[2]); //crit
+                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-50} |", "SPD base", weapon.Speed, weapon.BrokenFlavour[3]); //speed
                     break;
             }
 
@@ -375,15 +375,16 @@ namespace REEEE
         #endregion
         void DisplayMoves()
         {
+            //System.Diagnostics.Debug.WriteLine("\t DisplayMoves");
             Console.Write("\t ____________________    ____________________    ____________________    ____________________\n");
             //top of the boxes
-            for (int dataIndex = 1; dataIndex < 7; dataIndex++) //starting from one to dodge printing the ID
+            for (int dataIndex = 1; dataIndex < 7; dataIndex++) //each data piece. starting from one to dodge printing the attack ID
             {
                 Console.Write("\t");
-                //System.Diagnostics.Debug.WriteLine("ATTACK new dataIndex {0}/12", dataIndex);
+                System.Diagnostics.Debug.WriteLine("ATTACK new dataIndex {0}/12", dataIndex);
                 for (int attackIndex = 0; attackIndex < 4; attackIndex++) //each attack
                 {
-                    // System.Diagnostics.Debug.WriteLine("\tATTACK new attackIndex {0}/3", attackIndex);
+                    //System.Diagnostics.Debug.WriteLine("\tATTACK new attackIndex {0}/3", attackIndex);
                     try
                     {
                         int hold = (int)AttackData[attacks[attackIndex], dataIndex];
@@ -391,7 +392,7 @@ namespace REEEE
                         Console.Write("|{0,11}:\t{1,-5}|\t", AttackData[finalAddress, dataIndex], AttackData[attackIndex, dataIndex] + "%");
                     } catch //it wasn't an int; and is therefore the name
                     {
-                        Console.Write("| {0,-19}|\t", AttackData[attacks[attackIndex], dataIndex]);
+                        Console.Write("| {0,-19}|\t", AttackData[attackIndex, dataIndex]);
                         //unique print so it isn't `|Name:   name|` and get the name from the id
                         //(was having issues with it printing the names in the order they're in on the list, even though they're randomised on the weapon) 
 

@@ -194,7 +194,7 @@ namespace REEEE
         protected void Damage(int damage, bool poison, bool bleed, bool stun)
         {
             //try to dodge -> get stunned -> take damage -> see if dead
-            if(rnd.Next(0, 100) < Stats["Dodge"]) { //dodge check
+            if(rnd.Next(0, 100) > Stats["Dodge"]) { //dodge check
 
                 /*
                  * int[,] DOT = new int[,] { { 0, 0 }, { 0, 0 } };
@@ -216,8 +216,12 @@ namespace REEEE
 
                 Console.WriteLine("{0} damage done to {1}", damage, Name);
                 Stats["Health"] -= damage;
+
                 if(Stats["Health"] <= 0) {
+                    Stats["Health"] = 0;
                     Death();
+                } else {
+                    Display();
                 }
             } else {
                 Program.Scroll("The Attack Was Dodged!");
@@ -393,7 +397,7 @@ namespace REEEE
             //false             true                  false                 false  
             System.Diagnostics.Debug.WriteLine("raw input collected: {0}", attackRawInp);
 
-            int attack = (int)WeaponController.AttackData[Globals.HeldWeapon.attacks[int.Parse(attackRawInp)], 0];
+            int attack = (int)WeaponController.AttackData[Globals.HeldWeapon.attacks[int.Parse(attackRawInp)-1], 0];
             System.Diagnostics.Debug.WriteLine("relevant ID: {0}", attack);
             //cha cha real smooth from 1-4 as a string to the attack's ID as an int
 
@@ -432,16 +436,16 @@ namespace REEEE
 
             //spawning notifications
             System.Diagnostics.Debug.WriteLine("ID {0} has spawned\n", passedID);                               //the debug one
-            Program.Scroll((string)HostileData[passedID, Program.rnd.Next(10, hostileWidth - 1)], scrollTime: 400); //the randomised, slow, ambient message
-            Program.Scroll((string)HostileData[passedID, 9]);                                                  //the actually useful one
+            Program.Scroll((string)HostileData[passedID, Program.rnd.Next(11, hostileWidth - 1)], scrollTime: 400); //the randomised, slow, ambient message
+            Program.Scroll((string)HostileData[passedID, 10]);                                                  //the actually useful one
 
             Name = (string)HostileData[passedID, 1];                        //give it a name
             AddWeapon((int)HostileData[passedID, 2], WeaponInventory, Name); //give it a weapon
             AddItem((int)HostileData[passedID, 3], Inventory);              //give it an item
             //instead of using a global heldweapon, just directly reference the singular inventory slot
 
-            Stats = CompileInt((int)HostileData[passedID, 4], (int)HostileData[passedID, 5], (int)HostileData[passedID, 6], (int)HostileData[passedID, 7], (int)HostileData[passedID, 8]);
-            //                             health                           protection               posion                         bleed                               stun
+            Stats = CompileInt((int)HostileData[passedID, 4], (int)HostileData[passedID, 5], (int)HostileData[passedID, 6], (int)HostileData[passedID, 7], (int)HostileData[passedID, 8], (int)HostileData[passedID, 9]);
+            //                             health                           dodge                   physical                        posion                         bleed                               stun
 
             //set self as the target so it can be hit
             Globals.Target = this;
