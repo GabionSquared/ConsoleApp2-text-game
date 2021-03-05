@@ -15,7 +15,7 @@ namespace REEEE
 
         public object[,] WeaponData = Program.ReadFile("WeaponData.txt");
         //the weapon names, text and attached moveset
-        public static int[][] MovesetData = new int[13][];
+        public static int[][] MovesetData = new int[31][];
         public string Flavour { get; set; }
 #pragma warning disable IDE0044 // Add readonly modifier
         string[] BrokenFlavour = new string[4];
@@ -59,7 +59,6 @@ namespace REEEE
             MovesetData[10] = new int[] { 10, 5, 2, 11 };            //spear       //withstand, puncture, zealous plunge, intimidate
             MovesetData[11] = new int[] { 10, 5, 2, 14 };            //halberd     //withstand, puncture, zealous plunge, intimidate, sweep
             MovesetData[12] = new int[] { 10, 5, 7, 14 };            //scythe      //withstand, puncture, lacerate, intimidate, sweep
-            /*AI weapons*/
             MovesetData[13] = new int[] { 17, 18, 19, 20, 21 };      //0Prisoner
             MovesetData[14] = new int[] { 19, 17, 21, 22 };          //2Skeleton
             MovesetData[15] = new int[] { 23, 24, 17, 25 };          //3The Jailer
@@ -78,7 +77,6 @@ namespace REEEE
             MovesetData[28] = new int[] { 51, 51, 51, 51 };          //16Egg
             MovesetData[29] = new int[] { 52, 53, 54, 55 };          //17Crawling Black Sludge18Greater Black Sludge
             MovesetData[30] = new int[] { 52, 53, 54, 55 };          //19The Black Mass
-            /**/
         }
 
 
