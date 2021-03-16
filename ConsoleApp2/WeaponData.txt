@@ -6,29 +6,29 @@
 5|Claymore|2|10|10|10|10|10|10|10|A blade unusually longer , thicker and heavier than normal ; demanding both hands to be properly controlled . Generally accociated with knights from the south , who used them as standard .
 6|Glacial Fracture|2|10|10|10|10|10|10|10|An unwieldy shard of ice and permafrost that , with great effort , could be used as a larger than usual blade or lance .
 7|Moonlight Greatsword|2|10|10|10|10|10|10|10|Said to be a piece of a once great being , rarely spoken of nowadays . 
-8|Zweihander|3|10|10|10|10|10|10|10|--Zweihander Placeholder--
-9|Log|3|10|10|10|10|10|10|10|--Log Placeholder--
-10|Sabre|4|10|10|10|10|10|10|10|--Sabre Placeholder--
-11|Katana|4|10|10|10|10|10|10|10|--Katana Placeholder--
-12|Edgy Katana|4|10|10|10|10|10|10|10|--Katana 2 Placeholder--
-13|Rapier|5|10|10|10|10|10|10|10|--Rapier Placeholder--
-14|Battle Axe|6|10|10|10|10|10|10|10|--Axe Placeholder--
-15|Butcher's Knife|6|10|10|10|10|10|10|10|--Knife Placeholder--
-16|Wooden Club|7|10|10|10|10|10|10|10|--Club Placeholder--
-17|Blacksmith's hammer|7|10|10|10|10|10|10|10|--Hammer Placeholder--
-18|Mace|7|10|10|10|10|10|10|10|--Mace Placeholder--
-19|Greathammer|8|10|10|10|10|10|10|10|--Ghammer Placeholder--
-20|Caestus|9|10|10|10|10|10|10|10|--Caestus Placeholder--
-21|Katar|9|10|10|10|10|10|10|10|--Katar Placeholder--
-22|Claw|9|10|10|10|10|10|10|10|--Claw Placeholder--
-23|Shrouded Fist|9|10|10|10|10|10|10|10|--Fist Placeholder--
-24|Burning Fist|9|10|10|10|10|10|10|10|--Fist Placeholder--
-25|Spear|10|10|10|10|10|10|10|10|--Spear Placeholder--
-26|Lance|10|10|10|10|10|10|10|10|--Lance Placeholder--
-27|War Banner|10|10|10|10|10|10|10|10|--Banner Placeholder--
-28|Halberd|11|10|10|10|10|10|10|10|--Halberd Placeholder--
-29|Halberd|11|10|10|10|10|10|10|10|--Halberd Placeholder--
-30|Scythe|12|10|10|10|10|10|10|10|--Scythe Placeholder--
+8|Zweihander|3|10|10|10|10|10|10|10|As the name suggests , the Zweihander is held with two hands , but its wielder must still be inhumanly strong . It is this great weight that sends foes flying when hit solidly .
+9|Log|3|10|10|10|10|10|10|10|A large , uprooted tree trunk , wielded like a club . Simple .
+10|Sabre|4|10|10|10|10|10|10|10|A thin , curved sword revered by fencers , duelists , and others who met their end believing that all follow the guide of honour .
+11|Katana|4|10|10|10|10|10|10|10|A curved sword from a land far to the east that none have been able to replicate . How did this get down here ?
+12|Edgy Katana|4|10|10|10|10|10|10|10|The blood of 16,188 people , forged into a single flamboyant blade . it is rumored that all their might will burst forth with every swing .
+13|Rapier|5|10|10|10|10|10|10|10|A lightweight thrusting sword used in noble duels employing refined techniques .
+14|Battle Axe|6|10|10|10|10|10|10|10|Surprisingly sturdy battle axe that requires more strength to wield than a standard axe .
+15|Butcher's Knife|6|10|10|10|10|10|10|10|A flat , stubby blade designed for roughly chopping flesh . Not the most useful against an armoured assailent , but certianly intimidating .
+16|Wooden Club|7|10|10|10|10|10|10|10|A primitive wooden stick favoured by the mildly deranged .
+17|Blacksmith's hammer|7|10|10|10|10|10|10|10|A metal hammer , lasted owned by a talented workman . A better tool than a weapon , but sometimes there's no choice .
+18|Mace|7|10|10|10|10|10|10|10|A hammer with protruding pommels , commonly used by untrained conscripts on the battlefield .
+19|Greathammer|8|10|10|10|10|10|10|10|An extremly heavy , devistating hammer . Its bladeless surface is best used on heftier targets.
+20|Caestus|9|10|10|10|10|10|10|10|Weapon used to strike with one's fists . The thick leather covering bears iron studs , and protects the hands while augmenting their striking power .
+21|Katar|9|10|10|10|10|10|10|10|A gauntlet modified to have a thick , protruding blade from either arm . Capable of vicious flurries of attacks .
+22|Claw|9|10|10|10|10|10|10|10|The wearer attacks in a scratching motion with these three-pronged claws . Claws inflict deep wounds and cause deep bleeding .
+23|Shrouded Fist|9|10|10|10|10|10|10|10|A dark art capable of sapping the essense of it's victims . Not something lightly taught .
+24|Burning Fist|9|10|10|10|10|10|10|10|A demonic fist that burns with fiery essence . Its wielder can harness this power with enough skill .
+25|Spear|10|10|10|10|10|10|10|10|A precise , long-reach weapons that predominantly used thrusting attacks . Usually used in groups .
+26|Lance|10|10|10|10|10|10|10|10|Normally wielded by mounted knights , and it takes considerable training to handle one on the ground .
+27|War Banner|10|10|10|10|10|10|10|10|The flagpole that once carried the king's crest , and guided the knights long ago . The tip of the pole is fitted with a sharply pointed decoration , letting it serve as a spear .
+28|Halberd|11|10|10|10|10|10|10|10|This long-hilted weapon mixing spear and axe is difficult to handle , requiring both strength and dexterity.
+29|Lucerne|11|10|10|10|10|10|10|10|Instead of thrusting like a spear , the wielder of this abnormal halberd aims to club the head with its hard beak .
+30|Scythe|12|10|10|10|10|10|10|10|Traditionally a farming tool , however anything can be a worthy weapon in these depths .
 31|PrsnrWeapon|13|10|10|10|10|10|10|10|--0Prisoner
 32|SkltnWeapon|14|10|10|10|10|10|10|10|--2Skeleton
 33|JlrWeapon|15|10|10|10|10|10|10|10|--3The Jailer		
