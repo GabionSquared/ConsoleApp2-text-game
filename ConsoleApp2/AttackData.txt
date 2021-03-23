@@ -1,20 +1,21 @@
-0|Grapple|100|90|0|0|0|%EOF%
-1|Hew|99|90|0|0|0
-2|Zealous Plunge|98|90|0|0|0
-3|Bludgeon|97|90|0|0|0
-4|Parry|100|90|0|0|0
-5|Puncture|100|90|0|0|0
-6|Guardbreak|100|90|0|0|0
-7|Lacerate|100|90|0|0|0
-8|Feint|100|90|0|0|0
-9|Throw|100|90|0|0|0
-10|Withstand|100|90|0|0|0
-11|Intimidate|100|90|0|0|0
-12|Crush|100|90|0|0|0
-13|Charge|100|90|0|0|0
-14|Sweep|100|90|0|0|0
-15|Shatter|100|90|0|0|0
-16|Blunt|100|90|0|0|0
+0|Grapple|		100|90|0|0|0|%EOF%
+1|Hew|			99|90|0|0|0
+2|Zealous Plunge|	98|90|0|0|0
+3|Bludgeon|		97|90|0|0|0
+4|Parry|		100|90|0|0|0
+5|Puncture|		100|90|0|0|0
+6|Guardbreak|		100|90|0|0|0
+7|Lacerate|		100|90|0|0|0
+8|Feint|		100|90|0|0|0
+9|Throw|		100|90|0|0|0
+10|Withstand|		100|90|0|0|0
+11|Intimidate|		100|90|0|0|0
+12|Crush|		100|90|0|0|0
+13|Charge|		100|90|0|0|0
+14|Sweep|		100|90|0|0|0
+15|Shatter|		100|90|0|0|0
+16|Blunt|		100|90|0|0|0
+
 17|whips their chain|100|90|0|0|0
 18|tries to bite|100|90|0|0|0
 19|claws at you|100|90|0|0|0
