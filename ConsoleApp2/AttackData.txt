@@ -1,60 +1,60 @@
-0|Grapple|		100|90|0|0|0|%EOF%
-1|Hew|			99|90|0|0|0
-2|Zealous Plunge|	98|90|0|0|0
-3|Bludgeon|		97|90|0|0|0
-4|Parry|		100|90|0|0|0
-5|Puncture|		100|90|0|0|0
-6|Guardbreak|		100|90|0|0|0
-7|Lacerate|		100|90|0|0|0
-8|Feint|		100|90|0|0|0
-9|Throw|		100|90|0|0|0
-10|Withstand|		100|90|0|0|0
-11|Intimidate|		100|90|0|0|0
-12|Crush|		100|90|0|0|0
-13|Charge|		100|90|0|0|0
-14|Sweep|		100|90|0|0|0
-15|Shatter|		100|90|0|0|0
-16|Blunt|		100|90|0|0|0
+0|Grapple|		100|90|		0|0|0|%EOF%
+1|Hew|			100|90|		0|0|0
+2|Zealous Plunge|	100|90|		0|0|0
+3|Bludgeon|		100|90|		0|0|0
+4|Parry|		100|90|		0|0|0
+5|Puncture|		100|90|		0|0|0
+6|Guardbreak|		100|90|		0|0|0
+7|Lacerate|		100|90|		0|0|0
+8|Feint|		100|90|		0|0|0
+9|Throw|		100|90|		0|0|0
+10|Withstand|		100|90|		0|0|0
+11|Intimidate|		100|90|		0|0|0
+12|Crush|		100|90|		0|0|0
+13|Charge|		100|90|		0|0|0
+14|Sweep|		100|90|		0|0|0
+15|Shatter|		100|90|		0|0|0
+16|Blunt|		100|90|		0|0|0
 
-17|whips their chain|100|90|0|0|0
-18|tries to bite|100|90|0|0|0
-19|claws at you|100|90|0|0|0
-20|covers their face|100|90|0|0|0
-21|taunt|100|90|0|0|0			
-22|kicks|100|90|0|0|0
-23|Slashes a branding iron|100|90|0|0|0
-24|goes to grapple you|100|90|0|0|0
-25|cracks a lacerating whip|100|90|0|0|0
-26|snarls|100|90|0|0|0
-27|Slashes their dagger|100|90|0|0|0
-28|Tries to escape|100|90|0|0|0
-29|Raises their guard|100|90|0|0|0
-30|hew|100|90|0|0|0
-31|summons a poisonous mist|100|90|0|0|0
-32|slams their fist|100|90|0|0|0
-33|whips their tail|100|90|0|0|0
-34|gargph|100|90|0|0|0
-35|NtmbdGd|100|90|0|0|0
-36|NtmbdGd|100|90|0|0|0
-37|NtmbdGd|100|90|0|0|0
-38|NtmbdGd|100|90|0|0|0
-39|Kng|100|90|0|0|0
-40|Kng|100|90|0|0|0
-41|Kng|100|90|0|0|0
-42|Kng|100|90|0|0|0
-43|BldtngdKnght|100|90|0|0|0
-44|BldtngdKnght|100|90|0|0|0
-45|BldtngdKnght|100|90|0|0|0
-46|BldtngdKnght|100|90|0|0|0
-47|YngDrk|100|90|0|0|0
-48|YngDrk|100|90|0|0|0
-49|YngDrk|100|90|0|0|0
-50|YngDrk|100|90|0|0|0
-51|Egg|0|100|0|0|0
-52|Sldg|0|100|0|0|0
-53|Sldg|0|100|0|0|0
-54|Sldg|0|100|0|0|0
-55|Sldg|0|100|0|0|0
+17|whips their chain		|100|90|	0|0|0
+18|tries to bite		|100|90|	0|0|0
+19|claws at you			|100|90|	0|0|0
+20|covers their face		|100|90|	0|0|0
+21|taunt			|100|90|	0|0|0			
+22|kicks			|100|90|	0|0|0
+23|Slashes a branding iron	|100|90|	0|0|0
+24|goes to grapple you		|100|90|	0|0|0
+25|cracks a lacerating whip	|100|90|	0|0|0
+26|snarls			|100|90|	0|0|0
+27|Slashes their dagger		|100|90|	0|0|0
+28|Tries to escape		|100|90|	0|0|0
+29|Raises their guard		|100|90|	0|0|0
+30|hew				|100|90|	0|0|0
+31|summons a poisonous mist	|100|90|	0|0|0
+32|slams their fist		|100|90|	0|0|0
+33|whips their tail		|100|90|	0|0|0
+34|gargph			|100|90|	0|0|0
+35|NtmbdGd			|100|90|	0|0|0
+36|NtmbdGd			|100|90|	0|0|0
+37|NtmbdGd			|100|90|	0|0|0
+38|NtmbdGd			|100|90|	0|0|0
+39|Kng				|100|90|	0|0|0
+40|Kng				|100|90|	0|0|0
+41|Kng				|100|90|	0|0|0
+42|Kng				|100|90|	0|0|0
+43|BldtngdKnght			|100|90|	0|0|0
+44|BldtngdKnght			|100|90|	0|0|0
+45|BldtngdKnght			|100|90|	0|0|0
+46|BldtngdKnght			|100|90|	0|0|0
+47|YngDrk			|100|90|	0|0|0
+48|YngDrk			|100|90|	0|0|0
+49|YngDrk			|100|90|	0|0|0
+50|YngDrk			|100|90|	0|0|0
+51|Egg				|100|90|	0|0|0
+52|Sldg				|100|90|	0|0|0
+53|Sldg				|100|90|	0|0|0
+54|Sldg				|100|90|	0|0|0
+55|Sldg				|100|90|	0|0|0
 id|name|Accuracy|Damage Mod|Poison|Bleed|Stun
 %EOF%
 add special effect at the end like |ID|Flavour
