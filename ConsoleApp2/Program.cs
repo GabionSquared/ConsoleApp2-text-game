@@ -17,11 +17,24 @@ namespace REEEE
      * licensed under a Creative Commons Attribution Share Alike license (http://creativecommons.org/licenses/by-sa/3.0/)
      *  
      *  TODO:        
-     *      > finish the attack system
+     *      > real data
+     *      > fix enemy ai
+     *          > speed
+     *          > crit (*1.5 normal dam, flat %)
+     *      > defence
+     *          > dodge (detracts from incoming acc?)
+     *          > prot  (flat reduces incoming damage)
+     *      > weapons lose durability
+     *      > merchants can restore durability
+     *      > merchants can upgrade weapons
+     *      > merchant tutorial on first meeting
+     *      > Loot tables
+     *      > give things sensible prices
+     *  
+     *  Less important ToDo:
      *      > special effect on moves (debuff or bonus vs type)
      *      > multi-enemy encounters
      *      > .txt -> .xml
-     *      > give things sensible prices
      *  
      *  Map Rework Idea:
      *      > make it based around player orentation rather than the sterotypical omniciance
