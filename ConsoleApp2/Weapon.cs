@@ -59,6 +59,7 @@ namespace REEEE
             MovesetData[10] = new int[] { 10, 5, 2, 11 };            //spear       //withstand, puncture, zealous plunge, intimidate
             MovesetData[11] = new int[] { 10, 5, 2, 14 };            //halberd     //withstand, puncture, zealous plunge, intimidate, sweep
             MovesetData[12] = new int[] { 10, 5, 7, 14 };            //scythe      //withstand, puncture, lacerate, intimidate, sweep
+
             MovesetData[13] = new int[] { 17, 18, 19, 20, 21 };      //0Prisoner
             MovesetData[14] = new int[] { 19, 17, 21, 22 };          //2Skeleton
             MovesetData[15] = new int[] { 23, 24, 17, 25 };          //3The Jailer

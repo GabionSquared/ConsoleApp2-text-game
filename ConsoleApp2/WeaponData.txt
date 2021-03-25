@@ -21,33 +21,32 @@
 20|Caestus|9|10|30|40|6|7|6|6|Weapon used to strike with one's fists . The thick leather covering bears iron studs , and protects the hands while augmenting their striking power .
 21|Katar|9|10|20|50|7|8|6|6|A gauntlet modified to have a thick , protruding blade from either arm . Capable of vicious flurries of attacks .
 22|Claw|9|10|20|40|7|8|6|5|The wearer attacks in a scratching motion with these three-pronged claws . Claws inflict deep wounds and cause deep bleeding .
-23|Shrouded Fist|9|-10|-10|-10|6|7|7|6|A dark art capable of sapping the essense of it's victims . Not something lightly taught .
-24|Burning Fist|9|-10|-10|-10|6|7|3|6|A demonic fist that burns with fiery essence . Its wielder can harness this power with enough skill .
+23|Shrouded Fist|9|-10|-10|0|6|7|7|6|A dark art capable of sapping the essense of it's victims . Not something lightly taught .
+24|Burning Fist|9|-10|-10|0|6|7|3|6|A demonic fist that burns with fiery essence . Its wielder can harness this power with enough skill .
 25|Spear|10|50|95|100|5|10|6|5|A precise , long-reach weapons that predominantly used thrusting attacks . Usually used in groups .
 26|Lance|10|50|95|100|6|11|6|4|Normally wielded by mounted knights , and it takes considerable training to handle one on the ground .
 27|War Banner|10|10|50|100|4|6|6|6|The flagpole that once carried the king's crest , and guided the knights long ago . The tip of the pole is fitted with a sharply pointed decoration , letting it serve as a spear .
 28|Halberd|11|50|95|100|6|12|5|4|This long-hilted weapon mixing spear and axe is difficult to handle , requiring both strength and dexterity.
 29|Lucerne|11|50|95|100|5|10|6|4|Instead of thrusting like a spear , the wielder of this abnormal halberd aims to club the head with its hard beak .
 30|Scythe|12|50|80|80|5|10|6|5|Traditionally a farming tool , however anything can be a worthy weapon in these depths .
-
-31|PrsnrWeapon|13|0|0|0|		10|10|	3|8|--0Prisoner
-32|SkltnWeapon|14|0|0|0|		10|10|	5|6|--2Skeleton
-33|JlrWeapon|15|0|0|0|			10|10|	5|4|--3The Jailer		
-34|DgWeapon|16|0|0|0|			10|10|	9|10|--4Dog			
-35|ThrllWeapon|17|0|0|0|		10|10|	9|9|--5Thrall	
-36|KnghtWeapon|18|0|0|0|		10|10|	5|4|--6Knight	
-37|PrstWeapon|19|0|0|0|			10|10|	3|5|--7Priest
-38|GrgylWeapon|20|0|0|0|		10|10|	6|4|--8The Gargoyle
-39|NtmbdGdWeapon|21|0|0|0|		10|10|	7|8|--9The Entombed God
-40|PprKnghtWeapon|22|0|0|0|		10|10|	6|6|--10Upper Knight
-41|CptnWeapon|23|0|0|0|			10|10|	7|8|--11The Captian
-42|KngWeapon|24|0|0|0|			10|10|	8|3|--12The King
-43|BldtngdKnghtWeapon|25|0|0|0|		10|10|	6|8|--13Bloodtinged Knight
-44|YngDrkWeapon|26|0|0|0|		10|10|	6|5|--14The Young Drake
-45|PsndDrgnWeapon|27|0|0|0|		10|10|	6|5|--15The Poisoned Dragon
-46|EggWeapon|28|0|0|0|			10|10|	0|1|--16Egg
-47|SldgWeapon|29|0|0|0|			10|10|	6|1|--17Crawling Black Sludge18Greater Black Sludge
-48|BlckMssWeapon|30|0|0|0|		10|10|	7|1|--19The Black Mass
+31|PrsnrWeapon|13|0|0|0|0|0|0|8|--0Prisoner
+32|SkltnWeapon|14|0|0|0|0|0|0|6|--2Skeleton
+33|JlrWeapon|15|0|0|0|0|0|0|4|--3The Jailer		
+34|DgWeapon|16|-0|0|0|0|0|0|10|--4Dog			
+35|ThrllWeapon|17|0|0|0|0|0|0|9|--5Thrall	
+36|KnghtWeapon|18|0|0|0|0|0|0|4|--6Knight	
+37|PrstWeapon|19|0|0|0|0|0|0|5|--7Priest
+38|GrgylWeapon|20|0|0|0|0|0|0|4|--8The Gargoyle
+39|NtmbdGdWeapon|21|0|0|0|0|0|0|8|--9The Entombed God
+40|PprKnghtWeapon|22|0|0|0|0|0|0|6|--10Upper Knight
+41|CptnWeapon|23|0|0|0|0|0|0|8|--11The Captian
+42|KngWeapon|24|0|0|0|0|0|0|3|--12The King
+43|BldtngdKnghtWeapon|0|0|0|0|0|0|8|--13Bloodtinged Knight
+44|YngDrkWeapon|26|0|0|0|0|0|0|5|--14The Young Drake
+45|PsndDrgnWeapon|27|0|0|0|0|0|0|5|--15The Poisoned Dragon
+46|EggWeapon|28|0|0|0|0|0|0|1|--16Egg
+47|SldgWeapon|29|0|0|0|0|0|0|1|--17Crawling Black Sludge18Greater Black Sludge
+48|BlckMssWeapon|30|0|0|0|0|0|0|1|--19The Black Mass
 %EOF%
 ID|name|moveset|current Durability (lower)|current Durability (upper)|maxdurability|base damage lower|base damage upper|crit chance|speed|flavour
 	                                                                      (on upgrade +1             +2             +1        +1)
