@@ -200,7 +200,7 @@ namespace REEEE
                  * int[,] DOT = new int[,] { { 0, 0 }, { 0, 0 } };
                  * Bleed strength, Bleed Time, Poison Strength, Poison Time
                 */
-                if(bleed) {attack
+                if(bleed) {
                     Dot[0, 0] += 1;
                     Dot[0, 1] += 1;
                 }

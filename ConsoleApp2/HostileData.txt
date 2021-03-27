@@ -16,8 +16,8 @@
 15|The Poisoned Dragon|45|1|	10|10|10|	10|10|10|	Declare|Declare|Spawn
 16|Egg|46|1|			10|10|10|	10|10|10|	Declare|Declare|Spawn
 17|Crawling Black Sludge|47|1|	10|10|10|	10|10|10|	Declare|Declare|Spawn
-18|Greater Black Sludge|47|1|	10|10|10|	10|10|10|	Declare|Declare|Spawn
-19|The Black Mass|48|1|		10|10|10|	10|10|10|	Declare|Declare|Spawn
+18|Greater Black Sludge|48|1|	10|10|10|	10|10|10|	Declare|Declare|Spawn
+19|The Black Mass|49|1|		10|10|10|	10|10|10|	Declare|Declare|Spawn
 %EOF%
 
 ID|Name|WeaponID|ItemID|Max Health|dodge|physical|psn|bld|stun|DeclareMessage|spawn message(s)

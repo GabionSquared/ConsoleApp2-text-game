@@ -60,24 +60,25 @@ namespace REEEE
             MovesetData[11] = new int[] { 10, 5, 2, 14 };            //halberd     //withstand, puncture, zealous plunge, intimidate, sweep
             MovesetData[12] = new int[] { 10, 5, 7, 14 };            //scythe      //withstand, puncture, lacerate, intimidate, sweep
 
-            MovesetData[13] = new int[] { 17, 18, 19, 20, 21 };      //0Prisoner
-            MovesetData[14] = new int[] { 19, 17, 21, 22 };          //2Skeleton
-            MovesetData[15] = new int[] { 23, 24, 17, 25 };          //3The Jailer
-            MovesetData[16] = new int[] { 26, 19, 18, 24, 28 };      //4Dog
-            MovesetData[17] = new int[] { 26, 20, 27, 28 };          //5Thrall
-            MovesetData[18] = new int[] { 21, 29, 22, 30 };          //6Knight
-            MovesetData[19] = new int[] { 27, 28, 31, 28 };          //7Priest
-            MovesetData[20] = new int[] { 32, 19, 33, 34 };          //8The Gargoyle
-            MovesetData[21] = new int[] { 35, 36, 37, 38 };          //9The Entombed God
-            MovesetData[22] = new int[] { 21, 29, 22, 30 };          //10Upper Knight
-            MovesetData[23] = new int[] { 21, 29, 22, 30 };          //11The Captian
-            MovesetData[24] = new int[] { 39, 40, 41, 42 };          //12The King
-            MovesetData[25] = new int[] { 43, 44, 45, 46 };          //13Bloodtinged Knight
-            MovesetData[26] = new int[] { 47, 48, 49, 50 };          //14The Young Drake
-            MovesetData[27] = new int[] { 47, 48, 49, 50 };          //15The Poisoned Dragon
-            MovesetData[28] = new int[] { 51, 51, 51, 51 };          //16Egg
-            MovesetData[29] = new int[] { 52, 53, 54, 55 };          //17Crawling Black Sludge18Greater Black Sludge
-            MovesetData[30] = new int[] { 52, 53, 54, 55 };          //19The Black Mass
+            MovesetData[13] = new int[] { 17, 18, 19, 20 };          //0Prisoner
+            MovesetData[14] = new int[] { 21, 22, 23, 24 };          //2Skeleton
+            MovesetData[15] = new int[] { 25, 26, 27 };              //3The Jailer
+            MovesetData[16] = new int[] { 28, 29 };                  //4Dog
+            MovesetData[17] = new int[] { 30, 31, 32 };              //5Thrall
+            MovesetData[18] = new int[] { 33, 34, 35 };              //6Knight
+            MovesetData[19] = new int[] { 36, 37, 38, 39 };          //7Priest
+            MovesetData[20] = new int[] { 39, 40, 41 };          //8The Gargoyle
+            MovesetData[21] = new int[] { 0, 0, 0, 0 };           //9The Entombed God
+            MovesetData[22] = new int[] { 40, 41, 42, 43 };           //10Upper Knight
+            MovesetData[23] = new int[] { 44, 45, 46, 47, 48 };           //11The Captian
+            MovesetData[24] = new int[] { 0, 0, 0, 0 };           //12The King
+            MovesetData[25] = new int[] { 0, 0, 0, 0 };          //13Bloodtinged Knight
+            MovesetData[26] = new int[] { 0, 0, 0, 0 };           //14The Young Drake
+            MovesetData[27] = new int[] { 0, 0, 0, 0 };         //15The Poisoned Dragon
+            MovesetData[28] = new int[] { 0, 0, 0, 0 };          //16Egg
+            MovesetData[29] = new int[] { 0, 0, 0, 0 };           //17Crawling Black Sludge
+            MovesetData[30] = new int[] { 0, 0, 0, 0 };           //18Greater Black Sludge
+            MovesetData[31] = new int[] { 0, 0, 0, 0 };        //19The Black Mass
         }
 
 

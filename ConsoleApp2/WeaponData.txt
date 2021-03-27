@@ -29,24 +29,28 @@
 28|Halberd|11|50|95|100|6|12|5|4|This long-hilted weapon mixing spear and axe is difficult to handle , requiring both strength and dexterity.
 29|Lucerne|11|50|95|100|5|10|6|4|Instead of thrusting like a spear , the wielder of this abnormal halberd aims to club the head with its hard beak .
 30|Scythe|12|50|80|80|5|10|6|5|Traditionally a farming tool , however anything can be a worthy weapon in these depths .
+
 31|PrsnrWeapon|13|0|0|0|0|0|0|8|--0Prisoner
 32|SkltnWeapon|14|0|0|0|0|0|0|6|--2Skeleton
 33|JlrWeapon|15|0|0|0|0|0|0|4|--3The Jailer		
-34|DgWeapon|16|-0|0|0|0|0|0|10|--4Dog			
+34|DgWeapon|16|0|0|0|0|0|0|10|--4Dog			
 35|ThrllWeapon|17|0|0|0|0|0|0|9|--5Thrall	
 36|KnghtWeapon|18|0|0|0|0|0|0|4|--6Knight	
 37|PrstWeapon|19|0|0|0|0|0|0|5|--7Priest
-38|GrgylWeapon|20|0|0|0|0|0|0|4|--8The Gargoyle
-39|NtmbdGdWeapon|21|0|0|0|0|0|0|8|--9The Entombed God
-40|PprKnghtWeapon|22|0|0|0|0|0|0|6|--10Upper Knight
-41|CptnWeapon|23|0|0|0|0|0|0|8|--11The Captian
-42|KngWeapon|24|0|0|0|0|0|0|3|--12The King
-43|BldtngdKnghtWeapon|0|0|0|0|0|0|8|--13Bloodtinged Knight
+
+40|PprKnghtWeapon|20|0|0|0|0|0|0|6|--10Upper Knight
+41|CptnWeapon|21|0|0|0|0|0|0|8|--11The Captian
+
+38|GrgylWeapon|22|0|0|0|0|0|0|4|--8The Gargoyle
+42|KngWeapon|23|0|0|0|0|0|0|3|--12The King
+39|NtmbdGdWeapon|24|0|0|0|0|0|0|8|--9The Entombed God
+43|BldtngdKnghtWeapon|25|0|0|0|0|0|0|8|--13Bloodtinged Knight
 44|YngDrkWeapon|26|0|0|0|0|0|0|5|--14The Young Drake
 45|PsndDrgnWeapon|27|0|0|0|0|0|0|5|--15The Poisoned Dragon
 46|EggWeapon|28|0|0|0|0|0|0|1|--16Egg
-47|SldgWeapon|29|0|0|0|0|0|0|1|--17Crawling Black Sludge18Greater Black Sludge
-48|BlckMssWeapon|30|0|0|0|0|0|0|1|--19The Black Mass
+47|SldgWeapon|29|0|0|0|0|0|0|1|--17Crawling Black SludgeGreater Black Sludge
+48|SldgWeapon|30|0|0|0|0|0|0|1|--18Greater Black Sludge
+49|BlckMssWeapon|31|0|0|0|0|0|0|1|--19The Black Mass
 %EOF%
 ID|name|moveset|current Durability (lower)|current Durability (upper)|maxdurability|base damage lower|base damage upper|crit chance|speed|flavour
 	                                                                      (on upgrade +1             +2             +1        +1)
