@@ -22,4 +22,9 @@
 
 ID|Name|WeaponID|ItemID|Max Health|dodge|physical|psn|bld|stun|DeclareMessage|spawn message(s)
 0   1   2         3       4          5      6      7   8   9        10           11
+
 all armour does is hp and dodge
+	once i actually impliment it kappa
+
+	just look at the darkest dungeon wiki if you dont understand,
+	thats where most the combat system is stolen from

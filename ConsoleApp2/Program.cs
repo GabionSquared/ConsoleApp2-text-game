@@ -24,10 +24,13 @@ namespace REEEE
      *      > defence
      *          > dodge (detracts from incoming acc?)
      *          > prot  (flat reduces incoming damage)
+     *              > armour update soon :TM:
      *      > weapons lose durability
      *      > merchants can restore durability
      *      > merchants can upgrade weapons
      *      > merchant tutorial on first meeting
+     *      > merchants marked on the map
+     *          > curio system?
      *      > Loot tables
      *      > give things sensible prices
      *  
@@ -52,7 +55,7 @@ namespace REEEE
         //make the player
 
         /// <summary>
-        /// if you dont know what this is for, go back to codecademy<para>The main game loop</para>
+        /// Hey kids wanna buy some OOP? (DOP when kappa)<para>The main game loop</para>
         /// </summary>
         static void Main()
         {

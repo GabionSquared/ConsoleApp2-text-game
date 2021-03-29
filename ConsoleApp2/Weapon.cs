@@ -67,11 +67,11 @@ namespace REEEE
             MovesetData[17] = new int[] { 30, 31, 32 };              //5Thrall
             MovesetData[18] = new int[] { 33, 34, 35 };              //6Knight
             MovesetData[19] = new int[] { 36, 37, 38, 39 };          //7Priest
-            MovesetData[20] = new int[] { 39, 40, 41 };          //8The Gargoyle
-            MovesetData[21] = new int[] { 0, 0, 0, 0 };           //9The Entombed God
-            MovesetData[22] = new int[] { 40, 41, 42, 43 };           //10Upper Knight
-            MovesetData[23] = new int[] { 44, 45, 46, 47, 48 };           //11The Captian
-            MovesetData[24] = new int[] { 0, 0, 0, 0 };           //12The King
+            MovesetData[20] = new int[] { 39, 40, 41 };              //8The Gargoyle
+            MovesetData[21] = new int[] { 0, 0, 0, 0 };              //9The Entombed God
+            MovesetData[22] = new int[] { 40, 41, 42, 43 };          //10Upper Knight
+            MovesetData[23] = new int[] { 44, 45, 46, 47, 48 };      //11The Captian
+            MovesetData[24] = new int[] { 52, 53, 54 };              //12The King
             MovesetData[25] = new int[] { 0, 0, 0, 0 };          //13Bloodtinged Knight
             MovesetData[26] = new int[] { 0, 0, 0, 0 };           //14The Young Drake
             MovesetData[27] = new int[] { 0, 0, 0, 0 };         //15The Poisoned Dragon
@@ -127,7 +127,7 @@ namespace REEEE
             attacks[1] = ShuffledMoveSet[0];
             attacks[2] = ShuffledMoveSet[1];
             attacks[3] = ShuffledMoveSet[2];
-
+            //is 3 too few for a for loop?
             weapon.attacks = attacks;
 
             return weapon;
