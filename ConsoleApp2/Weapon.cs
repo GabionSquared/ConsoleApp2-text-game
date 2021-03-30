@@ -15,7 +15,7 @@ namespace REEEE
 
         public object[,] WeaponData = Program.ReadFile("WeaponData.txt");
         //the weapon names, text and attached moveset
-        public static int[][] MovesetData = new int[31][];
+        public static int[][] MovesetData = new int[32][];
         public string Flavour { get; set; }
 #pragma warning disable IDE0044 // Add readonly modifier
         string[] BrokenFlavour = new string[4];
