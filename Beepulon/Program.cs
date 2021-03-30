@@ -13,27 +13,42 @@ namespace Beepulon
         //The purpose of beepulon is to automatically change data in a way that i cannot be bothered to do manually.
         //As this is a devtool, I've made it in a seperate project.
 
+        static int length = 1000;
+        static int width = 1000;
+        //these values arent local to readfile anymore so we can use them ~elsewhere~ (mainly in for loops)
 
         static object[,] Data = Program.ReadFile("AttackData.txt");
 
         static void Main(string[] args)
         {
-            string fileName = Path.Combine(Path.Combine(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString(), "BeepulonOutput.txt"));
-            if (File.Exists(fileName))
-            {
+            #region making a new one
+            string fileName = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString()).ToString() + @"\ConsoleApp2\BeepulonOutput.txt";
+            if(File.Exists(fileName)) {
                 File.Delete(fileName);
             }
             Console.WriteLine(fileName);
-            using FileStream fs = File.Create(fileName);
+            #endregion
 
-            for (int i = 0; i > Data.Length; i++)
-            {
+            for(int i = 0; i < length; i++) {
+                Console.Write("was: {0}", Data[i, 0]);
                 Data[i, 0] = i;
+                Console.WriteLine("    is:{0} ", Data[i, 0]);
             }
 
-            // Create a new file     
-            fs.Write(Data);
-
+            #region writing the shit
+            using(StreamWriter file = new StreamWriter(fileName)) {
+                Console.WriteLine("ree");
+                for(int y = 0; y < length; y++) {
+                    for(int x = 0; x < width; x++) {
+                        file.Write(Data[y, x]);
+                        if(x < width-1) {
+                            file.Write("|");
+                        }
+                    }
+                    file.Write("\n");
+                }
+            }
+            #endregion
         }
 
         public static object[,] ReadFile(string location1)
@@ -43,9 +58,8 @@ namespace Beepulon
             string[] File;
             try
             {
-                File = System.IO.File.ReadAllLines(Path.Combine(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString(), location1));
-                //BASICALLY, GetCurrentDirectory() gives "C:\ [yadda yadda] \ConsoleApp2\bin\Debug". this get the parent twice to go to \ConsoleApp2,
-                //then grafts on the actual file name from the function call to find the file. I hate it too.
+                File = System.IO.File.ReadAllLines(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString()).ToString() + @"\ConsoleApp2\" + location1);
+                //this has been modified from the one in main consoleapp so it can navigate out of /beepulon/ and into /consoleapp/
 
                 System.Diagnostics.Debug.WriteLine(location1, " found");
                 //get the name of the file in question for the debug
@@ -60,8 +74,6 @@ namespace Beepulon
             #endregion
 
             #region finding EOF
-            int length = 1000;
-            int width = 1000;
             //finding the vertical EOF
             for (int i = 0; i < 1000; i++) //iterate through each line of the file
             {
