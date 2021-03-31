@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Beepulon
 {
-    class Program
+    class Beepulon
     {
         //The purpose of beepulon is to automatically change data in a way that i cannot be bothered to do manually.
         //As this is a devtool, I've made it in a seperate project.
@@ -17,9 +17,9 @@ namespace Beepulon
         static int width = 1000;
         //these values arent local to readfile anymore so we can use them ~elsewhere~ (mainly in for loops)
 
-        static object[,] Data = Program.ReadFile("AttackData.txt");
+        static object[,] Data = ReadFile("HostileData.txt");
 
-        static void Main(string[] args)
+        static void Main()
         {
             #region making a new one
             string fileName = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString()).ToString() + @"\ConsoleApp2\BeepulonOutput.txt";
@@ -29,16 +29,13 @@ namespace Beepulon
             Console.WriteLine(fileName);
             #endregion
 
-            for(int i = 0; i < length; i++) {
-                Console.Write("was: {0}", Data[i, 0]);
-                Data[i, 0] = i;
-                Console.WriteLine("    is:{0} ", Data[i, 0]);
-            }
-
             #region writing the shit
-            using(StreamWriter file = new StreamWriter(fileName)) {
-                Console.WriteLine("ree");
+            using (StreamWriter file = new StreamWriter(fileName))
+            {
+                /*
                 for(int y = 0; y < length; y++) {
+                    file.Write("");
+
                     for(int x = 0; x < width; x++) {
                         file.Write(Data[y, x]);
                         if(x < width-1) {
@@ -46,7 +43,13 @@ namespace Beepulon
                         }
                     }
                     file.Write("\n");
+                */
+                for (int i = 0; i < 20; i++)
+                {
+                    file.Write("case {0}:\t\t/*{1}*/", Data[i,0], Data[i,1]);
+                    file.Write("\n\tbreak;\n");
                 }
+                file.Write("default:\t\t/*Error*/");
             }
             #endregion
         }

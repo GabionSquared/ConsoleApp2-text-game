@@ -68,17 +68,17 @@ namespace REEEE
             MovesetData[18] = new int[] { 33, 34, 35 };              //6Knight
             MovesetData[19] = new int[] { 36, 37, 38, 39 };          //7Priest
             MovesetData[20] = new int[] { 39, 40, 41 };              //8The Gargoyle
-            MovesetData[21] = new int[] { 0, 0, 0, 0 };              //9The Entombed God
+            MovesetData[21] = new int[] { 55, 56, 57, 58 };          //9The Entombed God
             MovesetData[22] = new int[] { 40, 41, 42, 43 };          //10Upper Knight
             MovesetData[23] = new int[] { 44, 45, 46, 47, 48 };      //11The Captian
             MovesetData[24] = new int[] { 52, 53, 54 };              //12The King
-            MovesetData[25] = new int[] { 0, 0, 0, 0 };          //13Bloodtinged Knight
-            MovesetData[26] = new int[] { 0, 0, 0, 0 };           //14The Young Drake
-            MovesetData[27] = new int[] { 0, 0, 0, 0 };         //15The Poisoned Dragon
-            MovesetData[28] = new int[] { 0, 0, 0, 0 };          //16Egg
-            MovesetData[29] = new int[] { 0, 0, 0, 0 };           //17Crawling Black Sludge
-            MovesetData[30] = new int[] { 0, 0, 0, 0 };           //18Greater Black Sludge
-            MovesetData[31] = new int[] { 0, 0, 0, 0 };        //19The Black Mass
+            MovesetData[25] = new int[] { 59, 60, 61, 62 };          //13Bloodtinged Knight
+            MovesetData[26] = new int[] { 63, 64, 65, 66 };          //14The Young Drake
+            MovesetData[27] = new int[] { 67, 68, 69, 70 };          //15The Poisoned Dragon
+            MovesetData[28] = new int[] { 71 };                      //16Egg
+            MovesetData[29] = new int[] { 72, 73, 74, 75 };          //17Crawling Black Sludge
+            MovesetData[30] = new int[] { 76, 77, 78, 79 };          //18Greater Black Sludge
+            MovesetData[31] = new int[] { 80, 81, 82, 83 };          //19The Black Mass
         }
 
 
@@ -117,17 +117,22 @@ namespace REEEE
             weapon.BrokenFlavour = BreakFlavour(weapon.Flavour);
 
             int[] attacks = new int[4];
-            //assign the first one
-            attacks[0] = MovesetData[weapon.type][0];
-            //remove the first one (by putting it into another array, not touching the master)
-            int[] ShuffledMoveSet = MovesetData[weapon.type].Where((source, index) => index != 0).ToArray();
-            //shuffle the new shorter array
-            ShuffledMoveSet = ShuffledMoveSet.OrderBy(x => Program.rnd.Next()).ToArray();
+            //up to ID 30 is player weapons, and beyond that are AI weapons.
+            //dont shuffle AI weapons so its easier to program their choices.
+            if (passedID < 31)
+            {
+                //assign the first one
+                attacks[0] = MovesetData[weapon.type][0];
+                //remove the first one (by putting it into another array, not touching the master)
+                int[] ShuffledMoveSet = MovesetData[weapon.type].Where((source, index) => index != 0).ToArray();
+                //shuffle the new shorter array
+                ShuffledMoveSet = ShuffledMoveSet.OrderBy(x => Program.rnd.Next()).ToArray();
 
-            attacks[1] = ShuffledMoveSet[0];
-            attacks[2] = ShuffledMoveSet[1];
-            attacks[3] = ShuffledMoveSet[2];
-            //is 3 too few for a for loop?
+                attacks[1] = ShuffledMoveSet[0];
+                attacks[2] = ShuffledMoveSet[1];
+                attacks[3] = ShuffledMoveSet[2];
+                //is 3 too few for a for loop?
+            }
             weapon.attacks = attacks;
 
             return weapon;

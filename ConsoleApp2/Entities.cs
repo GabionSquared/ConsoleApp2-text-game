@@ -22,7 +22,7 @@ namespace REEEE
         protected static Dictionary<string, int>.KeyCollection StatNames;
 
         public bool Stunned = false;
-
+        public int ID{ get; set; }
         public string Name { get; set; }
 
 #pragma warning disable IDE0044 // Add readonly modifier
@@ -295,7 +295,7 @@ namespace REEEE
                 {
                     string[] nameSplit = tempname.Split(' ');
                     if(nameSplit[0] == "devskip") {
-
+                        //syntax is "devskip 0"
                         Funds = 100;
                         System.Diagnostics.Debug.WriteLine("NAME {0}; {1}", nameSplit[0], nameSplit[1]);
                         AddItem(1, Inventory); //add map
@@ -439,6 +439,7 @@ namespace REEEE
             Program.Scroll((string)HostileData[passedID, Program.rnd.Next(11, hostileWidth - 1)], scrollTime: 400); //the randomised, slow, ambient message
             Program.Scroll((string)HostileData[passedID, 10]);                                                  //the actually useful one
 
+            ID = (int)HostileData[passedID, 0];                        //give it a name
             Name = (string)HostileData[passedID, 1];                        //give it a name
             AddWeapon((int)HostileData[passedID, 2], WeaponInventory, Name); //give it a weapon
             AddItem((int)HostileData[passedID, 3], Inventory);              //give it an item
@@ -459,7 +460,15 @@ namespace REEEE
             if(Stunned) {
                 return;
             }
+            /*
+             * it's that time bois. Time for AI
+             * best way to do this so that each entity can
+             * behave as intended is a case switch based
+             * on the ID. Player weapons have their attacks shuffled,
+             * but AI aren't (see weapon.cs line ~120)
+            */
             int attackID = 0;
+
             //insert an actual AI here
 
             Attack(rnd.Next(WeaponInventory[0].DmgUp, WeaponInventory[0].DmgDwn), attackID, Program.Player);
