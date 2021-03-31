@@ -468,6 +468,55 @@ namespace REEEE
              * but AI aren't (see weapon.cs line ~120)
             */
             int attackID = 0;
+            int previous = 0;
+            switch (ID)
+            {
+                case 0:         /*Prisoner*/
+                    //even of 4
+                    break;
+                case 1:         /*Merchant*/
+                    //uses a player weapon. can ignore.
+                    break;
+                case 2:         /*Skeleton*/
+                    break;
+                case 3:         /*The Jailer*/
+                    break;
+                case 4:         /*Dog*/
+                    break;
+                case 5:         /*Thrall*/
+                    break;
+                case 6:         /*Knight*/
+                    break;
+                case 7:         /*Priest*/
+                    break;
+                case 8:         /*The Gargoyle*/
+                    break;
+                case 9:         /*The Entombed God*/
+                    break;
+                case 10:        /*Upper Knight*/
+                    break;
+                case 11:        /*The Captian*/
+                    break;
+                case 12:        /*The King*/
+                    break;
+                case 13:        /*Bloodtinged Knight*/
+                    break;
+                case 14:        /*The Young Drake*/
+                    break;
+                case 15:        /*The Poisoned Dragon*/
+                    break;
+                case 16:        /*Egg*/
+                    break;
+                case 17:        /*Crawling Black Sludge*/
+                    break;
+                case 18:        /*Greater Black Sludge*/
+                    break;
+                case 19:        /*The Black Mass*/
+                    break;
+                default:		/*Error*/
+                    attackID = 0;
+                    break;
+            }
 
             //insert an actual AI here
 
