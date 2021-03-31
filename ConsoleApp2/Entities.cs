@@ -469,95 +469,110 @@ namespace REEEE
             */
             int attackID = 0;
             int? previous = null;
-            int randomat = rnd.Next(1, 101)
-            switch (ID)
-            {
-                case 2:         /*Skeleton*/
-                    if(previous == null){
-                        attackID = 1
-                            break;
-                    }
-                    //even (open with 2?)
-               case 0:         /*Prisoner*/
-                case 1:         /*Merchant*/
-                    //4
-                    //even
-                    if(randomat <= 25){
+            int randomat = rnd.Next(1, 101);
+            switch(ID) {
+                case 0:                             /*Prisoner      even between 4*/
+                case 1:                             /*Merchant      even between 4*/
+                    if(randomat <= 25) {
                         attackID = 0;
-                    }else if randomant <= 50){
+                    } else if(randomat <= 50) {
                         attackID = 1;
-                    }else if randomant <= 75){
+                    } else if(randomat <= 75) {
                         attackID = 2;
-                    }else{
+                    } else {
                         attackID = 3;
                     }
                     break;
-                case 3:         /*The Jailer*/
-                    //3
-                    //(slight weight against 3rd?)
-                    break;
-                case 4:         /*Dog*/
-                    //2
-                    //heavy weight to 2
-                    if(randomat <= 25){
+                case 2:                             /*Skeleton      even between 4 (opens with 1)*/
+                    if(previous == null) {
+                            attackID = 1;
+                            break;
+                    }
+                    goto case 1;
+                case 3:                             /*The Jailer    3 with slight weight to 3rd (30|30|40)*/
+                    if(randomat <= 30) {
                         attackID = 0;
-                    }else{
+                    } else if(randomat <= 60) {
+                        attackID = 1;
+                    } else {
+                        attackID = 2;
+                    }
+                    break;
+                case 4:                             /*Dog           2 with a heavy weight to the second (80|20)*/
+                    if(randomat <= 80) {
+                        attackID = 0;
+                    } else {
                         attackID = 1;
                     }
                     break;
-                case 5:         /*Thrall*/
-                    //3
-                    //slight weight against 2
+                case 5:                             /*Thrall        3 with slight weight against 3rd (40|40|20)*/
+                    if(randomat <= 40) {
+                        attackID = 0;
+                    } else if(randomat <= 80) {
+                        attackID = 1;
+                    } else {
+                        attackID = 2;
+                    }
                     break;
-                case 6:         /*Knight*/
-                    //3
-                    //even, open with 3
+                case 6:                             /*Knight        even between 3 (open with 3rd)*/
+                    if(previous == null) {
+                        attackID = 2;
+                        break;
+                    }
+                    if(randomat <= 33) {
+                        attackID = 0;
+                    } else if(randomat <= 66) {
+                        attackID = 1;
+                    } else {
+                        if(previous == 2) {
+                        goto case 6;
+                        } //recur to stop this being used twice in a row
+                        attackID = 2;
+                    }
                     break;
-                case 7:         /*Priest*/
-                    //4
-                    //open with 4, do not repeat
-                    break;
-                case 8:         /*The Gargoyle*/
-                    //3
-                    //slight weight against 3
-                    break;
-                case 9:         /*The Entombed God*/
-                    //4
-                    //use 1 at last possible moment
-                    break;
-                case 10:        /*Upper Knight*/
-                    break;
-                case 11:        /*The Captian*/
-                    break;
-                case 12:        /*The King*/
-                    //3
-                    //dont open with 3
-                    break;
-                case 13:        /*Bloodtinged Knight*/
-                    //4
-                    //
-                    break;
-                case 14:        /*The Young Drake*/
-                    //4
-                    //1, 2 and 4. slight weight agasint 4. 4 always followed by 3
-                    break;
-                case 15:        /*The Poisoned Dragon*/
-                    //4
-                    //dont open with 3. only use 4 at <50% health
-                    break;
-                case 16:        /*Egg*/
-                    //only has 1 "attack". delete?
-                    break;
-                case 17:        /*Crawling Black Sludge*/
-                case 18:        /*Greater Black Sludge*/
-                case 19:        /*The Black Mass*/
-                    //4
-                    //sludge gang
-                    break;
+                case 7:                             /*Priest*/
+                //4
+                //open with 4, do not repeat 4
+                break;
+                case 8:                             /*The Gargoyle        3 with slight weight against 3rd (40|40|20)*/
+                    goto case 5;
+                case 9:                             /*The Entombed God*/
+                //4
+                //use 1 at last possible moment
+                break;
+                case 10:                             /*Upper Knight*/
+                break;
+                case 11:                             /*The Captian*/
+                break;
+                case 12:                             /*The King*/
+                //3
+                //dont open with 3
+                break;
+                case 13:                             /*Bloodtinged Knight*/
+                //4
+                //
+                break;
+                case 14:                             /*The Young Drake*/
+                //4
+                //1, 2 and 4. slight weight agasint 4. 4 always followed by 3
+                break;
+                case 15:                             /*The Poisoned Dragon*/
+                //4
+                //dont open with 3. only use 4 at <50% health
+                break;
+                case 16:                             /*Egg*/
+                //only has 1 "attack". delete?
+                break;
+                case 17:                             /*Crawling Black Sludge*/
+                case 18:                             /*Greater Black Sludge*/
+                case 19:                             /*The Black Mass*/
+                //4
+                //sludge gang
+                break;
             }
 
             //insert an actual AI here
-            previous = attackID
+            previous = attackID;
             Attack(rnd.Next(WeaponInventory[0].DmgUp, WeaponInventory[0].DmgDwn), attackID, Program.Player);
         }
 
