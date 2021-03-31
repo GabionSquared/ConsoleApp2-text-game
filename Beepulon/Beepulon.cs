@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace Beepulon
 {
+
     class Beepulon
     {
         //The purpose of beepulon is to automatically change data in a way that i cannot be bothered to do manually.
         //As this is a devtool, I've made it in a seperate project.
-
+        protected static Random rnd = new Random();
         static int length = 1000;
         static int width = 1000;
         //these values arent local to readfile anymore so we can use them ~elsewhere~ (mainly in for loops)
@@ -52,6 +53,20 @@ namespace Beepulon
                 file.Write("default:\t\t/*Error*/");
             }
             #endregion
+
+                    for(int y = 0; y < 100; y++) {
+                    int randomat = rnd.Next(1, 101)
+
+                    if(randomat <= 25){
+                Console.WriteLine("1");
+                    }else if randomant <= 50){
+        Console.WriteLine("2");
+                    }else if randomant <= 75){
+    Console.WriteLine("3");
+                    }else{
+    Console.WriteLine("4");
+                    }
+            }
         }
 
         public static object[,] ReadFile(string location1)

@@ -468,58 +468,96 @@ namespace REEEE
              * but AI aren't (see weapon.cs line ~120)
             */
             int attackID = 0;
-            int previous = 0;
+            int? previous = null;
+            int randomat = rnd.Next(1, 101)
             switch (ID)
             {
-                case 0:         /*Prisoner*/
-                    //even of 4
-                    break;
-                case 1:         /*Merchant*/
-                    //uses a player weapon. can ignore.
-                    break;
                 case 2:         /*Skeleton*/
+                    if(previous == null){
+                        attackID = 1
+                            break;
+                    }
+                    //even (open with 2?)
+               case 0:         /*Prisoner*/
+                case 1:         /*Merchant*/
+                    //4
+                    //even
+                    if(randomat <= 25){
+                        attackID = 0;
+                    }else if randomant <= 50){
+                        attackID = 1;
+                    }else if randomant <= 75){
+                        attackID = 2;
+                    }else{
+                        attackID = 3;
+                    }
                     break;
                 case 3:         /*The Jailer*/
+                    //3
+                    //(slight weight against 3rd?)
                     break;
                 case 4:         /*Dog*/
+                    //2
+                    //heavy weight to 2
+                    if(randomat <= 25){
+                        attackID = 0;
+                    }else{
+                        attackID = 1;
+                    }
                     break;
                 case 5:         /*Thrall*/
+                    //3
+                    //slight weight against 2
                     break;
                 case 6:         /*Knight*/
+                    //3
+                    //even, open with 3
                     break;
                 case 7:         /*Priest*/
+                    //4
+                    //open with 4, do not repeat
                     break;
                 case 8:         /*The Gargoyle*/
+                    //3
+                    //slight weight against 3
                     break;
                 case 9:         /*The Entombed God*/
+                    //4
+                    //use 1 at last possible moment
                     break;
                 case 10:        /*Upper Knight*/
                     break;
                 case 11:        /*The Captian*/
                     break;
                 case 12:        /*The King*/
+                    //3
+                    //dont open with 3
                     break;
                 case 13:        /*Bloodtinged Knight*/
+                    //4
+                    //
                     break;
                 case 14:        /*The Young Drake*/
+                    //4
+                    //1, 2 and 4. slight weight agasint 4. 4 always followed by 3
                     break;
                 case 15:        /*The Poisoned Dragon*/
+                    //4
+                    //dont open with 3. only use 4 at <50% health
                     break;
                 case 16:        /*Egg*/
+                    //only has 1 "attack". delete?
                     break;
                 case 17:        /*Crawling Black Sludge*/
-                    break;
                 case 18:        /*Greater Black Sludge*/
-                    break;
                 case 19:        /*The Black Mass*/
-                    break;
-                default:		/*Error*/
-                    attackID = 0;
+                    //4
+                    //sludge gang
                     break;
             }
 
             //insert an actual AI here
-
+            previous = attackID
             Attack(rnd.Next(WeaponInventory[0].DmgUp, WeaponInventory[0].DmgDwn), attackID, Program.Player);
         }
 
