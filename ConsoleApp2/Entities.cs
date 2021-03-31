@@ -473,15 +473,7 @@ namespace REEEE
             switch(ID) {
                 case 0:                             /*Prisoner      even between 4*/
                 case 1:                             /*Merchant      even between 4*/
-                    if(randomat <= 25) {
-                        attackID = 0;
-                    } else if(randomat <= 50) {
-                        attackID = 1;
-                    } else if(randomat <= 75) {
-                        attackID = 2;
-                    } else {
-                        attackID = 3;
-                    }
+                    attackID = rnd.Next(0, 4);
                     break;
                 case 2:                             /*Skeleton      even between 4 (opens with 1)*/
                     if(previous == null) {
@@ -519,16 +511,10 @@ namespace REEEE
                         attackID = 2;
                         break;
                     }
-                    if(randomat <= 33) {
-                        attackID = 0;
-                    } else if(randomat <= 66) {
-                        attackID = 1;
-                    } else {
-                        if(previous == 2) {
+                    attackID = rnd.Next(0, 4);
+                    if(previous == 2) {
                         goto case 6;
-                        } //recur to stop this being used twice in a row
-                        attackID = 2;
-                    }
+                    } //recur to stop this being used twice in a row
                     break;
                 case 7:                             /*Priest*/
                 //4
