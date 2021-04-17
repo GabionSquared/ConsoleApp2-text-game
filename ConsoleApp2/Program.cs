@@ -15,12 +15,20 @@ namespace REEEE
      * 
      * The FontStruction “7:12 Serif Italic” (https://fontstruct.com/fontstructions/show/413872) by Christian Munk is
      * licensed under a Creative Commons Attribution Share Alike license (http://creativecommons.org/licenses/by-sa/3.0/)
-     *  
+     *  UNTESTED:
+     *      lierally all real data
+     *      new attack & DOT method
+     *      AI
+     *      Speed
+     *      
      *  TODO:        
      *      > real data
+     *          specifically,
+     *             > AttackData
+     *             > HostileData
+     *          
      *      > fix enemy ai
      *          > speed
-     *          > crit (*1.5 normal dam, flat %)
      *      > defence
      *          > dodge (detracts from incoming acc?)
      *          > prot  (flat reduces incoming damage)
@@ -70,8 +78,13 @@ namespace REEEE
                     //Dont have gin; bought a bottle of kraken specially and walnut bought me programmer socks
                     System.Diagnostics.Debug.WriteLine("MAIN New combat turn");
                     //maybe add some speed property to decide who goes first. make it a weighted chance of being first rather than definitive > or <
-                    Player.DecideAttack();
-                    Globals.Target.DecideAttack();
+                    if(Globals.HeldWeapon.Speed > Globals.Target.Speed) {
+                        Player.DecideAttack();
+                        Globals.Target.DecideAttack();
+                    } else {
+                        Globals.Target.DecideAttack();
+                        Player.DecideAttack();
+                    }
 
                 } else {
                     Player.DamageOverTime();

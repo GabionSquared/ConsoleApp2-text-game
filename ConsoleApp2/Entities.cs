@@ -25,11 +25,16 @@ namespace REEEE
         public int ID{ get; set; }
         public string Name { get; set; }
 
-#pragma warning disable IDE0044 // Add readonly modifier
         int[,] Dot = new int[,] { { 0, 0 }, { 0, 0 } };
-#pragma warning restore IDE0044 // Add readonly modifier
-                               //Bleed strength, Bleed Time, Poison Strength, Poison Time
-
+        /*
+                         ________________
+	                    | TURNS | DAMAGE |
+	            ________|-------|--------|
+	           | POISON |   0   |   0    |
+	           |--------|-------|--------|
+	           |  BLEED |   0   |   0    |
+	           |________|_______|________|
+         */
         //these are ways of accessing the private/protected field of the same name (with lower case).
         //the name one is expanded for demonstration.
         #endregion
@@ -165,23 +170,60 @@ namespace REEEE
         /// <summary>
         /// Deal Damage
         /// </summary>
-        /// <param name="damage">base damage from the weapon</param>
+        /// <param name="damage">base damage from the weapon. AI do not possess this attribute.</param>
         /// <param name="id">the attack ID</param>
         /// <param name="Target">the recieving entity</param>
         protected void Attack(int damage, int id, EntityFramework Target)
         {
             //should it miss -> how much damage (target.stats) -> should it stun -> reciever.damage
             if(rnd.Next(0, 100) < (int)WeaponController.AttackData[id, 2]) { //accuracy check
-                damage *= (int)Math.Round(Convert.ToSingle(WeaponController.AttackData[id, 3]) / 100); //reduce the damage using moveset mod as a percentage
-                //int             double                        object          int   //do you see why this line is a mess?
 
-                bool poison = rnd.Next(0, 100) < (int)WeaponController.AttackData[id, 4] && rnd.Next(0, 100) < Target.Stats["Poison"];
-                bool bleed = rnd.Next(0, 100) < (int)WeaponController.AttackData[id, 5] && rnd.Next(0, 100) < Target.Stats["Bleed"];
-                bool stun = rnd.Next(0, 100) < (int)WeaponController.AttackData[id, 6] && rnd.Next(0, 100) < Target.Stats["Stun"];
-                //percent chance that it procs          //percent chance it's resisted
+                /*
+                 * player:
+                 *      damage = weapondamage*(damagemod/100) (index 3)
+                 *      if crit, damage*=1.5                    (index 4)
+                 *      
+                 *      effect type (5)
+                 *      strength    (6)
+                 *      duration    (7)
+                 *      
+                 * AI:
+                 *      damage = rand(lower to upper+1) (3 & 4)
+                 *      if crit, damage*=1.5            (5)
+                 *      
+                 *      effect type (6)
+                 *      strength    (7)
+                 *      duration    (8)
+                 */
+                int AISpacer = 0;
+                if(id < 17) {   //player
+                    //accuracy
+                    damage *= (int)Math.Round(Convert.ToSingle(WeaponController.AttackData[id, 3]) / 100);
+                    //int             double                        object          int
 
-                Target.Damage(damage, poison, bleed, stun);
+                } else {        //AI
+                    AISpacer = 1;
+                    damage = rnd.Next((int)WeaponController.AttackData[id, 3], (int)WeaponController.AttackData[id, 4]);
+                }
 
+                if(rnd.Next(0, 100) < (int)WeaponController.AttackData[id, 4 + AISpacer]) { //crit
+                    double hold = damage;
+                    hold *= 1.5;
+                    damage = (int)Math.Floor(hold);
+                    Program.Scroll("A critical Strike!");
+                    // multiplying by a float returns a double or float, damage is an int.
+                }
+
+                int[] TransferDot = new int[3];
+                if((int)WeaponController.AttackData[id, 5 + AISpacer] < 3) {
+                    for(int i = 0; i < 3; i++)
+                        TransferDot[i] = (int)WeaponController.AttackData[id, 5 + AISpacer + i];
+                }
+                //puts all the effect data into a transfer, but only if the ID is 1 or 2 (poison & bleed)
+                //[id][strength][duration]
+
+                Target.Damage(damage, TransferDot);
+                
             } else {//the attack missed
                 Program.Scroll("The Attack Missed!");
             }
@@ -191,7 +233,7 @@ namespace REEEE
         /// Recieve Damage
         /// </summary>
         /// <param name="damage">amount of incoming damage</param>
-        protected void Damage(int damage, bool poison, bool bleed, bool stun)
+        protected void Damage(int damage, int[] TransferDot)
         {
             //try to dodge -> get stunned -> take damage -> see if dead
             if(rnd.Next(0, 100) > Stats["Dodge"]) { //dodge check
@@ -199,18 +241,31 @@ namespace REEEE
                 /*
                  * int[,] DOT = new int[,] { { 0, 0 }, { 0, 0 } };
                  * Bleed strength, Bleed Time, Poison Strength, Poison Time
-                */
-                if(bleed) {
-                    Dot[0, 0] += 1;
-                    Dot[0, 1] += 1;
-                }
+                 */
+                bool poison = rnd.Next(0, 100) < Stats["Poison"];
+                bool bleed = rnd.Next(0, 100) < Stats["Bleed"];
+                bool Stun = rnd.Next(0, 100) < Stats["Stun"];
+                //checking resistances
 
-                if(poison) {
-                    Dot[1, 0] += 1;
+                if(poison && TransferDot[0] == 1) {
+                    if(Dot[0,0] != 0) {
+                        double x = TransferDot[1] / 2;
+                        Dot[0, 0] += (int)Math.Ceiling(x);
+                    } else {
+                        Dot[0, 0] += TransferDot[1];
+                    }
+                    Dot[0, 1] += TransferDot[2];
+                }else if(bleed && TransferDot[0] == 2) {
+                    if(Dot[1, 0] != 0) {
+                        double x = TransferDot[1] / 2;
+                        Dot[1, 0] += (int)Math.Ceiling(x);
+                    } else {
+                        Dot[1, 0] += TransferDot[1];
+                    }
                     Dot[1, 1] += 1;
                 }
 
-                if(stun) {
+                if(Stun) {
                     Stunned = true;
                 }
 
@@ -235,17 +290,17 @@ namespace REEEE
         /// </summary>
         public void DamageOverTime(){
             for(int i = 0; i < 2; i++) { //only does 0 and 1, for bleed and poison
-                if(Dot[i, 1] > 0) { //if active time
+                if(Dot[i, 0] > 0) { //if active time
 
-                    Stats["Health"] -= Dot[i, 0]; //take the damage
+                    Stats["Health"] -= Dot[i, 1]; //take the damage
 
                     if(Stats["Health"] <= 0) { //check if dead
                         Death();
                     }
 
                     Dot[i, 1]--;
-                    if(Dot[i, 1] > 0) { //if no more time
-                        Dot[i, 0] = 0;  //remove strength
+                    if(Dot[i, 0] > 0) { //if no more time
+                        Dot[i, 1] = 0;  //remove strength
                     }
                 }
             }
@@ -423,6 +478,7 @@ namespace REEEE
         #region instantiation
         readonly static int[,] Inventory = new int[50, 2];
         readonly static Weapon[] WeaponInventory = new Weapon[1];
+        public readonly int Speed;
         //needs to have as many slots as the AI has phases, so they can swap weapons
         #endregion
         /// <summary>
@@ -447,6 +503,8 @@ namespace REEEE
 
             Stats = CompileInt((int)HostileData[passedID, 4], (int)HostileData[passedID, 5], (int)HostileData[passedID, 6], (int)HostileData[passedID, 7], (int)HostileData[passedID, 8], (int)HostileData[passedID, 9]);
             //                             health                           dodge                   physical                        posion                         bleed                               stun
+
+            Speed = WeaponInventory[0].Speed;
 
             //set self as the target so it can be hit
             Globals.Target = this;
@@ -511,55 +569,74 @@ namespace REEEE
                         attackID = 2;
                         break;
                     }
-                    attackID = rnd.Next(0, 4);
+                    attackID = rnd.Next(0, 3);
                     if(previous == 2) {
                         goto case 6;
                     } //recur to stop this being used twice in a row
                     break;
-                case 7:                             /*Priest*/
-                //4
-                //open with 4, do not repeat 4
-                break;
-                case 8:                             /*The Gargoyle        3 with slight weight against 3rd (40|40|20)*/
+                case 7:                             /*Priest        even between 3 (open with 4, do not repeat)*/
+                    if(previous == null) {
+                        attackID = 3;
+                        break;
+                    }
+                    attackID = rnd.Next(0, 3);
+                    break;
+                case 8:                             /*The Gargoyle   3 with slight weight against 3rd (40|40|20)*/
                     goto case 5;
-                case 9:                             /*The Entombed God*/
-                //4
-                //use 1 at last possible moment
+                case 9:                             /*The Entombed God      even between 2-4, use 1 last (see Death())*/
+                    attackID = rnd.Next(1, 4);
                 break;
                 case 10:                             /*Upper Knight*/
                 break;
                 case 11:                             /*The Captian*/
                 break;
-                case 12:                             /*The King*/
-                //3
-                //dont open with 3
-                break;
-                case 13:                             /*Bloodtinged Knight*/
-                //4
-                //
-                break;
-                case 14:                             /*The Young Drake*/
-                //4
-                //1, 2 and 4. slight weight agasint 4. 4 always followed by 3
-                break;
-                case 15:                             /*The Poisoned Dragon*/
-                //4
-                //dont open with 3. only use 4 at <50% health
-                break;
+                case 12:                             /*The King     even between 3, dont open with 3*/
+                    if(previous == null){
+                        attackID = rnd.Next(0, 2);
+                        break;
+                    }
+                    attackID = rnd.Next(0, 3);
+                    break;
+                case 13:                             /*Bloodtinged Knight       even beween 4*/
+                    goto case 1;
+                case 14:                             /*The Young Drake          1-3 (40|40|20), 4 always follows 3*/
+                    if (previous == 2){
+                        attackID = 3;
+                        break;
+                    }
+
+                    if(randomat <= 40) {
+                        attackID = 0;
+                    } else if(randomat <= 80) {
+                        attackID = 1;
+                    } else {
+                        attackID = 2;
+                    }
+                    break;
+                case 15:                             /*The Poisoned Dragon      don's open with 3, only 4 below 50%*/
+                    if(Stats["Health"] > Stats["MaxHealth"] / 2)
+                    {
+                        goto case 12;
+                    } else {
+                        attackID = rnd.Next(0, 4);
+                    }
+                        break;
                 case 16:                             /*Egg*/
-                //only has 1 "attack". delete?
-                break;
+                    attackID = 0;
+                    break;
                 case 17:                             /*Crawling Black Sludge*/
                 case 18:                             /*Greater Black Sludge*/
                 case 19:                             /*The Black Mass*/
-                //4
+                    goto case 1;
                 //sludge gang
-                break;
             }
-
-            //insert an actual AI here
             previous = attackID;
-            Attack(rnd.Next(WeaponInventory[0].DmgUp, WeaponInventory[0].DmgDwn), attackID, Program.Player);
+            int attack = (int)WeaponController.AttackData[Globals.HeldWeapon.attacks[attackID], 0];
+            System.Diagnostics.Debug.WriteLine("relevant ID: {0}", attack);
+            //0-3 (weapon attacks) to 18-60something (real value)
+            
+            Attack(0, attack, Program.Player);
+
         }
 
         /// <summary>
@@ -567,6 +644,9 @@ namespace REEEE
         /// </summary>
         protected override void Death()
         {
+            if(ID == 9) { //the "death of a god" thing
+                Attack(rnd.Next(WeaponInventory[0].DmgUp, WeaponInventory[0].DmgDwn), 0, Program.Player);
+            }
             Globals.InCombat = false;
             //override for a new message
             Console.WriteLine("{0} has been vanquished", Name);

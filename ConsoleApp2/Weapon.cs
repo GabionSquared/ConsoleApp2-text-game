@@ -73,7 +73,7 @@ namespace REEEE
             MovesetData[23] = new int[] { 44, 45, 46, 47, 48 };      //11The Captian
             MovesetData[24] = new int[] { 52, 53, 54 };              //12The King
             MovesetData[25] = new int[] { 59, 60, 61, 62 };          //13Bloodtinged Knight
-            MovesetData[26] = new int[] { 63, 64, 65, 66 };          //14The Young Drake
+            MovesetData[26] = new int[] { 63, 64, 66, 65 };          //14The Young Drake
             MovesetData[27] = new int[] { 67, 68, 69, 70 };          //15The Poisoned Dragon
             MovesetData[28] = new int[] { 71 };                      //16Egg
             MovesetData[29] = new int[] { 72, 73, 74, 75 };          //17Crawling Black Sludge

@@ -1,54 +1,41 @@
-/*
-             * it's that time bois. Time for AI
-             * best way to do this so that each entity can
-             * behave as intended is a case switch based
-             * on the ID. Player weapons have their attacks shuffled,
-             * but AI aren't (see weapon.cs line ~120)
-            */
-            int attackID = 0;
-            switch (ID)
-            {
-                case 0:         /*Prisoner*/
-                    break;
-                case 1:         /*Merchant*/
-                    break;
-                case 2:         /*Skeleton*/
-                    break;
-                case 3:         /*The Jailer*/
-                    break;
-                case 4:         /*Dog*/
-                    break;
-                case 5:         /*Thrall*/
-                    break;
-                case 6:         /*Knight*/
-                    break;
-                case 7:         /*Priest*/
-                    break;
-                case 8:         /*The Gargoyle*/
-                    break;
-                case 9:         /*The Entombed God*/
-                    break;
-                case 10:        /*Upper Knight*/
-                    break;
-                case 11:        /*The Captian*/
-                    break;
-                case 12:        /*The King*/
-                    break;
-                case 13:        /*Bloodtinged Knight*/
-                    break;
-                case 14:        /*The Young Drake*/
-                    break;
-                case 15:        /*The Poisoned Dragon*/
-                    break;
-                case 16:        /*Egg*/
-                    break;
-                case 17:        /*Crawling Black Sludge*/
-                    break;
-                case 18:        /*Greater Black Sludge*/
-                    break;
-                case 19:        /*The Black Mass*/
-                    break;
-                default:		/*Error*/
-                    attackID = 0;
-                    break;
-            }
+case 0:		/*Prisoner*/
+	break;
+case 1:		/*Merchant*/
+	break;
+case 2:		/*Skeleton*/
+	break;
+case 3:		/*The Jailer*/
+	break;
+case 4:		/*Dog*/
+	break;
+case 5:		/*Thrall*/
+	break;
+case 6:		/*Knight*/
+	break;
+case 7:		/*Priest*/
+	break;
+case 8:		/*The Gargoyle*/
+	break;
+case 9:		/*The Entombed God*/
+	break;
+case 10:		/*Upper Knight*/
+	break;
+case 11:		/*The Captian*/
+	break;
+case 12:		/*The King*/
+	break;
+case 13:		/*Bloodtinged Knight*/
+	break;
+case 14:		/*The Young Drake*/
+	break;
+case 15:		/*The Poisoned Dragon*/
+	break;
+case 16:		/*Egg*/
+	break;
+case 17:		/*Crawling Black Sludge*/
+	break;
+case 18:		/*Greater Black Sludge*/
+	break;
+case 19:		/*The Black Mass*/
+	break;
+default:		/*Error*/

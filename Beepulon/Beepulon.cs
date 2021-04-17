@@ -22,9 +22,17 @@ namespace Beepulon
 
         static void Main()
         {
+            for (int i = 0; i < 4; i++)
+            {
+                Console.Write(rnd.Next(0, 4));
+                Console.Write("  ");
+            }
+            Console.WriteLine();
+
             #region making a new one
             string fileName = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString()).ToString() + @"\ConsoleApp2\BeepulonOutput.txt";
-            if(File.Exists(fileName)) {
+            if (File.Exists(fileName))
+            {
                 File.Delete(fileName);
             }
             Console.WriteLine(fileName);
@@ -47,26 +55,15 @@ namespace Beepulon
                 */
                 for (int i = 0; i < 20; i++)
                 {
-                    file.Write("case {0}:\t\t/*{1}*/", Data[i,0], Data[i,1]);
+                    file.Write("case {0}:\t\t/*{1}*/", Data[i, 0], Data[i, 1]);
                     file.Write("\n\tbreak;\n");
                 }
                 file.Write("default:\t\t/*Error*/");
             }
             #endregion
 
-                    for(int y = 0; y < 100; y++) {
-                    int randomat = rnd.Next(1, 101)
+            
 
-                    if(randomat <= 25){
-                Console.WriteLine("1");
-                    }else if randomant <= 50){
-        Console.WriteLine("2");
-                    }else if randomant <= 75){
-    Console.WriteLine("3");
-                    }else{
-    Console.WriteLine("4");
-                    }
-            }
         }
 
         public static object[,] ReadFile(string location1)
