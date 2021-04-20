@@ -26,11 +26,8 @@ namespace REEEE
      *          specifically,
      *             > AttackData
      *             > HostileData
-     *          
-     *      > fix enemy ai
-     *          > speed
-     *      > defence
-     *          > dodge (detracts from incoming acc?)
+     *      > armour
+     *          ========The Progress Line=======
      *          > prot  (flat reduces incoming damage)
      *              > armour update soon :TM:
      *      > weapons lose durability
@@ -74,11 +71,12 @@ namespace REEEE
             do { //they call it a game loop for a reason
                 if (Globals.InCombat)
                 {
-                    //come back to this when i have a LOT of gin
-                    //Dont have gin; bought a bottle of kraken specially and walnut bought me programmer socks
                     System.Diagnostics.Debug.WriteLine("MAIN New combat turn");
-                    //maybe add some speed property to decide who goes first. make it a weighted chance of being first rather than definitive > or <
-                    if(Globals.HeldWeapon.Speed > Globals.Target.Speed) {
+
+                    //calculating speed. this method gives a weighted chance rather than flat > or <
+                    int PRnd = rnd.Next(0,10) + Globals.HeldWeapon.Speed;
+                    int AIRnd = rnd.Next(0,10) + Globals.Target.Speed;
+                    if(PRnd > AIRnd) {
                         Player.DecideAttack();
                         Globals.Target.DecideAttack();
                     } else {
@@ -86,7 +84,7 @@ namespace REEEE
                         Player.DecideAttack();
                     }
 
-                } else {
+                } else { //not in combat
                     Player.DamageOverTime();
                     Map.PassiveAction();
                 }

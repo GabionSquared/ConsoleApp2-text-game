@@ -178,52 +178,37 @@ namespace REEEE
             //should it miss -> how much damage (target.stats) -> should it stun -> reciever.damage
             if(rnd.Next(0, 100) < (int)WeaponController.AttackData[id, 2]) { //accuracy check
 
-                /*
-                 * player:
-                 *      damage = weapondamage*(damagemod/100) (index 3)
-                 *      if crit, damage*=1.5                    (index 4)
-                 *      
-                 *      effect type (5)
-                 *      strength    (6)
-                 *      duration    (7)
-                 *      
-                 * AI:
-                 *      damage = rand(lower to upper+1) (3 & 4)
-                 *      if crit, damage*=1.5            (5)
-                 *      
-                 *      effect type (6)
-                 *      strength    (7)
-                 *      duration    (8)
-                 */
-                int AISpacer = 0;
-                if(id < 17) {   //player
-                    //accuracy
+                int AISpacer = 0; //because how much damage the AI does is decided here, all the data has been shifted by 1 for them
+
+                if(id < 17) {   //player attacks
                     damage *= (int)Math.Round(Convert.ToSingle(WeaponController.AttackData[id, 3]) / 100);
                     //int             double                        object          int
 
-                } else {        //AI
+                } else {        //AI attacks
                     AISpacer = 1;
                     damage = rnd.Next((int)WeaponController.AttackData[id, 3], (int)WeaponController.AttackData[id, 4]);
                 }
 
-                if(rnd.Next(0, 100) < (int)WeaponController.AttackData[id, 4 + AISpacer]) { //crit
+                if(rnd.Next(0, 100) < (int)WeaponController.AttackData[id, 4 + AISpacer]) { //crit. uses the value as a % chance.
                     double hold = damage;
-                    hold *= 1.5;
+                    hold *= 1.5; //burner variable because *1.5 returns n.5 on odd numbers
                     damage = (int)Math.Floor(hold);
                     Program.Scroll("A critical Strike!");
                     // multiplying by a float returns a double or float, damage is an int.
                 }
 
                 int[] TransferDot = new int[3];
-                if((int)WeaponController.AttackData[id, 5 + AISpacer] < 3) {
+                if((int)WeaponController.AttackData[id, 5 + AISpacer] =< 3) {
                     for(int i = 0; i < 3; i++)
                         TransferDot[i] = (int)WeaponController.AttackData[id, 5 + AISpacer + i];
                 }
-                //puts all the effect data into a transfer, but only if the ID is 1 or 2 (poison & bleed)
+                //puts all the effect data into a transfer, but only if the ID is 1-3 (poison, bleed, stun)
                 //[id][strength][duration]
-
-                Target.Damage(damage, TransferDot);
                 
+                Target.Damage(damage, TransferDot);
+                //taking damage is a seperate function so it's easier to access their own dodge and prot values.
+                //this could plausably be done using the Using(x) function, but thats bad conpartmentalisation.
+
             } else {//the attack missed
                 Program.Scroll("The Attack Missed!");
             }
@@ -247,15 +232,17 @@ namespace REEEE
                 bool Stun = rnd.Next(0, 100) < Stats["Stun"];
                 //checking resistances
 
-                if(poison && TransferDot[0] == 1) {
+                //TODO: TURN THIS INTO A SWITCH CASE BASED ON TransferDot[0]
+                if(poison && TransferDot[0] == 1) { //poison wasn't resisted, and is being transfered
                     if(Dot[0,0] != 0) {
                         double x = TransferDot[1] / 2;
-                        Dot[0, 0] += (int)Math.Ceiling(x);
+                        Dot[0, 0] += (int)Math.Ceiling(x);  //if already poisoned, increment strength by half what's requested (rounded up)
                     } else {
-                        Dot[0, 0] += TransferDot[1];
+                        Dot[0, 0] += TransferDot[1]; //if not already poisoned, apply at full strength
                     }
-                    Dot[0, 1] += TransferDot[2];
-                }else if(bleed && TransferDot[0] == 2) {
+                    Dot[0, 1] += TransferDot[2]; //increment the time, regardless of what already existed
+
+                }else if(bleed && TransferDot[0] == 2) { //(same as poison, but for bleed)
                     if(Dot[1, 0] != 0) {
                         double x = TransferDot[1] / 2;
                         Dot[1, 0] += (int)Math.Ceiling(x);
@@ -263,18 +250,17 @@ namespace REEEE
                         Dot[1, 0] += TransferDot[1];
                     }
                     Dot[1, 1] += 1;
-                }
-
-                if(Stun) {
+                }else if(Stun && TransferDot[0] == 3) {
                     Stunned = true;
                 }
 
                 Console.WriteLine("{0} damage done to {1}", damage, Name);
                 Stats["Health"] -= damage;
 
+                //check for death
                 if(Stats["Health"] <= 0) {
                     Stats["Health"] = 0;
-                    Death();
+                    Death(); //make health always 0 rather than a negative on death, to stop weird displays
                 } else {
                     Display();
                 }
