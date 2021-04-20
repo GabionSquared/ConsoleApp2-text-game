@@ -56,7 +56,7 @@ namespace REEEE
                 {"Health",mxhlth},
                 {"MaxHealth",mxhlth},
                 {"Dodge",dgd},
-                {"Protection",phy},
+                //protection goes here. redundant, just give more health
                 {"Poison",psn},
                 {"Bleed",bld},
                 {"Stun", stn}
@@ -198,7 +198,8 @@ namespace REEEE
                 }
 
                 int[] TransferDot = new int[3];
-                if((int)WeaponController.AttackData[id, 5 + AISpacer] =< 3) {
+                int r = (int)WeaponController.AttackData[id, 5 + AISpacer];
+                if (r <= 3) {
                     for(int i = 0; i < 3; i++)
                         TransferDot[i] = (int)WeaponController.AttackData[id, 5 + AISpacer + i];
                 }
@@ -442,6 +443,10 @@ namespace REEEE
             System.Diagnostics.Debug.WriteLine("relevant ID: {0}", attack);
             //cha cha real smooth from 1-4 as a string to the attack's ID as an int
 
+            if (rnd.Next(0, 10) > 3) { //30% chance to not lose durability, for the memes
+                Globals.HeldWeapon.Durability--;
+            }
+
             Attack(rnd.Next(Globals.HeldWeapon.DmgUp, Globals.HeldWeapon.DmgDwn), attack, Globals.Target);
             //shipping all that good shit off to the actual attack thingie
         }
@@ -464,7 +469,9 @@ namespace REEEE
         #region instantiation
         readonly static int[,] Inventory = new int[50, 2];
         readonly static Weapon[] WeaponInventory = new Weapon[1];
-        public readonly int Speed;
+        public int Speed;
+        int? previous = null; //the previous attack used. Can't be local.
+
         //needs to have as many slots as the AI has phases, so they can swap weapons
         #endregion
         /// <summary>
@@ -509,10 +516,9 @@ namespace REEEE
              * best way to do this so that each entity can
              * behave as intended is a case switch based
              * on the ID. Player weapons have their attacks shuffled,
-             * but AI aren't (see weapon.cs line ~120)
+             * but AI don't (see weapon.cs line ~120)
             */
             int attackID = 0;
-            int? previous = null;
             int randomat = rnd.Next(1, 101);
             switch(ID) {
                 case 0:                             /*Prisoner      even between 4*/
@@ -617,6 +623,7 @@ namespace REEEE
                 //sludge gang
             }
             previous = attackID;
+
             int attack = (int)WeaponController.AttackData[Globals.HeldWeapon.attacks[attackID], 0];
             System.Diagnostics.Debug.WriteLine("relevant ID: {0}", attack);
             //0-3 (weapon attacks) to 18-60something (real value)

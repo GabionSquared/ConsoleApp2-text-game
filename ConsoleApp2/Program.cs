@@ -26,11 +26,8 @@ namespace REEEE
      *          specifically,
      *             > AttackData
      *             > HostileData
-     *      > armour
-     *          ========The Progress Line=======
-     *          > prot  (flat reduces incoming damage)
-     *              > armour update soon :TM:
-     *      > weapons lose durability
+     *      > armour (increases health and dodge)
+     *          ========The Progress Line=======    ^ cba to do, basically
      *      > merchants can restore durability
      *      > merchants can upgrade weapons
      *      > merchant tutorial on first meeting

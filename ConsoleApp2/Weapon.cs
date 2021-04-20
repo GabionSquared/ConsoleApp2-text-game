@@ -81,20 +81,6 @@ namespace REEEE
             MovesetData[31] = new int[] { 80, 81, 82, 83 };          //19The Black Mass
         }
 
-
-        /// <summary>
-        /// make a new weapon object from id <para>This summary block is longer than the actual function</para>
-        /// </summary>
-        /// <param name="id">ID for the weapon being generated</param>
-        /// <returns>weapon from id as Weapon type</returns>
-        /*
-        public Weapon CreateWeapon(int id = 0)
-        {
-            Weapon weapon = Assign(id);
-
-            return weapon;
-        }
-        */
         /// <summary>
         /// defining all the variables using WeaponData and some bell curves
         /// </summary>
@@ -325,7 +311,7 @@ namespace REEEE
                 * That's why this switchcase exists: it uses different spacing depending on how long the flavour text is.
                 */
 
-                for(int i = 0; i < totalWidth; i++)
+                    for(int i = 0; i < totalWidth; i++)
                     {
                         Console.Write("-");
                     }
@@ -414,6 +400,9 @@ namespace REEEE
             Console.Write("\t|____________________|  |____________________|  |____________________|  |____________________|\n");
         }
 
+        /// <summary>
+        /// I dont remember why i decided i needed to do this
+        /// </summary>
         void Tabgroup()
         {
             Console.Write("\t");
