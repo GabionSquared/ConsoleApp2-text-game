@@ -354,7 +354,7 @@ namespace REEEE
                 Console.Write("> ");
                 tempname = Console.ReadLine();
                 Console.WriteLine();
-                //try//because of the split and parse, this might cause an error
+                try//because of the split and parse, this might cause an error
                 {
                     string[] nameSplit = tempname.Split(' ');
                     if(nameSplit[0] == "devskip" || nameSplit[0] == "debug") {
@@ -372,9 +372,9 @@ namespace REEEE
                         WeaponInterpreter.Display(Globals.HeldWeapon, true, true);
                         return;
                     }
-                } //catch {
+                } catch {
                     System.Diagnostics.Debug.WriteLine("GENERATE authentic input");
-                //}
+                }
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Program.Scroll("You're certian?");
                 Console.ForegroundColor = ConsoleColor.White;
@@ -395,10 +395,12 @@ namespace REEEE
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Program.Scroll("Don't remember?", lineBreak: 0);
                     Program.Scroll("Take your time...", lineBreak: 2);
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
             } while(flag == false);
 
             //figure out how to add a wait
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Program.Scroll("\n\tWhat's that look for? ", finishTime: 500, lineBreak: 0, tabs: 0);
             Program.Scroll("Don't know what you're doing here?", tabs: 0);
             Program.Scroll("There used to be " + Stats.Count() + " different statistics until the developer scrapped them and made a dictionary.\n\tIt Says:");
@@ -429,7 +431,7 @@ namespace REEEE
                     flag = true;
                     Program.Scroll("Off you go, then");
                     AddItem(1, Inventory);
-                } else if(ans == "N" || ans == "n") {
+                } else {
                     Program.Scroll("...", scrollTime: 300, finishTime: 2000);
                     Program.Scroll("alright then.");
                 }

@@ -146,6 +146,7 @@ namespace REEEE
                 Toggle(); Console.WriteLine("|"); Program.Scroll("| 5:", 20, 30, 0);
                 Toggle(); Program.Scroll("Save             ", 20, 30, 0);
                 Toggle(); Console.WriteLine("|"); Program.Scroll("|________________________|", 20, 30);
+                Console.ForegroundColor = ConsoleColor.White;
                 #endregion
 
                 Console.Write("> ");

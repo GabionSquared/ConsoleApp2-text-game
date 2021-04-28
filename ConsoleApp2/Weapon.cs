@@ -162,6 +162,7 @@ namespace REEEE
         /// <returns></returns>
         string[] BreakFlavour(string Flavour, bool debug = false)
         {
+            
             string[] BrokenFlavour = new string[4];
             int flavourBracket = FlavourBracket(Flavour);
             System.Diagnostics.Debug.WriteLine("\nBREAKFLAVOUR");
@@ -236,6 +237,11 @@ namespace REEEE
         /// <param name="debug">if the debus is shown</param>
         public void Display(Weapon weapon, bool moves = false, bool debug = false)
         {
+            void Tabgroup()
+            { //I don't remember why i did it like this
+                Console.Write("\t");
+            }
+
             #region Thinking space
             /*
              * current method:
@@ -406,7 +412,7 @@ namespace REEEE
                 Console.Write("\n");
             }
             #endregion
-
+            Console.Write("\t");
             # region DOT & special effects
             string BoxBottom = "|____________________|  "; //bottom of a box
             string Spacer =    "                        "; //a space the width of a box
@@ -418,10 +424,10 @@ namespace REEEE
                 {2,"Bleed"},
                 {3,"Stun"}
             };
-
+            
             for (int attackIndex = 0; attackIndex < 4; attackIndex++) //each attack
             {
-                int hold = (int)AttackData[attacks[attackIndex], 5]; //the data
+                int hold = (int)AttackData[attackIndex, 5]; //the data
 
                 if (hold == 0) //if there is no effect
                 {
@@ -430,9 +436,11 @@ namespace REEEE
                 }
                 else
                 {
+                    Console.Write("|");
                     switch (hold)
                     {
                         case 0: //note that to get here, hold =! 0, so this is free for operations
+                            Console.Write (" {0,6}: {1,-1}, {2,-1} turns ", Strings[hold], (int)AttackData[attackIndex, 6], (int)AttackData[attackIndex, 7]);
                             Console.ForegroundColor = ConsoleColor.White;
                             break;
                         case 1: //poison
@@ -447,39 +455,22 @@ namespace REEEE
                         default:
                             throw new Exception("Unrecognised Special Effect");
                     }
-
-                    //|   Accuracy:   100% |
-                    //| Poison: 0, 0 turns |
+                    Console.Write("|  ");
                 }
             }
-
+            Console.Write("\n\t");
             //if active, place bottom, else, place spacer
-
-
-
-            /*
-            for (int dataIndex = 5; dataIndex < 8; dataIndex++)
+            for (int attackIndex = 0; attackIndex < 4; attackIndex++) //each attack
             {
-                Console.Write("\t");
-                System.Diagnostics.Debug.WriteLine("ATTACK new dataIndex {0}/12", dataIndex);
-                for (int attackIndex = 0; attackIndex < 4; attackIndex++) //each attack
+                if (State[attackIndex] == false) //if there is no effect
                 {
-                    int hold = (int)AttackData[attacks[attackIndex], dataIndex]; //the data in question
-
+                    Console.Write(Spacer);
+                }else{
+                    Console.Write(BoxBottom);
                 }
             }
-            */
-            //bottom of the boxes
-            Console.Write("\t|____________________|  |____________________|  |____________________|  |____________________|\n");
+            Console.WriteLine();
             #endregion
-        }
-
-        /// <summary>
-        /// I dont remember why i decided i needed to do this
-        /// </summary>
-        void Tabgroup()
-        {
-            Console.Write("\t");
         }
     }
 
