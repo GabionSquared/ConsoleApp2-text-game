@@ -22,6 +22,16 @@ namespace Beepulon
 
         static void Main()
         {
+            for (int dataIndex = 1; dataIndex < 5; dataIndex++)
+            {
+                Console.Write(dataIndex);
+            }
+            Console.WriteLine();
+            for (int dataIndex = 5; dataIndex < 8; dataIndex++)
+            {
+                Console.Write(dataIndex);
+            }
+            Console.WriteLine();
             /*
             ConsoleColor[] consoleColors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
             foreach(var color in consoleColors) {

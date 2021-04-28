@@ -378,7 +378,8 @@ namespace REEEE
             //System.Diagnostics.Debug.WriteLine("\t DisplayMoves");
             Console.Write("\t ____________________    ____________________    ____________________    ____________________\n");
             //top of the boxes
-            for (int dataIndex = 1; dataIndex < 8; dataIndex++) //each data piece. starting from one to dodge printing the attack ID
+            #region Name, accuracy, damage/crit mod
+            for (int dataIndex = 1; dataIndex < 5; dataIndex++) //each data piece. starting from one to dodge printing the attack ID
             {
                 Console.Write("\t");
                 System.Diagnostics.Debug.WriteLine("ATTACK new dataIndex {0}/12", dataIndex);
@@ -404,8 +405,73 @@ namespace REEEE
                 }
                 Console.Write("\n");
             }
+            #endregion
+
+            # region DOT & special effects
+            string BoxBottom = "|____________________|  "; //bottom of a box
+            string Spacer =    "                        "; //a space the width of a box
+            bool[] State = new bool[] { true, true, true, true }; //if that attack still needs to be printed.
+
+            Dictionary<int, String> Strings = new Dictionary<int, String> //remember that 0 is the default
+            {
+                {1,"Poison"},
+                {2,"Bleed"},
+                {3,"Stun"}
+            };
+
+            for (int attackIndex = 0; attackIndex < 4; attackIndex++) //each attack
+            {
+                int hold = (int)AttackData[attacks[attackIndex], 5]; //the data
+
+                if (hold == 0) //if there is no effect
+                {
+                    State[attackIndex] = false;
+                    Console.Write(BoxBottom);
+                }
+                else
+                {
+                    switch (hold)
+                    {
+                        case 0: //note that to get here, hold =! 0, so this is free for operations
+                            Console.ForegroundColor = ConsoleColor.White;
+                            break;
+                        case 1: //poison
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            goto case 0;
+                        case 2: //bleed
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            goto case 0;
+                        case 3: //stun
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            goto case 0;
+                        default:
+                            throw new Exception("Unrecognised Special Effect");
+                    }
+
+                    //|   Accuracy:   100% |
+                    //| Poison: 0, 0 turns |
+                }
+            }
+
+            //if active, place bottom, else, place spacer
+
+
+
+            /*
+            for (int dataIndex = 5; dataIndex < 8; dataIndex++)
+            {
+                Console.Write("\t");
+                System.Diagnostics.Debug.WriteLine("ATTACK new dataIndex {0}/12", dataIndex);
+                for (int attackIndex = 0; attackIndex < 4; attackIndex++) //each attack
+                {
+                    int hold = (int)AttackData[attacks[attackIndex], dataIndex]; //the data in question
+
+                }
+            }
+            */
             //bottom of the boxes
             Console.Write("\t|____________________|  |____________________|  |____________________|  |____________________|\n");
+            #endregion
         }
 
         /// <summary>
