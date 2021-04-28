@@ -11,7 +11,7 @@ namespace REEEE
     class WeaponController
     {
         public static readonly object[,] AttackData = Program.ReadFile("AttackData.txt");
-        public readonly int finalAddress = (AttackData.Length / 7) - 1; // .length on a 2d array will give the ENTIRE LENGTH (length*width) so we're dividing by the width to get the last row
+        public readonly int finalAddress = (AttackData.Length / 9) -1; // .length on a 2d array will give the ENTIRE LENGTH (length*width) so we're dividing by the width to get the last row
 
         public object[,] WeaponData = Program.ReadFile("WeaponData.txt");
         //the weapon names, text and attached moveset
@@ -119,10 +119,17 @@ namespace REEEE
                 attacks[3] = ShuffledMoveSet[2];
                 //is 3 too few for a for loop?
             }
+            else {
+                attacks[0] = MovesetData[weapon.type][0];
+                attacks[1] = MovesetData[weapon.type][1];
+                attacks[2] = MovesetData[weapon.type][2];
+                attacks[3] = MovesetData[weapon.type][3];
+            }
             weapon.attacks = attacks;
 
             return weapon;
         }
+
         #region Flavourtext shenanigans
 
         /// <summary>
@@ -365,12 +372,13 @@ namespace REEEE
             }
         }
         #endregion
+
         void DisplayMoves()
         {
             //System.Diagnostics.Debug.WriteLine("\t DisplayMoves");
             Console.Write("\t ____________________    ____________________    ____________________    ____________________\n");
             //top of the boxes
-            for (int dataIndex = 1; dataIndex < 7; dataIndex++) //each data piece. starting from one to dodge printing the attack ID
+            for (int dataIndex = 1; dataIndex < 8; dataIndex++) //each data piece. starting from one to dodge printing the attack ID
             {
                 Console.Write("\t");
                 System.Diagnostics.Debug.WriteLine("ATTACK new dataIndex {0}/12", dataIndex);

@@ -98,16 +98,56 @@ namespace REEEE
 
             //for loop printing all the available direction, using the dictionary for the sentance
             //if the value is null on int?[]nesw, it's skipped as there's no doorway in that direction
+            #region print nesw options
+            Console.ForegroundColor = ConsoleColor.Green;
+            Program.Scroll(" ____________________________", scrollTime:5, finishTime:20);
             for(int i = 0; i < 4; i++) {
-                if(nesw[i].HasValue) {
-                    Program.Scroll("There is a "+Nesw[i]+" door open", scrollTime:20);
+                if(nesw[i].HasValue && (nesw[i] % 2) == 0) {//the even ones
+                    Program.Scroll("| ", scrollTime:20, lineBreak: 0, finishTime:20);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Program.Scroll("There is a "+Nesw[i]+" door open", scrollTime:20, lineBreak: 0, tabs: 0, finishTime:20);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Program.Scroll(" |", scrollTime:20, tabs: 0, finishTime:20);
+                }else if (nesw[i].HasValue) {
+                    Program.Scroll("| ", scrollTime:20, lineBreak: 0, finishTime:20);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Program.Scroll("There is a "+Nesw[i]+" door open ", scrollTime:20, lineBreak: 0, tabs: 0, finishTime:20);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Program.Scroll(" |", scrollTime:20, tabs: 0, finishTime:20);
                 }
             }
-
+            Program.Scroll("|____________________________|", scrollTime:5);
+            #endregion
             //ask if they want to move, see the map, or inspect
             bool flag = true; //only set to true if the menu wont re-appear that cycle, on move.
             do {
-                Program.Scroll("\n\t1:\tMap\n\t2:\tMove\n\t3:\tInspect the Room\n\t4:\tInventory\n\t5:\tSave", scrollTime:20, lineBreak: 2);
+
+                #region printing the menu
+                int toggle = 1;
+                void Toggle()
+                {
+                    toggle*=-1;
+                    if(toggle == 1) {
+                        Console.ForegroundColor = ConsoleColor.White;
+                    } else {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                    }
+                }
+                Toggle();
+                Program.Scroll("\n\t ________________________", scrollTime:20, finishTime:30, tabs: 0);
+                          Program.Scroll("\t| 1:", 20, 30, 0, 0);
+                Toggle(); Program.Scroll("Map              ", 20, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("| 2:", 20, 30, 0);
+                Toggle(); Program.Scroll("Move             ", 20, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("| 3:", 20, 30, 0);
+                Toggle(); Program.Scroll("Inspect the Room ", 20, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("| 4:", 20, 30, 0);
+                Toggle(); Program.Scroll("Inventory        ", 20, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("| 5:", 20, 30, 0);
+                Toggle(); Program.Scroll("Save             ", 20, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("|________________________|", 20, 30);
+                #endregion
+
                 Console.Write("> ");
                 string ans = Console.ReadLine();
 
@@ -150,39 +190,37 @@ namespace REEEE
         /// <param name="nesw">the output of GetDirection()</param>
         static void Move(int?[] nesw)
         {
-            //UGLI CODE TIME BOIS
-            //huge else if stack to catch all inputs the user could be given, then moves them in the specified direction (see SetLoaction)
-            //invailid input causes the funtion to recur
+            //invalid input causes the function to recur
             Program.Scroll("\n\tWhich way do you walk?\t\t[back to return]", lineBreak:2);
             Console.Write("> ");
             string ans = Console.ReadLine();
-            if ((ans == "North" ^ ans == "north" ^ ans == "N" ^ ans == "n" ^ ans == "Up" ^ ans == "up" ^ ans == "u") & nesw[0].HasValue)
-            {
+            string[][] PossibleAnswers = new string[4][];
+            
+            PossibleAnswers[0] = new string[] { "North", "north", "N", "n", "Up", "up", "u" };
+            PossibleAnswers[1] = new string[] { "East", "east", "E", "e", "Right", "right", "r" };
+            PossibleAnswers[2] = new string[] { "South", "south", "S", "s", "Down", "down", "d" };
+            PossibleAnswers[3] = new string[] { "West", "west", "W", "w", "Left", "left", "l" };
+
+            if (PossibleAnswers[0].Contains(ans) & nesw[0].HasValue) {
                 Program.Scroll("You walk through the north door");
                 SetLocation(nesw[0].Value - 1);
-            }
-            else if ((ans == "East" ^ ans == "east" ^ ans == "E" ^ ans == "e" ^ ans == "Right" ^ ans == "right" ^ ans == "r") & nesw[1].HasValue)
+            } else if (PossibleAnswers[1].Contains(ans) & nesw[1].HasValue)
             {
                 Program.Scroll("You walk through the east door");
                 SetLocation(nesw[1].Value - 1);
-            }
-            else if ((ans == "South" ^ ans == "south" ^ ans == "S" ^ ans == "s" ^ ans == "Down" ^ ans == "down" ^ ans == "d") & nesw[2].HasValue)
+            } else if (PossibleAnswers[2].Contains(ans) & nesw[2].HasValue)
             {
                 Program.Scroll("You walk through the south door");
                 SetLocation(nesw[2].Value - 1);
-            }
-            else if ((ans == "West" ^ ans == "west" ^ ans == "W" ^ ans == "w" ^ ans == "Left" ^ ans == "left" ^ ans == "l") & nesw[3].HasValue)
+            } else if (PossibleAnswers[3].Contains(ans) & nesw[3].HasValue)
             {
                 Program.Scroll("You walk through the west door");
                 SetLocation(nesw[3].Value - 1);
-            }
-            else if (ans == "back")
+            } else if (ans == "back")
             {
                 PassiveAction();
-            }
-            else
+            } else
             {
-                Program.Scroll("Invalid Input\n", lineBreak: 2);
                 Move(nesw);
             }
         }

@@ -22,8 +22,13 @@ namespace Beepulon
 
         static void Main()
         {
-            for (int i = 0; i < 4; i++)
-            {
+            /*
+            ConsoleColor[] consoleColors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
+            foreach(var color in consoleColors) {
+                Console.WriteLine(color);
+            }
+            */
+            for (int i = 0; i < 4; i++){
                 Console.Write(rnd.Next(0, 4));
                 Console.Write("  ");
             }

@@ -82,7 +82,7 @@
 81|Sldg|100|0|0|90|0|0|0
 82|Sldg|100|0|0|90|0|0|0
 83|Sldg|100|0|0|90|0|0|0
-id|name|		Accuracy|Damage Mod|Crit Mod|			EffectType|Strength|Duration|FlavourERROR
+id|name|Accuracy|Damage Mod|Crit Mod|EffectType|Strength|Duration|FlavourERROR
 %EOF%
 ^ player moves v AI moves. player moves are on the valid side of eof because it's used in weapondisplay
 id|name|		Accuracy|DMG upper|DMG lower|Flat Crit|		EffectType|Strength|Duration           [AI]	[delete this and the player tag]
