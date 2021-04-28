@@ -649,8 +649,7 @@ namespace REEEE
                 //sludge gang
             }
             previous = attackID;
-
-            int attack = (int)WeaponController.AttackData[Globals.HeldWeapon.attacks[attackID], 0];
+            int attack = WeaponInventory[0].attacks[attackID];
             System.Diagnostics.Debug.WriteLine("relevant ID: {0}", attack);
             //0-3 (weapon attacks) to 18-60something (real value)
             
