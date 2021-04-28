@@ -77,9 +77,12 @@ namespace REEEE
                     int PRnd = rnd.Next(0,10) + Globals.HeldWeapon.Speed;
                     int AIRnd = rnd.Next(0,10) + Globals.Target.Speed;
                     if(PRnd > AIRnd) {
+                        Scroll("\nYou lunge in first!");
                         Player.DecideAttack();
                         Globals.Target.DecideAttack();
                     } else {
+                        string output = "\n"+ Globals.Target.Name + " lunges in first!";
+                        Scroll("\n"+ Globals.Target.Name + " lunges in first!");
                         Globals.Target.DecideAttack();
                         Player.DecideAttack();
                     }

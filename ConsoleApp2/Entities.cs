@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace REEEE
 {
+
     /// <summary>
     /// holds the basic functions for all entities
     /// </summary>
@@ -17,9 +18,7 @@ namespace REEEE
         //names, default gear and resistances
         protected readonly static int hostileWidth = 12;
         protected readonly static object[,] HostileData = Program.ReadFile("HostileData.txt");
-        protected Dictionary<string, int> Stats;
-
-        protected static Dictionary<string, int>.KeyCollection StatNames;
+        protected StatDictionary Stats;
 
         public bool Stunned = false;
         public int ID{ get; set; }
@@ -49,9 +48,9 @@ namespace REEEE
         /// <param name="bld">Bleed. Effective on thing with blood</param>
         /// <param name="stn">Stun.</param>
         /// <returns></returns>
-        protected static Dictionary<string, int> CompileInt(int mxhlth = 30, int dgd = 5, int phy = 10, int psn = 10, int bld = 10, int stn = 10)
+        protected static StatDictionary CompileInt(int mxhlth = 30, int dgd = 5, int phy = 10, int psn = 10, int bld = 10, int stn = 10)
         { // you can't execute the script to add the things in the instantiation phase, hense this function
-            Dictionary<string, int> Stats = new Dictionary<string, int>
+            StatDictionary Stats = new StatDictionary
             {
                 {"Health",mxhlth},
                 {"MaxHealth",mxhlth},
@@ -61,8 +60,6 @@ namespace REEEE
                 {"Bleed",bld},
                 {"Stun", stn}
             };
-
-            StatNames = Stats.Keys;
            
             return Stats;
         }
@@ -71,19 +68,45 @@ namespace REEEE
         /// name, health as an integer and percentage based health bar
         /// </summary>
         protected void Display()
-        {
-            Console.WriteLine("\nName: {0}\nHealth: {1}/{2}", Name, Stats["Health"], Stats["MaxHealth"]);
-            double hold = Math.Round(((double)Stats["Health"] / Stats["MaxHealth"]) * 10);
+        { //print({0, -10}, "ass") would be `ass-------`
+            int toggle = 1;
+            void Toggle()
+            {
+                toggle*=-1;
+                if(toggle == 1) {
+                    Console.ForegroundColor = ConsoleColor.White;
+                } else {
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                }
+            }
 
-            Program.Scroll("[", 10, 0, 0, 1);
+            Toggle();
+            Console.Write("\t\t _____________________________\n\t\t|");
+            Toggle();
+            Console.Write(" Name: {0, -21}", Name);
+            Toggle();
+            Console.Write(" |\n\t\t|=============================|\n\t\t|");
+            Toggle();
+            string healthString = " Health: "+ Stats["Health"]+ "/"+ Stats["MaxHealth"];
+            Console.Write("{0, -29}", healthString);
+            double hold = Math.Round(((double)Stats["Health"] / Stats["MaxHealth"]) * 10);
+            Toggle();
+            Console.Write("|\n\t\t|");
+            Toggle();
+            Console.Write(" [");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             for(int i = 0; i < hold; i++) {
-                Program.Scroll("#", 10, 0, 0, 0);
-                //Program.Scroll("-", 10, 0, 0, 0);
+                Console.Write("#");
             }
+            Console.ForegroundColor = ConsoleColor.DarkGray;
             for(int i = 0; i < 10 - hold; i++) {
-                Program.Scroll("-", 10, 0, 0, 0);
+                Console.Write("-");
             }
-            Program.Scroll("]", 10, 1000, 1, 0);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("]");
+            Toggle();
+            Console.WriteLine("                |\n\t\t|_____________________________|\n");
+            Toggle();
         }
    
         /// <summary>
@@ -198,7 +221,7 @@ namespace REEEE
                 }
 
                 int[] TransferDot = new int[3];
-                if((int)WeaponController.AttackData[id, 5 + AISpacer] =< 3) {
+                if((int)WeaponController.AttackData[id, 5 + AISpacer] <= 3) {
                     for(int i = 0; i < 3; i++)
                         TransferDot[i] = (int)WeaponController.AttackData[id, 5 + AISpacer + i];
                 }
@@ -227,30 +250,25 @@ namespace REEEE
                  * int[,] DOT = new int[,] { { 0, 0 }, { 0, 0 } };
                  * Bleed strength, Bleed Time, Poison Strength, Poison Time
                  */
-                bool poison = rnd.Next(0, 100) < Stats["Poison"];
-                bool bleed = rnd.Next(0, 100) < Stats["Bleed"];
-                bool Stun = rnd.Next(0, 100) < Stats["Stun"];
-                //checking resistances
 
-                //TODO: TURN THIS INTO A SWITCH CASE BASED ON TransferDot[0]
-                if(poison && TransferDot[0] == 1) { //poison wasn't resisted, and is being transfered
-                    if(Dot[0,0] != 0) {
-                        double x = TransferDot[1] / 2;
-                        Dot[0, 0] += (int)Math.Ceiling(x);  //if already poisoned, increment strength by half what's requested (rounded up)
-                    } else {
-                        Dot[0, 0] += TransferDot[1]; //if not already poisoned, apply at full strength
+                for (int i = 0; i < 2; i++) {
+                    if (TransferDot[0] == i) {
+                        if (rnd.Next(0, 100) < Stats.Indexer(i+4)) { //4,5,6
+                            if (Dot[i, 0] != 0) {
+                                double x = TransferDot[1] / 2;
+                                Dot[i, 0] += (int)Math.Ceiling(x);  //if already poisoned/bled, increment strength by half what's requested (rounded up)
+                            }
+                            else {
+                                Dot[i, 0] += TransferDot[1]; //if not already poisoned/bled, apply at full strength
+                            }
+                            Dot[i, 1] += TransferDot[2]; //increment the time, regardless of what already existed
+                        }
+                        else {
+                            Program.Scroll("The "+ Stats.IndexKeys(i + 4) + " Was Resisted");
+                        }
                     }
-                    Dot[0, 1] += TransferDot[2]; //increment the time, regardless of what already existed
-
-                }else if(bleed && TransferDot[0] == 2) { //(same as poison, but for bleed)
-                    if(Dot[1, 0] != 0) {
-                        double x = TransferDot[1] / 2;
-                        Dot[1, 0] += (int)Math.Ceiling(x);
-                    } else {
-                        Dot[1, 0] += TransferDot[1];
-                    }
-                    Dot[1, 1] += 1;
-                }else if(Stun && TransferDot[0] == 3) {
+                }
+                if(rnd.Next(0, 100) < Stats["Stun"] && TransferDot[0] == 3) {
                     Stunned = true;
                 }
 
@@ -318,10 +336,13 @@ namespace REEEE
         /// <returns>name, maxHealth (100), Stats (all 5)</returns>
         public void Generate()
         {
-            Stats = CompileInt(); //generate the player using the default values
+            //this code is fucking unreadable, but that's literally not my problem
 
+            Stats = CompileInt(); //generate the player using the default values
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Program.Scroll("Hm?", finishTime: 3000);
             Program.Scroll("Who might you be?");
+            Console.ForegroundColor = ConsoleColor.White;
             Program.Scroll("[Input your name. You will not be able to change this later]", 0, 0, 2, 2);
 
             bool flag = false;
@@ -335,7 +356,7 @@ namespace REEEE
                 //try//because of the split and parse, this might cause an error
                 {
                     string[] nameSplit = tempname.Split(' ');
-                    if(nameSplit[0] == "devskip") {
+                    if(nameSplit[0] == "devskip" || nameSplit[0] == "debug") {
                         //syntax is "devskip 0"
                         Funds = 100;
                         System.Diagnostics.Debug.WriteLine("NAME {0}; {1}", nameSplit[0], nameSplit[1]);
@@ -343,17 +364,19 @@ namespace REEEE
                         AddWeapon(int.Parse(nameSplit[1]), WeaponInventory, "player"); //add whatever weapon
                                                                                        //0, 7, 4
                         System.Diagnostics.Debug.WriteLine("WeponInventory index 0: {0}\n", WeaponInventory[0]);
-
+                        Name = "debug";
                         Globals.HeldWeapon = WeaponInventory[0]; //set broken short sword to active weapon
 
-                        //DecideAttack();
-
+                        Display();
+                        WeaponInterpreter.Display(Globals.HeldWeapon, true, true);
                         return;
                     }
                 } //catch {
                     System.Diagnostics.Debug.WriteLine("GENERATE authentic input");
                 //}
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Program.Scroll("You're certian?");
+                Console.ForegroundColor = ConsoleColor.White;
                 Program.Scroll("[Y / N]", 0, 0, 2, 2);
                 Console.Write("> ");
                 string ans = Console.ReadLine();
@@ -363,10 +386,12 @@ namespace REEEE
                 {
                     Name = tempname;
                     flag = true;
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Program.Scroll("At least you know your own name...", lineBreak: 0);
                     Program.Scroll("Doing better than most rabble already.", tabs: 1);
-                    Program.Scroll("Greetings, " + Name + ".", finishTime: 2500);
+                    Program.Scroll("Greetings, ", finishTime: 30, lineBreak: 0); Console.ForegroundColor = ConsoleColor.DarkCyan; Program.Scroll(Name + ".", finishTime: 2500, tabs: 0);
                 } else {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Program.Scroll("Don't remember?", lineBreak: 0);
                     Program.Scroll("Take your time...", lineBreak: 2);
                 }
@@ -376,11 +401,11 @@ namespace REEEE
             Program.Scroll("\n\tWhat's that look for? ", finishTime: 500, lineBreak: 0, tabs: 0);
             Program.Scroll("Don't know what you're doing here?", tabs: 0);
             Program.Scroll("There used to be " + Stats.Count() + " different statistics until the developer scrapped them and made a dictionary.\n\tIt Says:");
-
-            foreach(string s in StatNames) {
-                Program.Scroll(s, 50, 500, 1, 2);
+            Console.ForegroundColor = ConsoleColor.Red;
+            for(int i = 0; i < 6; i++) {
+                Program.Scroll(Stats.IndexKeys(i), 50, 500, 1, 2);
             }
-
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Program.Scroll("\n\tYou seem pretty average across the board; ", finishTime: 500, lineBreak: 0, tabs: 0);
             Program.Scroll("not that I know what they mean.", tabs: 0);
             Program.Scroll("Here, let me draw a map for you", lineBreak: 0);
@@ -388,7 +413,7 @@ namespace REEEE
             Program.Scroll(".", lineBreak: 0, tabs: 0);
             Program.Scroll(".", lineBreak: 2, tabs: 0);
 
-
+            Console.ForegroundColor = ConsoleColor.White;
             do//loops until the player decides yes or no
             {
                 Program.Scroll("[Accept Map?]", 0, 0, 2, 2);
@@ -396,9 +421,10 @@ namespace REEEE
                 Console.Write("> ");
                 string ans = Console.ReadLine();
                 Console.WriteLine();
-
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 if(ans == "Y" || ans == "y") //input validation. could add more.
                 {
+
                     flag = true;
                     Program.Scroll("Off you go, then");
                     AddItem(1, Inventory);
@@ -408,7 +434,7 @@ namespace REEEE
                 }
             } while(flag == false);
 
-
+            Console.ForegroundColor = ConsoleColor.White;
             Program.Scroll("\t[You see a broken sword on the ground. It's a start.]");
             AddWeapon(0, WeaponInventory, "player");
 
@@ -464,7 +490,7 @@ namespace REEEE
         #region instantiation
         readonly static int[,] Inventory = new int[50, 2];
         readonly static Weapon[] WeaponInventory = new Weapon[1];
-        public readonly int Speed;
+        public int Speed;
         //needs to have as many slots as the AI has phases, so they can swap weapons
         #endregion
         /// <summary>
@@ -617,7 +643,7 @@ namespace REEEE
                 //sludge gang
             }
             previous = attackID;
-            int attack = (int)WeaponController.AttackData[Globals.HeldWeapon.attacks[attackID], 0];
+            int attack = WeaponInventory[0].attacks[attackID];
             System.Diagnostics.Debug.WriteLine("relevant ID: {0}", attack);
             //0-3 (weapon attacks) to 18-60something (real value)
             
@@ -783,6 +809,53 @@ namespace REEEE
             }
 
             return intChoice;
+        }
+    }
+
+    /// <summary>
+    /// You can't index through dictionarys or keycollections so I just made one myself
+    /// </summary>
+    public class StatDictionary : Dictionary<string, int>
+    {
+
+        public int Indexer(int index)
+        {
+            switch(index){
+                case 0:
+                    return this["MaxHealth"];
+                case 1:
+                    return this["Dodge"];
+                case 2:
+                    return this["Protection"];
+                case 3:
+                    return this["Poison"];
+                case 4:
+                    return this["Bleed"];
+                case 5:
+                    return this["Stun"];
+                default:
+                    throw new InvalidOperationException("Index not found.\n Possible incorrect assignment of this type of dict?");
+            }
+        }
+
+        public string IndexKeys(int index)
+        {
+            switch(index){
+                case 0:
+                    return "MaxHealth";
+                case 1:
+                    return "Dodge";
+                case 2:
+                    return "Protection";
+                case 3:
+                    return "Poison";
+                case 4:
+                    return "Bleed";
+                case 5:
+                    return "Stun";
+                default:
+                    throw new InvalidOperationException("Index not found.\n Possible incorrect assignment of this type of dict?");
+            }
         }
     }
 }
