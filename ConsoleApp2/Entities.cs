@@ -207,6 +207,18 @@ namespace REEEE
                     damage *= (int)Math.Round(Convert.ToSingle(WeaponController.AttackData[id, 3]) / 100);
                     //int             double                        object          int
 
+                    if(Globals.HeldWeapon.Durability > 0) {
+                        Globals.HeldWeapon.Durability--;
+                        if(Globals.HeldWeapon.Durability == 0) {
+                            Program.Scroll("Your weapon crumbles in your hands...");
+                        }
+                    }else if(Globals.HeldWeapon.Durability == 0) {
+                        Program.Scroll("Your shattered weapon is much less effective...");
+                        damage = (int)Math.Ceiling(damage*0.25);
+                    }
+                    //reduces durability by 1 with every use, notifying when it hits 0.
+                    //every use after that will do 25% damage.
+
                 } else {        //AI attacks
                     AISpacer = 1;
                     damage = rnd.Next((int)WeaponController.AttackData[id, 3], (int)WeaponController.AttackData[id, 4]);
@@ -329,6 +341,9 @@ namespace REEEE
         public static Weapon[] WeaponInventory = new Weapon[2];
         //this NEEDS to be extendable
         public static int Funds { get; set; }
+
+        public static bool metMerchant = false;
+        //tracking if the player has met a merchant, as the first one gives a tutorial
         #endregion
 
         /// <summary>
@@ -369,12 +384,14 @@ namespace REEEE
                         Globals.HeldWeapon = WeaponInventory[0]; //set broken short sword to active weapon
 
                         Display();
-                        WeaponInterpreter.Display(Globals.HeldWeapon, true, true);
-                        return;
+                        //return;
                     }
                 } catch {
                     System.Diagnostics.Debug.WriteLine("GENERATE authentic input");
                 }
+                Merchant merchant = new Merchant();
+                merchant.Generate();
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Program.Scroll("You're certian?");
                 Console.ForegroundColor = ConsoleColor.White;
@@ -716,7 +733,41 @@ namespace REEEE
             }//add the first 4 ids in the list to the inventory and shit out some prices
             // (note: AddWeapon is inherited from EntityFramework)
 
-            Program.Scroll("you can hear someone muttering to themselves...\n\tA merchant presents his wares to you.");
+            if (Player.metMerchant) {
+                Program.Scroll("you can hear someone muttering to themselves...\n\tA merchant presents his wares to you.");
+            }
+            else {
+                Program.Scroll("Someone waves you over from the corner of the room.");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Program.Scroll("What, You've never met a merchant before?");
+                Program.Scroll("Just trying to make a living, like the rest of us are.");
+                Program.Scroll("I've got weapons, and a small smithy for repairs and upgrades if you'd be intrested.");
+                if(Player.Inventory[0, 1] == 1) {
+                    Program.Scroll("Is that a map you've got? How about I mark where my brothers of the trade are for you?");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Program.Scroll("[Accept Marking?]", 0, 0, 2, 2);
+                    Program.Scroll("[Y / N]", 0, 0, 1, 2);
+                    Console.Write("> ");
+                    string ans = Console.ReadLine();
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    if(ans == "Y" || ans == "y") //input validation.
+                    {
+                        //script for marking merchants on the map
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Map.ShowMerchants();
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Program.Scroll("No problem.");
+
+                    } else {
+                        Program.Scroll("Suit yourself.");
+                    }
+                     Program.Scroll("Have a look at my wares, won't you?");
+                }
+
+                Console.ForegroundColor = ConsoleColor.White;
+                Player.metMerchant = true;
+            }
             PurchaseLoop();
         }
 
@@ -725,12 +776,6 @@ namespace REEEE
         /// </summary>
         void PurchaseLoop()
         {
-            for(int i = 0; i < 4; i++) {
-                if(!WeaponInventory[i].Equals(default(Weapon))) {
-
-                    WeaponInterpreter.Display(WeaponInventory[i]);
-                }
-            }
             while (true){
                 Program.Scroll("Your Funds:" + Player.Funds + "\t\tMerchant Funds:" + Funds, lineBreak:2);
                 int choice = Selection();
@@ -742,17 +787,39 @@ namespace REEEE
                         }
                     }
                     break;
-                    case 6:                                         /*attack*/
+                    case 6:                                         /*repair*/
+
+                    break;
+                    case 7:                                         /*upgrade*/
+                        /*
+                          - explain what repair is if detecting it's never done before
+                          - show current stats
+                          - show future stats
+                                generate a new weapon that's been upgraded rather than modify current:
+                                if the player goes through with the purchase, then swap their heldweapon with it
+                                and let c#'s autodeletion clean up the rest seeing as it'll be a local 'variable'.
+                                best start would be to make a function in weapon.cs that makes the upgraded weapons,
+                                and modify Display() with an embedded function highlighting the parts.
+                          - display pricing
+                          - check if the player can afford the change{
+                                confirmation{
+                                    swap the upgraded with the old
+                                }
+                            }else{
+                                "you cant afford that"
+                        */
+                    break;
+                    case 8:                                         /*attack*/
                     Hostile merchant = new Hostile();
                     merchant.Generate(0);
                     return;
-                    case 7:                                         /*leave*/
+                    case 9:                                         /*leave*/
                     if (fastLeave) {
                     Program.Scroll("Nothing you like? You could look a little harder...");
                     } else {
                         Program.Scroll("Do come again...");
                     }
-                    return;
+                    return; //6) Repair your weapon\n\t7) Upgrade your weapon
                     default:                                         /*input 2-5, purchase 1-4*/
                     if (Player.Funds >= prices[choice - 1])
                     {
@@ -776,28 +843,26 @@ namespace REEEE
             int intChoice; //for the parsed input
             bool notnull = false;
 
-            do {
-                do {
-                    Console.WriteLine("\t1) View Wares");
+            do { //range check, null check and confirmation
+                do { //putting in a valid raw option
+                    Console.WriteLine("\t1) Inspect the merchandise");
                     for(int i = 0; i < 4; i++) {
-                        if(WeaponInventory[i].Equals(default(Weapon))) {
+                        if(!(WeaponInventory[i].Equals(default(Weapon)))) {
                             Console.WriteLine("\t{0}) Purchase {1, -20}\t{2, -10}", i + 2, WeaponInventory[i].name, "price: " + prices[i].ToString());
                         } else {
                             Console.WriteLine("\t{0}) ###  Sold Out  ###", i + 2);
                         }
                     }
-                    Console.Write("\t6) Attack the merchant\n\t7) Exit\n\n> ");
-                    
-                    
+                    Console.Write("\t6) Repair your weapon\n\t7) Upgrade your weapon\n\t8) Attack the merchant\n\t9) Exit\n\n> ");
                     choice = Console.ReadLine();
 
-                } while(!Int32.TryParse(choice, out _)); //type check
+                } while(!Int32.TryParse(choice, out _)); //type check. presense not needed because " " can't be string
                 intChoice = int.Parse(choice);
                 
-                if(intChoice > 1 && intChoice < 6) {//check if hat index of weapin is available, unless it's 1 or 7
+                if(intChoice > 1 && intChoice < 6) {//check if that index of weapon is available, if its 2-5
                     notnull = !WeaponInventory[intChoice-2].Equals(default(Weapon));
                 }
-                if(intChoice != 1 && intChoice != 7) { //confimation, unless it's 1 or 7
+                if((intChoice > 1 && intChoice < 6) || intChoice == 8) { //confimation for 2-5, or 8
                     Program.Scroll("You're certian?");
                     Program.Scroll("[Y / N]", 0, 0, 2, 2);
                     Console.Write("> ");

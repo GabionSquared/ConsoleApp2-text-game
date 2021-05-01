@@ -14,6 +14,8 @@ namespace REEEE
 #pragma warning disable IDE0044 // Add readonly modifier
         public static object[,] MapData = Program.ReadFile("MapData.txt");
 #pragma warning restore IDE0044 // Add readonly modifier
+        static string previousMarker = " ";
+
         /// <summary>
         /// prints the map.<para>What did you expect?</para>
         /// </summary>
@@ -57,7 +59,8 @@ namespace REEEE
         /// <param name="goTo">the room number of the destination</param>
         static void SetLocation(int goTo)
         {
-            MapData[currentLocation, 1] = " "; //remove the x marker from the map
+            MapData[currentLocation, 1] = previousMarker; //remove the x marker from the map
+            previousMarker = (string)MapData[goTo, 1];
             MapData[goTo, 1] = "x"; //put it in the new place
 
             currentLocation = goTo; //make it so you've moved more than graphically
@@ -248,6 +251,20 @@ namespace REEEE
                     //throw new Exception("Relevant inspection event was not found");
                 }
             }
+        }
+
+        /// <summary>
+        /// Writes all merchant locations to the map graphic my detecting their inspection event
+        /// </summary>
+        public static void ShowMerchants()
+        {
+            for(int i = 0; i < (MapData.Length/8); i++) {
+                if((int)MapData[i,7] == 0) {
+                    MapData[i,1] = "M";
+                }
+            }
+            previousMarker = "M";
+            DisplayMap();
         }
     }
 }
