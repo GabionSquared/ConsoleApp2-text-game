@@ -16,7 +16,7 @@ namespace REEEE
      * The FontStruction “7:12 Serif Italic” (https://fontstruct.com/fontstructions/show/413872) by Christian Munk is
      * licensed under a Creative Commons Attribution Share Alike license (http://creativecommons.org/licenses/by-sa/3.0/)
      *  UNTESTED:
-     *      lierally all real data
+     *      literally all real data
      *      new attack & DOT method
      *      AI
      *      Speed
@@ -28,17 +28,13 @@ namespace REEEE
      *             > HostileData
      *      > armour (increases health and dodge)
      *          ========The Progress Line=======    ^ cba to do, basically
-     *      > merchants can restore durability
-     *      > merchants can upgrade weapons
-     *      > merchant tutorial on first meeting
-     *      > merchants marked on the map
-     *          > curio system?
+     *          >looks like you can buy the same thing twice?
+     *      > curio system?
      *      > Loot tables
      *      > give things sensible prices
      *  
      *  Less important ToDo:
      *      > special effect on moves (debuff or bonus vs type)
-     *      > multi-enemy encounters
      *      > .txt -> .xml
      *  
      *  Map Rework Idea:

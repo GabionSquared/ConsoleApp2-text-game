@@ -374,11 +374,11 @@ namespace REEEE
                     string[] nameSplit = tempname.Split(' ');
                     if(nameSplit[0] == "devskip" || nameSplit[0] == "debug") {
                         //syntax is "devskip 0"
-                        Funds = 100;
+                        Funds = 300;
                         System.Diagnostics.Debug.WriteLine("NAME {0}; {1}", nameSplit[0], nameSplit[1]);
                         AddItem(1, Inventory); //add map
                         AddWeapon(int.Parse(nameSplit[1]), WeaponInventory, "player"); //add whatever weapon
-                                                                                       //0, 7, 4
+                        metMerchant = true;
                         System.Diagnostics.Debug.WriteLine("WeponInventory index 0: {0}\n", WeaponInventory[0]);
                         Name = "debug";
                         Globals.HeldWeapon = WeaponInventory[0]; //set broken short sword to active weapon
@@ -709,7 +709,6 @@ namespace REEEE
         int[] lootTable = new int[] { 0, 1, 2, 3, 4, 5, 6 };
         //the IDs of the weapons that could be for sale
         //moonlight greatsword display (7) is broken
-        public int Funds { get; set; }
 
         bool fastLeave = true;
         //flag for if the player immediatly leaves, giving an annoyed message
@@ -720,10 +719,6 @@ namespace REEEE
         /// </summary>
         public void Generate()
         {
-            ///display the merchant graphic
-            Funds = rnd.Next(25, 50) + rnd.Next(25, 50);
-            //50-100 bell curve
-
             lootTable = lootTable.OrderBy(x => Program.rnd.Next()).ToArray();
             //give the lootTable a good shuffle
 
@@ -777,61 +772,99 @@ namespace REEEE
         void PurchaseLoop()
         {
             while (true){
-                Program.Scroll("Your Funds:" + Player.Funds + "\t\tMerchant Funds:" + Funds, lineBreak:2);
+                Program.Scroll("Your Funds:" + Player.Funds, lineBreak:2);
                 int choice = Selection();
                 switch(choice){
                     case 1:                                         /*view*/
-                    for(int i = 0; i < 4; i++) {
-                        if(!WeaponInventory[i].Equals(default(Weapon))){
-                            WeaponInterpreter.Display(WeaponInventory[i], true);
+                        for(int i = 0; i < 4; i++) {
+                            if(!WeaponInventory[i].Equals(default(Weapon))){
+                                WeaponInterpreter.Display(WeaponInventory[i], true);
+                            }
                         }
-                    }
                     break;
                     case 6:                                         /*repair*/
+                        int Rcost = 10;
+                        int affordable = (int)Math.Floor((double)(Player.Funds/Rcost));
+                        int amount = affordable++;
+                        int max = (int)WeaponInterpreter.WeaponData[Globals.HeldWeapon.id, 5];
+                        WeaponInterpreter.Display(Globals.HeldWeapon);
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Program.Scroll("That's "+ Rcost+" gold a point.");
+                        if(max == Globals.HeldWeapon.Durability) {
+                            Program.Scroll("Not like your weapon seems like it needs that, though.");
+                        }
+                        else {
+                            Console.ForegroundColor = ConsoleColor.White;
+                            int available = max - Globals.HeldWeapon.Durability;
+                            do {
+                                Program.Scroll("[Maximum: " + available + ". Affordable: "+affordable+". 'back' to return]", lineBreak: 2);
 
+                                Console.Write("> ");
+                                string ans = Console.ReadLine();
+                                Console.WriteLine();
+                                if(Int32.TryParse(ans, out _)) {
+                                    amount = int.Parse(ans);
+                                }
+                                else {
+                                    PurchaseLoop();
+                                    //return will end the interaction, break will end the do while. need a full recur.
+                                }
+                            }while(amount >= affordable & amount > 0 & amount <= max);
+                            Globals.HeldWeapon.Durability += amount;
+                            Player.Funds -= Rcost*amount;
+                        }
                     break;
                     case 7:                                         /*upgrade*/
-                        /*
-                          - explain what repair is if detecting it's never done before
-                          - show current stats
-                          - show future stats
-                                generate a new weapon that's been upgraded rather than modify current:
-                                if the player goes through with the purchase, then swap their heldweapon with it
-                                and let c#'s autodeletion clean up the rest seeing as it'll be a local 'variable'.
-                                best start would be to make a function in weapon.cs that makes the upgraded weapons,
-                                and modify Display() with an embedded function highlighting the parts.
-                          - display pricing
-                          - check if the player can afford the change{
-                                confirmation{
-                                    swap the upgraded with the old
-                                }
-                            }else{
-                                "you cant afford that"
-                        */
+                        WeaponInterpreter.Display(Globals.HeldWeapon);
+                        Weapon upgrade = WeaponInterpreter.UpgradeWeapon(Globals.HeldWeapon);
+
+                        int Ucost = 100; //make this a sensible calculation
+                        Program.Scroll("Your Funds:" + Player.Funds + "\t Cost: "+ Ucost, lineBreak:2);
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        if (Ucost > Player.Funds) {
+                            Program.Scroll("That looks a litle pricey for you");
+                        }
+                        else {
+                            Program.Scroll("You're certian?");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Program.Scroll("[Y / N]", 0, 0, 2, 2);
+                            Console.Write("> ");
+                            string ans = Console.ReadLine();
+                            Console.WriteLine();
+                            if(ans == "Y" || ans == "y") {
+                                Program.Scroll("Pleasure doing business");
+                                Globals.HeldWeapon = upgrade;
+                                Player.Funds -= Ucost;
+                            }
+                            else {
+                                Program.Scroll("No worries.");
+                            }
+                        }
+                        Console.ForegroundColor = ConsoleColor.White;
                     break;
                     case 8:                                         /*attack*/
-                    Hostile merchant = new Hostile();
-                    merchant.Generate(0);
+                        Hostile merchant = new Hostile();
+                        merchant.Generate(0);
                     return;
                     case 9:                                         /*leave*/
-                    if (fastLeave) {
-                    Program.Scroll("Nothing you like? You could look a little harder...");
-                    } else {
-                        Program.Scroll("Do come again...");
-                    }
-                    return; //6) Repair your weapon\n\t7) Upgrade your weapon
+                        if (fastLeave) {
+                        Program.Scroll("Nothing you like? You could look a little harder...");
+                        } else {
+                            Program.Scroll("Do come again...");
+                        }
+                    return;
                     default:                                         /*input 2-5, purchase 1-4*/
-                    if (Player.Funds >= prices[choice - 1])
-                    {
-                        AddWeapon(0, Player.WeaponInventory, "merchant purchase", true, WeaponInventory[choice - 1]);
-                        WeaponInventory[choice - 1] = default;
-                        Player.Funds -= prices[choice - 1];
-                        Funds += prices[choice - 1];
-                    }
-                    else
-                    {
-                        Program.Scroll("You cannot afford this item");
-                    }
+                        if (Player.Funds >= prices[choice - 1])
+                        {
+                            AddWeapon(0, Player.WeaponInventory, "merchant purchase", true, WeaponInventory[choice - 1]);
+                            WeaponInventory[choice - 1] = default;
+                            Player.Funds -= prices[choice - 1];
+                            //Funds += prices[choice - 1];
+                        }
+                        else
+                        {
+                            Program.Scroll("You cannot afford this item");
+                        }
                     break;
                 }
             }
