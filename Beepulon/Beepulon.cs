@@ -20,6 +20,7 @@ namespace Beepulon
 
         static object[,] Data = ReadFile("HostileData.txt");
 
+
         static void Main()
         {
             for (int dataIndex = 1; dataIndex < 5; dataIndex++)

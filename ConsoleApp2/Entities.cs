@@ -353,6 +353,12 @@ namespace REEEE
         public void Generate()
         {
             //this code is fucking unreadable, but that's literally not my problem
+            Program.Scroll("PLEASE REMEMBER THAT IT IS POSSIBLE TO QUEUE INPUTS. ", 10, 750, 0, 0);
+            Program.Scroll("DO NOT ACCIDENTALLY PRESS ENTER.", 10, 750, 1, 0);
+            for(int i = 0; i < Console.WindowWidth-1; i++) {
+                Console.Write("-");
+            }
+            Program.Scroll("-", 10, 2000, 3, 0);
 
             Stats = CompileInt(); //generate the player using the default values
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -363,6 +369,11 @@ namespace REEEE
 
             bool flag = false;
             //do while for entering and confirming the name entered with a boolean flag
+            bool testname = false;
+            string[] nameSplit = {"null", "null"};
+            //because the debug name is in a try catch, any test features in it won't throw a visable exception, just continue this function
+            //this is a flag *outside* the try catch that the game is in a debug state
+
             do//loops until the player confirmes their name
             {
                 string tempname;
@@ -371,26 +382,30 @@ namespace REEEE
                 Console.WriteLine();
                 try//because of the split and parse, this might cause an error
                 {
-                    string[] nameSplit = tempname.Split(' ');
+                    nameSplit = tempname.Split(' ');
                     if(nameSplit[0] == "devskip" || nameSplit[0] == "debug") {
+                        testname = true;
                         //syntax is "devskip 0"
-                        Funds = 300;
-                        System.Diagnostics.Debug.WriteLine("NAME {0}; {1}", nameSplit[0], nameSplit[1]);
-                        AddItem(1, Inventory); //add map
-                        AddWeapon(int.Parse(nameSplit[1]), WeaponInventory, "player"); //add whatever weapon
-                        metMerchant = true;
-                        System.Diagnostics.Debug.WriteLine("WeponInventory index 0: {0}\n", WeaponInventory[0]);
-                        Name = "debug";
-                        Globals.HeldWeapon = WeaponInventory[0]; //set broken short sword to active weapon
-
-                        Display();
-                        //return;
                     }
                 } catch {
                     System.Diagnostics.Debug.WriteLine("GENERATE authentic input");
                 }
-                Merchant merchant = new Merchant();
-                merchant.Generate();
+                if (testname) {
+                    Funds = 300;
+                    System.Diagnostics.Debug.WriteLine("NAME {0}; {1}", nameSplit[0], nameSplit[1]);
+                    AddItem(1, Inventory); //add map
+                    AddWeapon(int.Parse(nameSplit[1]), WeaponInventory, "player"); //add whatever weapon
+                    metMerchant = true;
+                    System.Diagnostics.Debug.WriteLine("WeponInventory index 0: {0}\n", WeaponInventory[0]);
+                    Name = "debug";
+                    Globals.HeldWeapon = WeaponInventory[0]; //set whatever weapon was spawned in as active
+
+                    Display();
+                    WeaponInterpreter.Display(Globals.HeldWeapon, true);
+
+                    Merchant merchant = new Merchant();
+                    merchant.Generate();
+                }
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Program.Scroll("You're certian?");
@@ -714,6 +729,8 @@ namespace REEEE
         //flag for if the player immediatly leaves, giving an annoyed message
         #endregion
 
+        bool active = true;
+
         /// <summary>
         /// put things in the WeaponInventory from the loot table
         /// </summary>
@@ -771,8 +788,10 @@ namespace REEEE
         /// </summary>
         void PurchaseLoop()
         {
-            while (true){
+            while (active){
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Program.Scroll("Your Funds:" + Player.Funds, lineBreak:2);
+                Console.ForegroundColor = ConsoleColor.White;
                 int choice = Selection();
                 switch(choice){
                     case 1:                                         /*view*/
@@ -847,24 +866,33 @@ namespace REEEE
                         merchant.Generate(0);
                     return;
                     case 9:                                         /*leave*/
+                        Console.ForegroundColor = ConsoleColor.Cyan;
                         if (fastLeave) {
                         Program.Scroll("Nothing you like? You could look a little harder...");
                         } else {
                             Program.Scroll("Do come again...");
                         }
+                        active = false;
+                        Console.ForegroundColor = ConsoleColor.White;
                     return;
                     default:                                         /*input 2-5, purchase 1-4*/
-                        if (Player.Funds >= prices[choice - 1])
-                        {
-                            AddWeapon(0, Player.WeaponInventory, "merchant purchase", true, WeaponInventory[choice - 1]);
-                            WeaponInventory[choice - 1] = default;
-                            Player.Funds -= prices[choice - 1];
-                            //Funds += prices[choice - 1];
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        if(!WeaponInventory[choice - 2].Equals(default(Weapon))){
+                            if (Player.Funds >= prices[choice - 2])
+                            {
+                                AddWeapon(0, Player.WeaponInventory, "merchant purchase", true, WeaponInventory[choice - 2]);
+                                WeaponInventory[choice - 2] = default;
+                                Player.Funds -= prices[choice - 2];
+                            }
+                            else
+                            {
+                                Program.Scroll("That looks a litle pricey for you");
+                            }
                         }
-                        else
-                        {
-                            Program.Scroll("You cannot afford this item");
+                        else {
+                            Program.Scroll("You've already bought that");
                         }
+                        Console.ForegroundColor = ConsoleColor.White;
                     break;
                 }
             }
@@ -891,7 +919,7 @@ namespace REEEE
 
                 } while(!Int32.TryParse(choice, out _)); //type check. presense not needed because " " can't be string
                 intChoice = int.Parse(choice);
-                
+
                 if(intChoice > 1 && intChoice < 6) {//check if that index of weapon is available, if its 2-5
                     notnull = !WeaponInventory[intChoice-2].Equals(default(Weapon));
                 }

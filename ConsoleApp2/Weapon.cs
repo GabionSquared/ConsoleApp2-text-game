@@ -496,6 +496,7 @@ namespace REEEE
             }
             Console.WriteLine();
             #endregion
+            Console.WriteLine();
         }
 
         public Weapon UpgradeWeapon(Weapon passed)
