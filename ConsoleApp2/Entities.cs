@@ -425,8 +425,11 @@ namespace REEEE
                     Display();
                     WeaponInterpreter.Display(Globals.HeldWeapon, true);
 
-                    Merchant merchant = new Merchant();
-                    merchant.Generate();
+                    //Merchant merchant = new Merchant();
+                    //merchant.Generate();
+
+                    Hostile hostile = new Hostile();
+                    hostile.Generate(0);
 
                     #region get the game back on track
                     Console.ForegroundColor = ConsoleColor.White;
@@ -1053,6 +1056,17 @@ namespace REEEE
 
         public int Indexer(int index)
         {
+            return index switch {
+                0 => this["MaxHealth"],
+                1 => this["Dodge"],
+                2 => this["Protection"],
+                3 => this["Poison"],
+                4 => this["Bleed"],
+                5 => this["Stun"],
+                _ => throw new InvalidOperationException("Index not found.\n Possible incorrect assignment of this type of dict?"),
+            };
+
+            /*
             switch(index){
                 case 0:
                     return this["MaxHealth"];
@@ -1069,10 +1083,21 @@ namespace REEEE
                 default:
                     throw new InvalidOperationException("Index not found.\n Possible incorrect assignment of this type of dict?");
             }
+            */
         }
 
         public string IndexKeys(int index)
         {
+            return index switch {
+                0 => "MaxHealth",
+                1 => "Dodge",
+                2 => "Protection",
+                3 => "Poison",
+                4 => "Bleed",
+                5 => "Stun",
+                _ => throw new InvalidOperationException("Index not found.\n Possible incorrect assignment of this type of dict?"),
+            };
+            /*
             switch(index){
                 case 0:
                     return "MaxHealth";
@@ -1089,6 +1114,7 @@ namespace REEEE
                 default:
                     throw new InvalidOperationException("Index not found.\n Possible incorrect assignment of this type of dict?");
             }
+            */
         }
     }
 }
