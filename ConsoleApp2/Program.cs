@@ -26,9 +26,7 @@ namespace REEEE
      *          specifically,
      *             > AttackData
      *             > HostileData
-     *      > armour (increases health and dodge)
      *          ========The Progress Line=======    ^ cba to do, basically
-     *          >looks like you can buy the same thing twice?
      *      > curio system?
      *      > Loot tables
      *      > give things sensible prices

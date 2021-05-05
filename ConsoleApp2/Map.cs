@@ -137,18 +137,18 @@ namespace REEEE
                     }
                 }
                 Toggle();
-                Program.Scroll("\n\t ________________________", scrollTime:20, finishTime:30, tabs: 0);
-                          Program.Scroll("\t| 1:", 20, 30, 0, 0);
-                Toggle(); Program.Scroll("Map              ", 20, 30, 0);
-                Toggle(); Console.WriteLine("|"); Program.Scroll("| 2:", 20, 30, 0);
-                Toggle(); Program.Scroll("Move             ", 20, 30, 0);
-                Toggle(); Console.WriteLine("|"); Program.Scroll("| 3:", 20, 30, 0);
-                Toggle(); Program.Scroll("Inspect the Room ", 20, 30, 0);
-                Toggle(); Console.WriteLine("|"); Program.Scroll("| 4:", 20, 30, 0);
-                Toggle(); Program.Scroll("Inventory        ", 20, 30, 0);
-                Toggle(); Console.WriteLine("|"); Program.Scroll("| 5:", 20, 30, 0);
-                Toggle(); Program.Scroll("Save             ", 20, 30, 0);
-                Toggle(); Console.WriteLine("|"); Program.Scroll("|________________________|", 20, 30);
+                Program.Scroll("\n\t ________________________", scrollTime:10, finishTime:30, tabs: 0);
+                          Program.Scroll("\t| 1:", 10, 30, 0, 0);
+                Toggle(); Program.Scroll("Map              ", 10, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("| 2:", 10, 30, 0);
+                Toggle(); Program.Scroll("Move             ", 10, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("| 3:", 10, 30, 0);
+                Toggle(); Program.Scroll("Inspect the Room ", 10, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("| 4:", 10, 30, 0);
+                Toggle(); Program.Scroll("Inventory        ", 10, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("| 5:", 10, 30, 0);
+                Toggle(); Program.Scroll("Save             ", 10, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("|________________________|", 10, 30);
                 Console.ForegroundColor = ConsoleColor.White;
                 #endregion
 

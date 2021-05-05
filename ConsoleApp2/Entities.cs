@@ -18,7 +18,7 @@ namespace REEEE
         //names, default gear and resistances
         protected readonly static int hostileWidth = 12;
         protected readonly static object[,] HostileData = Program.ReadFile("HostileData.txt");
-        protected StatDictionary Stats;
+        protected static StatDictionary Stats;
 
         public bool Stunned = false;
         public int ID{ get; set; }
@@ -326,8 +326,7 @@ namespace REEEE
         ///<summary>
         ///death message. This should never be seen by player, always overwritten
         ///</summary>
-        protected virtual void Death()
-        {
+        protected virtual void Death() {
             Console.WriteLine("Entity died");
         }
     }
@@ -341,6 +340,29 @@ namespace REEEE
         public static Weapon[] WeaponInventory = new Weapon[2];
         //this NEEDS to be extendable
         public static int Funds { get; set; }
+        public static int MxHealth
+        {
+            get
+            {
+                return Stats["MaxHealth"];
+            }
+            set
+            {
+                Stats["MaxHealth"] = value;
+            }
+        }
+        public static int Dodge
+        {
+            get
+            {
+                return Stats["Dodge"];
+            }
+            set
+            {
+                Stats["Dodge"] = value;
+            }
+        }
+
 
         public static bool metMerchant = false;
         //tracking if the player has met a merchant, as the first one gives a tutorial
@@ -405,6 +427,22 @@ namespace REEEE
 
                     Merchant merchant = new Merchant();
                     merchant.Generate();
+
+                    #region get the game back on track
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                    for(int i = 0; i < Console.WindowWidth; i++) {
+                        Console.Write("-");
+                    }
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    Program.Scroll("DEBUG FINISHED. RETURNING TO NORMAL GAMEPLAY");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    for(int i = 0; i < Console.WindowWidth-1; i++) {
+                        Console.Write("-");
+                    }
+                    Program.Scroll("-", 10, 2000, 3, 0);
+                    return;
+                    #endregion
                 }
 
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -435,14 +473,45 @@ namespace REEEE
             Console.ForegroundColor = ConsoleColor.Cyan;
             Program.Scroll("\n\tWhat's that look for? ", finishTime: 500, lineBreak: 0, tabs: 0);
             Program.Scroll("Don't know what you're doing here?", tabs: 0);
-            Program.Scroll("There used to be " + Stats.Count() + " different statistics until the developer scrapped them and made a dictionary.\n\tIt Says:");
+            
+            Program.Scroll("you look pretty ", finishTime: 30, lineBreak: 0);
             Console.ForegroundColor = ConsoleColor.Red;
+            Program.Scroll("healthy", finishTime: 30, lineBreak: 0, tabs: 0);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Program.Scroll(", ", finishTime: 500, lineBreak: 0, tabs: 0);
+            Program.Scroll("but you could always just ", finishTime: 30, lineBreak: 0, tabs: 0);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Program.Scroll("dodge", finishTime: 30, lineBreak: 0, tabs: 0);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Program.Scroll(" whatever comes your way,", finishTime: 500, tabs: 0);
+            Program.Scroll("or have enough ", finishTime: 30, lineBreak: 0);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Program.Scroll("speed", finishTime: 30, lineBreak: 0, tabs: 0);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Program.Scroll(" to hit first.", finishTime: 500, tabs: 0);
+            Program.Scroll("Watch out for anything that could ", finishTime: 30, lineBreak: 0);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Program.Scroll("poison", finishTime: 30, lineBreak: 0, tabs: 0);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Program.Scroll(" you, ", finishTime: 500, lineBreak: 0, tabs: 0);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Program.Scroll("stun", finishTime: 30, lineBreak: 0, tabs: 0);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Program.Scroll(", ", finishTime: 500, lineBreak: 0, tabs: 0);
+            Program.Scroll("or make you start ", finishTime: 30, lineBreak: 0, tabs: 0);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Program.Scroll("bleeding", finishTime: 30, lineBreak: 0, tabs: 0);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Program.Scroll(".", finishTime: 500, tabs: 0);
+            Program.Scroll("You've gone quite pale, ", finishTime: 500, lineBreak: 0);
+            Program.Scroll("have I said too much?", finishTime: 2000, lineBreak: 2, tabs: 0);
+            /*
+            Program.Scroll("There used to be " + Stats.Count() + " different statistics until the developer scrapped them and made a dictionary.\n\tIt Says:");
             for(int i = 0; i < 6; i++) {
                 Program.Scroll(Stats.IndexKeys(i), 50, 500, 1, 2);
             }
+            */
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Program.Scroll("\n\tYou seem pretty average across the board; ", finishTime: 500, lineBreak: 0, tabs: 0);
-            Program.Scroll("not that I know what they mean.", tabs: 0);
             Program.Scroll("Here, let me draw a map for you", lineBreak: 0);
             Program.Scroll(".", lineBreak: 0, tabs: 0);
             Program.Scroll(".", lineBreak: 0, tabs: 0);
@@ -461,7 +530,7 @@ namespace REEEE
                 {
 
                     flag = true;
-                    Program.Scroll("Off you go, then");
+                    Program.Scroll("Off you go, then.");
                     AddItem(1, Inventory);
                 } else {
                     Program.Scroll("...", scrollTime: 300, finishTime: 2000);
@@ -470,7 +539,7 @@ namespace REEEE
             } while(flag == false);
 
             Console.ForegroundColor = ConsoleColor.White;
-            Program.Scroll("\t[You see a broken sword on the ground. It's a start.]");
+            Program.Scroll("\t[You see a broken sword and a light curass on the ground. It's a start.]");
             AddWeapon(0, WeaponInventory, "player");
 
             Globals.HeldWeapon = WeaponInventory[0];
@@ -507,7 +576,7 @@ namespace REEEE
                 Globals.HeldWeapon.Durability--;
             }
 
-            Attack(rnd.Next(Globals.HeldWeapon.DmgUp, Globals.HeldWeapon.DmgDwn), attack, Globals.Target);
+            Attack(rnd.Next(Globals.HeldWeapon.DmgDwn, Globals.HeldWeapon.DmgUp), attack, Globals.Target);
             //shipping all that good shit off to the actual attack thingie
         }
 
@@ -850,6 +919,7 @@ namespace REEEE
                             Console.Write("> ");
                             string ans = Console.ReadLine();
                             Console.WriteLine();
+                            Console.ForegroundColor = ConsoleColor.Cyan;
                             if(ans == "Y" || ans == "y") {
                                 Program.Scroll("Pleasure doing business");
                                 Globals.HeldWeapon = upgrade;
@@ -861,11 +931,40 @@ namespace REEEE
                         }
                         Console.ForegroundColor = ConsoleColor.White;
                     break;
-                    case 8:                                         /*attack*/
+                    case 8:                                         /*upgrade armour*/
+                        Console.WriteLine("| Current max health: {0,3} | Upgrade max health: {1,3} |" ,Player.MxHealth, (int)Math.Floor(Player.MxHealth*1.2));
+                        Console.WriteLine("| Current Dodge: {0,8} | Upgrade Dodge: {1,8} |" ,Player.Dodge, (int)Math.Floor(Player.Dodge*1.2));
+                        int Acost = 100; //make this a sensible calculation
+                        Program.Scroll("\nYour Funds:" + Player.Funds + "\t Cost: "+ Acost, lineBreak:2);
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        if (Acost > Player.Funds) {
+                            Program.Scroll("That looks a litle pricey for you");
+                        }
+                        else {
+                            Program.Scroll("You're certian?");
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Program.Scroll("[Y / N]", 0, 0, 2, 2);
+                            Console.Write("> ");
+                            string ans = Console.ReadLine();
+                            Console.WriteLine();
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            if(ans == "Y" || ans == "y") {
+                                Program.Scroll("Pleasure doing business");
+                                Player.Funds -= Acost;
+                                Player.MxHealth = (int)Math.Floor(Player.MxHealth*1.2);
+                                Player.Dodge = (int)Math.Floor(Player.Dodge*1.2);
+                            }
+                            else {
+                                Program.Scroll("No worries.");
+                            }
+                        }
+                        Console.ForegroundColor = ConsoleColor.White;
+                        break;
+                    case 9:                                         /*attack*/
                         Hostile merchant = new Hostile();
                         merchant.Generate(0);
                     return;
-                    case 9:                                         /*leave*/
+                    case 10:                                        /*leave*/
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         if (fastLeave) {
                         Program.Scroll("Nothing you like? You could look a little harder...");
@@ -914,7 +1013,7 @@ namespace REEEE
                             Console.WriteLine("\t{0}) ###  Sold Out  ###", i + 2);
                         }
                     }
-                    Console.Write("\t6) Repair your weapon\n\t7) Upgrade your weapon\n\t8) Attack the merchant\n\t9) Exit\n\n> ");
+                    Console.Write("\t6) Repair your weapon\n\t7) Upgrade your weapon\n\t8) Upgrade your armour\n\t9) Attack the merchant\n\t10) Exit\n\n> ");
                     choice = Console.ReadLine();
 
                 } while(!Int32.TryParse(choice, out _)); //type check. presense not needed because " " can't be string
@@ -923,7 +1022,7 @@ namespace REEEE
                 if(intChoice > 1 && intChoice < 6) {//check if that index of weapon is available, if its 2-5
                     notnull = !WeaponInventory[intChoice-2].Equals(default(Weapon));
                 }
-                if((intChoice > 1 && intChoice < 6) || intChoice == 8) { //confimation for 2-5, or 8
+                if((intChoice > 1 && intChoice < 6) || intChoice == 9) { //confimation for 2-5, or 9
                     Program.Scroll("You're certian?");
                     Program.Scroll("[Y / N]", 0, 0, 2, 2);
                     Console.Write("> ");
@@ -938,7 +1037,7 @@ namespace REEEE
 
             } while((intChoice < 1 || intChoice > 7) && (choice == "Y" || choice == "y") && notnull); //range check, null check and confirmation
             
-            if(intChoice > 1 && intChoice < 6) {
+            if(intChoice > 1 && intChoice < 9) {
                 fastLeave = false;
             }
 
