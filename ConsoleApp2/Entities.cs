@@ -198,43 +198,72 @@ namespace REEEE
         /// <param name="Target">the recieving entity</param>
         protected void Attack(int damage, int id, EntityFramework Target)
         {
-            //should it miss -> how much damage (target.stats) -> should it stun -> reciever.damage
-            if(rnd.Next(0, 100) < (int)WeaponController.AttackData[id, 2]) { //accuracy check
+            System.Diagnostics.Debug.WriteLine("\n\n--- home attack calc --- ");
 
+            int roll = rnd.Next(0, 100);
+            System.Diagnostics.Debug.WriteLine("Accuracy:\n\tRolled {0}\n\t{1} read as {2}", roll, Target.Name, WeaponController.AttackData[id, 2].ToString());
+
+            //should it miss -> how much damage (target.stats) -> should it stun -> reciever.damage
+            if (roll < (int)WeaponController.AttackData[id, 2]) { //accuracy check
+                System.Diagnostics.Debug.WriteLine("Succeeded\n");
                 int AISpacer = 0; //because how much damage the AI does is decided here, all the data has been shifted by 1 for them
 
                 if(id < 17) {   //player attacks
                     damage *= (int)Math.Round(Convert.ToSingle(WeaponController.AttackData[id, 3]) / 100);
                     //int             double                        object          int
+                    System.Diagnostics.Debug.WriteLine("entity is player\n Flat damage: {0}\n", damage);
 
                 } else {        //AI attacks
                     AISpacer = 1;
                     damage = rnd.Next((int)WeaponController.AttackData[id, 3], (int)WeaponController.AttackData[id, 4]);
+                    System.Diagnostics.Debug.WriteLine("entity is AI\n Flat damage: {0}\n", damage);
                 }
 
-                if(rnd.Next(0, 100) < (int)WeaponController.AttackData[id, 4 + AISpacer]) { //crit. uses the value as a % chance.
+                roll = rnd.Next(0, 100);
+                System.Diagnostics.Debug.WriteLine("Critical:\n\tRolled {0}\n\tchance read as {1}", roll, WeaponController.AttackData[id, 4 + AISpacer].ToString());
+
+                if (rnd.Next(0, 100) < (int)WeaponController.AttackData[id, 4 + AISpacer]) { //crit. uses the value as a % chance.
+                    System.Diagnostics.Debug.WriteLine("Succeded");
                     double hold = damage;
                     hold *= 1.5; //burner variable because *1.5 returns n.5 on odd numbers
                     damage = (int)Math.Floor(hold);
                     Console.ForegroundColor = ConsoleColor.Red;
                     Program.BasicBox("", false, "A Critical Strike!");
+                    System.Diagnostics.Debug.WriteLine("\tnew damage: {0}\n", damage);
                     // multiplying by a float returns a double or float, damage is an int.
                 }
+                System.Diagnostics.Debug.WriteLine("Failed\n");
+
+                #region debug shizz
+                System.Diagnostics.Debug.WriteLine("\n@@@@@@@@@@@@@@@ Attack DOT packaging");
+                System.Diagnostics.Debug.WriteLine("chosen attack is "+ id);
+                System.Diagnostics.Debug.Write("Line of data:\n\t");
+                for (int i = 0; i < 0; i++) {
+                    System.Diagnostics.Debug.Write(WeaponController.AttackData[id,i]+"|");
+                }
+                System.Diagnostics.Debug.WriteLine("");
+                #endregion
 
                 int[] TransferDot = new int[3];
                 int r = (int)WeaponController.AttackData[id, 5 + AISpacer];
-                if (r <= 3) {
-                    for(int i = 0; i < 3; i++)
+                System.Diagnostics.Debug.WriteLine("\tR: " + r);
+                if (r >= 3) {
+                    System.Diagnostics.Debug.WriteLine("[r is a valid DOT effect]");
+                    for (int i = 0; i < 3; i++) {
                         TransferDot[i] = (int)WeaponController.AttackData[id, 5 + AISpacer + i];
+                        System.Diagnostics.Debug.WriteLine("\tTransfer[{0}]: {1}", i.ToString(), TransferDot[i].ToString());
+                    }
                 }
+                System.Diagnostics.Debug.WriteLine("");
                 //puts all the effect data into a transfer, but only if the ID is 1-3 (poison, bleed, stun)
                 //[id][strength][duration]
-                
+
                 Target.Damage(damage, TransferDot);
                 //taking damage is a seperate function so it's easier to access their own dodge and prot values.
                 //this could plausably be done using the Using(x) function, but thats bad conpartmentalisation.
 
             } else {//the attack missed
+                System.Diagnostics.Debug.WriteLine("Failed\n");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Program.BasicBox("", false, "The Attack Missed!");
             }
@@ -246,8 +275,9 @@ namespace REEEE
         /// <param name="damage">amount of incoming damage</param>
         protected void Damage(int damage, int[] TransferDot)
         {
+            System.Diagnostics.Debug.WriteLine("--- away damage calc --- ");
             //try to dodge -> get stunned -> take damage -> see if dead
-            if(rnd.Next(0, 100) > Stats["Dodge"]) { //dodge check
+            if (rnd.Next(0, 100) > Stats["Dodge"]) { //dodge check
 
                 /*
                  * int[,] DOT = new int[,] { { 0, 0 }, { 0, 0 } };
@@ -284,7 +314,8 @@ namespace REEEE
                     Stunned = true;
                 }
 
-                Console.WriteLine("{0} damage done to {1}", damage, Name);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Program.BasicBox(Name, Name == Program.Player.Name, " Takes " + damage + " Damage!");
                 Stats["Health"] -= damage;
 
                 //check for death
@@ -480,7 +511,9 @@ namespace REEEE
         public void DecideAttack()
         {
             if(Stunned) {
-                Program.Scroll("You are stunned!");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Program.BasicBox(Name, true, " Is Stunned!");
+                Stunned = false;
                 return;
             }
 
@@ -564,6 +597,9 @@ namespace REEEE
         public void DecideAttack()
         {
             if(Stunned) {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Program.BasicBox(Name, false, " Is Stunned!");
+                Stunned = false;
                 return;
             }
             /*
