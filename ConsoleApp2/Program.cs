@@ -16,7 +16,7 @@ namespace REEEE
      * The FontStruction “7:12 Serif Italic” (https://fontstruct.com/fontstructions/show/413872) by Christian Munk is
      * licensed under a Creative Commons Attribution Share Alike license (http://creativecommons.org/licenses/by-sa/3.0/)
      *  UNTESTED:
-     *      lierally all real data
+     *      literally all real data
      *      new attack & DOT method
      *      AI
      *      Speed
@@ -26,19 +26,26 @@ namespace REEEE
      *          specifically,
      *             > AttackData
      *             > HostileData
-     *      > armour (increases health and dodge)
      *          ========The Progress Line=======    ^ cba to do, basically
-     *      > merchants can restore durability
-     *      > merchants can upgrade weapons
-     *      > merchant tutorial on first meeting
-     *      > merchants marked on the map
-     *          > curio system?
+     *      > curio system?
      *      > Loot tables
      *      > give things sensible prices
+     *      
+     *  TODO V2 ELECTRIC BOOGALOO:
+     *      > there seems to be a bug with special effects not lining up with the input, ie press 4, do 3s dot effect.
+     *          > overcompensating or unaccounted 0 index?
+     *      > speed up hostile intoduction messages
+     *      > the open doorways message is a mess (make it a local function?)
+     *      > doorways message has no border after lookin at the map
+     *      > make it clearer when a turn starts & what the ai is doing
+     *      > startwe weapon needs more ducability, or a faster replacement (loot tables?)
+     *      > merchant menu needs a reskin
+     *      > AI misses a suspicious amount of the time
+     *      > add display to passive action
+     *      > some things damage the player as well?
      *  
      *  Less important ToDo:
      *      > special effect on moves (debuff or bonus vs type)
-     *      > multi-enemy encounters
      *      > .txt -> .xml
      *  
      *  Map Rework Idea:
