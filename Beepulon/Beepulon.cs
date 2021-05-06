@@ -19,9 +19,41 @@ namespace Beepulon
         //these values arent local to readfile anymore so we can use them ~elsewhere~ (mainly in for loops)
 
         static object[,] Data = ReadFile("HostileData.txt");
+        static Dictionary<int, string> Nesw = new Dictionary<int, string>
+        {
+            {0,"North"},
+            {1,"East"},
+            {2,"South"},
+            {3,"West"},
+        };
 
         static void Main()
         {
+            int?[] nesw = new int?[4];
+            nesw[0] = 0;
+            nesw[1] = 0;
+            nesw[2] = 0;
+            nesw[3] = 0;
+            #region print nesw options
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(" ____________________________");
+            string hold;
+            for (int i = 0; i < 4; i++)
+            {
+                if (nesw[i].HasValue)
+                {
+                    Console.Write("| ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    hold = "There is a " + Nesw[i] + " door open";
+                    Console.Write("{0, -26}", hold);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine(" |");
+                }
+            }
+            Console.WriteLine("|____________________________|");
+            #endregion
+
+
             for (int dataIndex = 1; dataIndex < 5; dataIndex++)
             {
                 Console.Write(dataIndex);

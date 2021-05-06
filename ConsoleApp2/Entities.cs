@@ -513,7 +513,7 @@ namespace REEEE
 
             //spawning notifications
             System.Diagnostics.Debug.WriteLine("ID {0} has spawned\n", passedID);                               //the debug one
-            Program.Scroll((string)HostileData[passedID, Program.rnd.Next(11, hostileWidth - 1)], scrollTime: 400); //the randomised, slow, ambient message
+            Program.Scroll((string)HostileData[passedID, Program.rnd.Next(11, hostileWidth - 1)], scrollTime: 200); //the randomised, slow, ambient message
             Program.Scroll((string)HostileData[passedID, 10]);                                                  //the actually useful one
 
             ID = (int)HostileData[passedID, 0];                        //give it a name

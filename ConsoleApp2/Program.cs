@@ -34,9 +34,6 @@ namespace REEEE
      *  TODO V2 ELECTRIC BOOGALOO:
      *      > there seems to be a bug with special effects not lining up with the input, ie press 4, do 3s dot effect.
      *          > overcompensating or unaccounted 0 index?
-     *      > speed up hostile intoduction messages
-     *      > the open doorways message is a mess (make it a local function?)
-     *      > doorways message has no border after lookin at the map
      *      > make it clearer when a turn starts & what the ai is doing
      *      > startwe weapon needs more ducability, or a faster replacement (loot tables?)
      *      > merchant menu needs a reskin

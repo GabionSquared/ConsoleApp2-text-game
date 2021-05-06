@@ -32,7 +32,6 @@ namespace REEEE
                 
                 Console.WriteLine("____________________________________________________________________\n\\                                                                   \\\n \\    ___________________________________________________________    \\\n /   |           |     |           |     |           |     |     |   /\n/    |           |     |   {24}       |  {29}              |  {34}        |  /\n|    |     {0}     |  {22}  |      __ __|__ __|     {30}     |__ __|  {35}  |  |\n\\    |           |     |     |     |     |           |     |     |  \\\n |   |           |     |     |  {26}     {28}  |           |  {33}  |     |   |\n |   |__ ________|__ __|__ __|_____|_____|___________|__ __|__ __|   |\n \\   |     |     |     |     |     |     |           |     |     |   \\\n  |  |  {1}     {2}  |  {21}     {23}     {25}     {27}        {31}        {32}     {36}  |    |\n /   |__ __|_____|__ __|_____|_____|__ __|___________|_____|_____|   /\n |   |     |     |     |           |     |     |     |     |     |   |\n/    |  {3}     {4}  |  {20}  |           |  {44}     {45}     {46}     {38}        |  /\n|    |_____|__ __|__ __|     {43}     |__ __|_____|__ __|__ __|  {37}  |  |\n\\    |     |     |     |           |     |     |     |     |     |  \\\n |   |  {5}     {6}  |  {19}  |              {47}     {48}  |  {49}  |  {39}  |     |   |\n |   |__ __|__ __|__ __|___________|_____|_____|__ __|__ __|_____|   |\n \\   |     |     |     |     |     |                 |           |   \\\n  |  |  {7}     {8}  |  {16}     {17}     {18}  |                 |           |    |\n /   |_____|__ __|__ __|__ __|__ __|                 |     {40}     |   /\n |   |           |     |     |     |                 |           |  |\n /   |           |  {13}     {14}     {15}  |        {50}        |           | /\n|    |     {9}     |__ __|__ __|__ __|                 |________ __| |\n\\    |           |     |     |     |                 |     |     | \\\n |   |              {10}     {11}     {12}  |                 |  {41}     {42}  |  |\n \\   |___________|_____|_____|_____|_________________|_____|_____|  \\\n  |__________________________________________________________________|\n", MapData[0, 1], MapData[1, 1], MapData[2, 1], MapData[3, 1], MapData[4, 1], MapData[5, 1], MapData[6, 1], MapData[7, 1], MapData[8, 1], MapData[9, 1], MapData[10, 1], MapData[11, 1], MapData[12, 1], MapData[13, 1], MapData[14, 1], MapData[15, 1], MapData[16, 1], MapData[17, 1], MapData[18, 1], MapData[19, 1], MapData[20, 1], MapData[21, 1], MapData[22, 1], MapData[23, 1], MapData[24, 1], MapData[25, 1], MapData[26, 1], MapData[27, 1], MapData[28, 1], MapData[29, 1], MapData[30, 1], MapData[31, 1], MapData[32, 1], MapData[33, 1], MapData[34, 1], MapData[35, 1], MapData[36, 1], MapData[37, 1], MapData[38, 1], MapData[39, 1], MapData[40, 1], MapData[41, 1], MapData[42, 1], MapData[43, 1], MapData[44, 1], MapData[45, 1], MapData[46, 1], MapData[47, 1], MapData[48, 1], MapData[49, 1], MapData[50, 1]);
             }
-            _ = GetDirection();
         }
 
         /// <summary>
@@ -68,21 +67,15 @@ namespace REEEE
             #region print nesw options
             Console.ForegroundColor = ConsoleColor.Green;
             Program.Scroll(" ____________________________", scrollTime: 5, finishTime: 20);
+            string hold;
             for (int i = 0; i < 4; i++)
             {
-                if (nesw[i].HasValue && (nesw[i] % 2) == 0)
-                {//the even ones
-                    Program.Scroll("| ", scrollTime: 20, lineBreak: 0, finishTime: 20);
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Program.Scroll("There is a " + Nesw[i] + " door open", scrollTime: 20, lineBreak: 0, tabs: 0, finishTime: 20);
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Program.Scroll(" |", scrollTime: 20, tabs: 0, finishTime: 20);
-                }
-                else if (nesw[i].HasValue)
+                if (nesw[i].HasValue)
                 {
                     Program.Scroll("| ", scrollTime: 20, lineBreak: 0, finishTime: 20);
                     Console.ForegroundColor = ConsoleColor.White;
-                    Program.Scroll("There is a " + Nesw[i] + " door open ", scrollTime: 20, lineBreak: 0, tabs: 0, finishTime: 20);
+                    hold = "There is a " + Nesw[i] + " Door open";
+                    Console.Write("{0, -26}", hold);
                     Console.ForegroundColor = ConsoleColor.Green;
                     Program.Scroll(" |", scrollTime: 20, tabs: 0, finishTime: 20);
                 }
@@ -166,11 +159,7 @@ namespace REEEE
 
                     case "1": //show map
                     DisplayMap();
-                    for(int i = 0; i < 4; i++) {
-                        if(nesw[i].HasValue) {
-                            Program.Scroll("There is a "+ Nesw[i] + " door open");
-                        }
-                    }
+                    _ = GetDirection();
                     break;
 
                     case "2": //move
