@@ -92,8 +92,8 @@ namespace REEEE
                 name = Convert.ToString(WeaponData[passedID, 1]),
                 type = Convert.ToInt32(WeaponData[passedID, 2]),
                 Durability = Program.rnd.Next(Convert.ToInt32(WeaponData[passedID, 3]), Convert.ToInt32(WeaponData[passedID, 4])) + Program.rnd.Next(Convert.ToInt32(WeaponData[passedID, 3]), Convert.ToInt32(WeaponData[passedID, 4])),
-                DmgUp = Convert.ToInt32(WeaponData[passedID, 6]),
-                DmgDwn = Convert.ToInt32(WeaponData[passedID, 7]),
+                DmgDwn = Convert.ToInt32(WeaponData[passedID, 6]),
+                DmgUp = Convert.ToInt32(WeaponData[passedID, 7]),
                 Crit = Convert.ToInt32(WeaponData[passedID, 8]),
                 Speed = Convert.ToInt32(WeaponData[passedID, 9]),
                 Flavour = Convert.ToString(WeaponData[passedID, 10])
@@ -235,12 +235,36 @@ namespace REEEE
         /// <param name="weapon">what weapon it is</param>
         /// <param name="moves">if the moves are shown too by autoactivating void DisplayMoves()</param>
         /// <param name="debug">if the debus is shown</param>
-        public void Display(Weapon weapon, bool moves = false, bool debug = false)
+        public void Display(Weapon weapon, bool moves = false, bool debug = false, bool upgrade = false)
         {
-            debug = false;
-            void Tabgroup()
-            { //I don't remember why i did it like this
-                Console.Write("\t");
+            int toggle = 1;
+            int upgradeToggle = 1;
+
+            void Toggle()
+            {
+                toggle*=-1;
+                if(toggle == 1) {
+                    Console.ForegroundColor = ConsoleColor.White;
+                } else {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                }
+            }
+
+            void Upgrade()
+            {
+                upgradeToggle*=-1;
+                if (upgrade) {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+            }
+
+            void DChck()
+            {
+                if(weapon.Durability == (int)WeaponData[weapon.id, 5]) {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }else if(weapon.Durability == 0) {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
             }
 
             #region Thinking space
@@ -299,79 +323,79 @@ namespace REEEE
             int totalWidth = 24 + FlavourBracket(weapon.Flavour);
             //size tiers of description: 80 (20), 120 (30), 200 (50)
 
-            Tabgroup();
-            Console.Write(" ");
+            Toggle();
+            Console.Write("\t ");
             for (int i = 0; i < totalWidth; i++)
             {
                 Console.Write("_");
             }
             Console.Write("\n");
-
+            #region explanation
+            /* what is that -22 you ask? let me tell you, you'll be seeing them a lot in this function.
+            * it creates a virtual field. let's say i wanted a {0, 10}. 0 is still the next available peramater,
+            * but the 10 will take up space. 10 characters worth of space will be taken up, regardless of
+            * what the parameter is.
+            * print({0, 10}, "ass") would be like `-------ass`, and print({0, -10}, "ass") would be `ass-------`
+            * the - are visual aid, obviously. they'd be blank characters.
+            * a problem with this system is that you can't use variables in them, so everything has a character limit.
+            * That's why this switchcase exists: it uses different spacing depending on how long the flavour text is.
+            */
+            #endregion
             #endregion
             switch (FlavourBracket(weapon.Flavour))
             {
                 case 20:
-                    Tabgroup(); Console.Write("| {0,-22}|", weapon.name); //name
-                    Tabgroup(); Console.Write("| {0,-22}|", "(" + WeaponCatagories[weapon.type] + ")"); //type
-                    Tabgroup(); Console.Write("|");
-
-                /* what is that -22 you ask? let me tell you, you'll be seeing them a lot in this function.
-                * it creates a virtual field. let's say i wanted a {0, 10}. 0 is still the next available peramater,
-                * but the 10 will take up space. 10 characters worth of space will be taken up, regardless of
-                * what the parameter is.
-                * print({0, 10}, "ass") would be like `-------ass`, and print({0, -10}, "ass") would be `ass-------`
-                * the - are visual aid, obviously. they'd be blank characters.
-                * a problem with this system is that you can't use variables in them, so everything has a character limit.
-                * That's why this switchcase exists: it uses different spacing depending on how long the flavour text is.
-                */
-
+                    Console.Write("\t|"); Toggle(); Console.Write(" {0,-22}", weapon.name);                                Toggle(); Console.Write("|\n");//name
+                    Console.Write("\t|"); Toggle(); Console.Write(" {0,-22}", "(" + WeaponCatagories[weapon.type] + ")"); Toggle(); Console.Write("|\n"); //type
+                    Console.Write("\t|");
                     for(int i = 0; i < totalWidth; i++)
                     {
                         Console.Write("-");
                     }
                     Console.Write("|\n");
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-39} |", "Durability", weapon.Durability, weapon.BrokenFlavour[0]); //durability
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t {1,2}-{2,-3}|{3,-39} |", "DMG Base", weapon.DmgDwn, weapon.DmgUp, weapon.BrokenFlavour[1]); //damage
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-39} |", "CRT base", weapon.Crit, weapon.BrokenFlavour[2]); //crit
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-39} |", "SPD base", weapon.Speed, weapon.BrokenFlavour[3]); //speed
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "Durability"); DChck(); Console.Write("  {0,-5}", weapon.Durability);                Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-39}", weapon.BrokenFlavour[0]); Toggle(); Console.Write(" |\n"); //durability
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "DMG Base"); Upgrade(); Console.Write("{0,2}-{1,-3} ", weapon.DmgDwn, weapon.DmgUp); Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-39}", weapon.BrokenFlavour[1]); Toggle(); Console.Write(" |\n"); //damage
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "CRT base"); Upgrade(); Console.Write("  {0,-5}", weapon.Crit);                      Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-39}", weapon.BrokenFlavour[2]); Toggle(); Console.Write(" |\n"); //crit
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "SPD base"); Upgrade(); Console.Write("  {0,-5}", weapon.Speed);                     Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-39}", weapon.BrokenFlavour[3]); Toggle(); Console.Write(" |\n"); //speed
                     break;
                 case 36:
-                    Tabgroup(); Console.WriteLine("| {0,-59}|", weapon.name); //name
-                    Tabgroup(); Console.WriteLine("| {0,-59}|", "(" + WeaponCatagories[weapon.type] + ")"); //type
-                    Tabgroup(); Console.Write("|");
-                    for (int i = 0; i < totalWidth; i++)
+                    Console.Write("\t|"); Toggle(); Console.Write(" {0,-59}", weapon.name);                                Toggle(); Console.Write("|\n");//name
+                    Console.Write("\t|"); Toggle(); Console.Write(" {0,-59}", "(" + WeaponCatagories[weapon.type] + ")"); Toggle(); Console.Write("|\n"); //type
+                    Console.Write("\t|");
+                    for(int i = 0; i < totalWidth; i++)
                     {
                         Console.Write("-");
                     }
                     Console.Write("|\n");
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-36} |", "Durability", weapon.Durability, weapon.BrokenFlavour[0]); //durability
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t {1,2}-{2,-3}|{3,-36} |", "DMG Base", weapon.DmgDwn, weapon.DmgUp, weapon.BrokenFlavour[1]); //damage
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-36} |", "CRT base", weapon.Crit, weapon.BrokenFlavour[2]); //crit
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-36} |", "SPD base", weapon.Speed, weapon.BrokenFlavour[3]); //speed
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "Durability"); DChck(); Console.Write("  {0,-5}", weapon.Durability);                Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-36}", weapon.BrokenFlavour[0]); Toggle(); Console.Write(" |\n"); //durability
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "DMG Base"); Upgrade(); Console.Write("{0,2}-{1,-3} ", weapon.DmgDwn, weapon.DmgUp); Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-36}", weapon.BrokenFlavour[1]); Toggle(); Console.Write(" |\n"); //damage
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "CRT base"); Upgrade(); Console.Write("  {0,-5}", weapon.Crit);                      Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-36}", weapon.BrokenFlavour[2]); Toggle(); Console.Write(" |\n"); //crit
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "SPD base"); Upgrade(); Console.Write("  {0,-5}", weapon.Speed);                     Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-36}", weapon.BrokenFlavour[3]); Toggle(); Console.Write(" |\n"); //speed
                     break;
                 case 50:
-                    Tabgroup(); Console.WriteLine("| {0,-73}|", weapon.name); //name
-                    Tabgroup(); Console.WriteLine("| {0,-73}|", "(" + WeaponCatagories[weapon.type] + ")"); //type
-                    Tabgroup(); Console.Write("|");
-                    for (int i = 0; i < totalWidth; i++)
+                    Console.Write("\t|"); Toggle(); Console.Write(" {0,-73}", weapon.name);                                Toggle(); Console.Write("|\n");//name
+                    Console.Write("\t|"); Toggle(); Console.Write(" {0,-73}", "(" + WeaponCatagories[weapon.type] + ")"); Toggle(); Console.Write("|\n"); //type
+                    Console.Write("\t|");
+                    for(int i = 0; i < totalWidth; i++)
                     {
                         Console.Write("-");
                     }
                     Console.Write("|\n");
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-50} |", "Durability", weapon.Durability, weapon.BrokenFlavour[0]); //durability
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t {1,2}-{2,-3}|{3,-50} |", "DMG Base", weapon.DmgDwn, weapon.DmgUp, weapon.BrokenFlavour[1]); //damage
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-50} |", "CRT base", weapon.Crit, weapon.BrokenFlavour[2]); //crit
-                    Tabgroup(); Console.WriteLine("|{0,11}:\t  {1,-5}|{2,-50} |", "SPD base", weapon.Speed, weapon.BrokenFlavour[3]); //speed
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "Durability"); DChck(); Console.Write("  {0,-5}", weapon.Durability);                Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-50}", weapon.BrokenFlavour[0]); Toggle(); Console.Write(" |\n"); //durability
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "DMG Base"); Upgrade(); Console.Write("{0,2}-{1,-3} ", weapon.DmgDwn, weapon.DmgUp); Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-50}", weapon.BrokenFlavour[1]); Toggle(); Console.Write(" |\n"); //damage
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "CRT base"); Upgrade(); Console.Write("  {0,-5}", weapon.Crit);                      Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-50}", weapon.BrokenFlavour[2]); Toggle(); Console.Write(" |\n"); //crit
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "SPD base"); Upgrade(); Console.Write("  {0,-5}", weapon.Speed);                     Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-50}", weapon.BrokenFlavour[3]); Toggle(); Console.Write(" |\n"); //speed
                     break;
             }
 
-            Tabgroup(); Console.Write("|");
+            Console.Write("\t|");
             for (int i = 0; i < totalWidth; i++)
             {
                 Console.Write("_");
             }
             Console.Write("|\n");
             Console.Write("\n");
+            Toggle();
 
             if (moves)
             {
@@ -472,6 +496,31 @@ namespace REEEE
             }
             Console.WriteLine();
             #endregion
+            Console.WriteLine();
+        }
+
+        public Weapon UpgradeWeapon(Weapon passed)
+        {
+            Weapon weapon = passed;
+
+            if (weapon.name == Convert.ToString(WeaponData[weapon.id, 1])){ //if the weapon has default name, and is therefore unupgraded
+                weapon.name = Convert.ToString(WeaponData[weapon.id, 1]) + " +1";
+            }
+            else {  //if the weapon has been upgraded
+                string[] nameSplit = weapon.name.Split(' ');
+                string end = nameSplit[nameSplit.Length-1];
+                int level = int.Parse(end.Substring(1));
+                level++;
+                weapon.name = Convert.ToString(WeaponData[weapon.id, 1]) + " +" + level;
+            }
+
+            weapon.DmgDwn++;
+            weapon.DmgUp+=2;
+            weapon.Crit++;
+            weapon.Speed++;
+            Display(weapon, false, false, true);
+
+            return weapon;
         }
     }
 

@@ -24,6 +24,8 @@ namespace REEEE
 
         static int?[] nesw = new int?[4];
 
+        static string previousMarker = " ";
+
         /// <summary>
         /// prints the map.<para>What did you expect?</para>
         /// </summary>
@@ -109,7 +111,8 @@ namespace REEEE
         /// <param name="goTo">the room number of the destination</param>
         static void SetLocation(int goTo)
         {
-            MapData[currentLocation, 1] = " "; //remove the x marker from the map
+            MapData[currentLocation, 1] = previousMarker; //remove the x marker from the map
+            previousMarker = (string)MapData[goTo, 1];
             MapData[goTo, 1] = "x"; //put it in the new place
 
             currentLocation = goTo; //make it so you've moved more than graphically
@@ -154,18 +157,18 @@ namespace REEEE
                     }
                 }
                 Toggle();
-                Program.Scroll("\n\t ________________________", scrollTime:20, finishTime:30, tabs: 0);
-                          Program.Scroll("\t| 1:", 20, 30, 0, 0);
-                Toggle(); Program.Scroll("Map              ", 20, 30, 0);
-                Toggle(); Console.WriteLine("|"); Program.Scroll("| 2:", 20, 30, 0);
-                Toggle(); Program.Scroll("Move             ", 20, 30, 0);
-                Toggle(); Console.WriteLine("|"); Program.Scroll("| 3:", 20, 30, 0);
-                Toggle(); Program.Scroll("Inspect the Room ", 20, 30, 0);
-                Toggle(); Console.WriteLine("|"); Program.Scroll("| 4:", 20, 30, 0);
-                Toggle(); Program.Scroll("Inventory        ", 20, 30, 0);
-                Toggle(); Console.WriteLine("|"); Program.Scroll("| 5:", 20, 30, 0);
-                Toggle(); Program.Scroll("Save             ", 20, 30, 0);
-                Toggle(); Console.WriteLine("|"); Program.Scroll("|________________________|", 20, 30);
+                Program.Scroll("\n\t ________________________", scrollTime:10, finishTime:30, tabs: 0);
+                          Program.Scroll("\t| 1:", 10, 30, 0, 0);
+                Toggle(); Program.Scroll("Map              ", 10, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("| 2:", 10, 30, 0);
+                Toggle(); Program.Scroll("Move             ", 10, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("| 3:", 10, 30, 0);
+                Toggle(); Program.Scroll("Inspect the Room ", 10, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("| 4:", 10, 30, 0);
+                Toggle(); Program.Scroll("Inventory        ", 10, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("| 5:", 10, 30, 0);
+                Toggle(); Program.Scroll("Save             ", 10, 30, 0);
+                Toggle(); Console.WriteLine("|"); Program.Scroll("|________________________|", 10, 30);
                 Console.ForegroundColor = ConsoleColor.White;
                 #endregion
 
@@ -264,6 +267,20 @@ namespace REEEE
                     //throw new Exception("Relevant inspection event was not found");
                 }
             }
+        }
+
+        /// <summary>
+        /// Writes all merchant locations to the map graphic my detecting their inspection event
+        /// </summary>
+        public static void ShowMerchants()
+        {
+            for(int i = 0; i < (MapData.Length/8); i++) {
+                if((int)MapData[i,7] == 0) {
+                    MapData[i,1] = "M";
+                }
+            }
+            previousMarker = "M";
+            DisplayMap();
         }
     }
 }

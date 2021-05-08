@@ -27,6 +27,7 @@ namespace Beepulon
             {3,"West"},
         };
 
+
         static void Main()
         {
             int?[] nesw = new int?[4];
