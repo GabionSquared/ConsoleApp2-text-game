@@ -198,10 +198,10 @@ namespace REEEE
         /// <param name="Target">the recieving entity</param>
         protected void Attack(int damage, int id, EntityFramework Target)
         {
-            System.Diagnostics.Debug.WriteLine("\n\n--- {0} attack calc --- ", Name);
+            System.Diagnostics.Debug.WriteLine("\n\n--- "+Name+" attack calc --- ");
 
             int roll = rnd.Next(0, 100);
-            System.Diagnostics.Debug.WriteLine("Accuracy:\n\tRolled {0}\n\t{1} read as {2}", roll, Target.Name, WeaponController.AttackData[id, 2].ToString());
+            System.Diagnostics.Debug.WriteLine("Accuracy:\n\tRolled {0}\n\taccuracy chance read as {1} (id {2})", roll, WeaponController.AttackData[id, 2].ToString(), id);
 
             //should it miss -> how much damage (target.stats) -> should it stun -> reciever.damage
             if (roll < (int)WeaponController.AttackData[id, 2]) { //accuracy check
@@ -235,20 +235,21 @@ namespace REEEE
                 System.Diagnostics.Debug.WriteLine("Failed\n");
 
                 #region debug shizz
-                System.Diagnostics.Debug.WriteLine("\n@@@@@@@@@@@@@@@ Attack DOT packaging");
+                System.Diagnostics.Debug.WriteLine("\n--- Attack DOT packaging ---");
                 System.Diagnostics.Debug.WriteLine("chosen attack is "+ id);
                 System.Diagnostics.Debug.Write("Line of data:\n\t");
-                for (int i = 0; i < 0; i++) {
-                    System.Diagnostics.Debug.Write(WeaponController.AttackData[id,i]+"|");
+                for (int i = 0; i < 9; i++) {
+                    System.Diagnostics.Debug.Write(WeaponController.AttackData[id,i]);
+                    System.Diagnostics.Debug.Write("|");
                 }
                 System.Diagnostics.Debug.WriteLine("");
                 #endregion
 
                 int[] TransferDot = new int[3];
                 int r = (int)WeaponController.AttackData[id, 5 + AISpacer];
-                System.Diagnostics.Debug.WriteLine("\tR: " + r);
-                if (r >= 3) {
-                    System.Diagnostics.Debug.WriteLine("[r is a valid DOT effect]");
+                System.Diagnostics.Debug.WriteLine("\tDot id slot: " + r);
+                if (r > 0) {
+                    System.Diagnostics.Debug.WriteLine("\t\t[r is a valid DOT effect]");
                     for (int i = 0; i < 3; i++) {
                         TransferDot[i] = (int)WeaponController.AttackData[id, 5 + AISpacer + i];
                         System.Diagnostics.Debug.WriteLine("\tTransfer[{0}]: {1}", i.ToString(), TransferDot[i].ToString());
@@ -275,89 +276,98 @@ namespace REEEE
         /// <param name="damage">amount of incoming damage</param>
         protected void Damage(int damage, int[] TransferDot)
         {
-            System.Diagnostics.Debug.WriteLine("--- {0} damage calc --- ", Name);
+            System.Diagnostics.Debug.WriteLine("--- "+Name+" damage calc --- ");
             //try to dodge -> get stunned -> take damage -> see if dead
             int roll = rnd.Next(0, 100);
             System.Diagnostics.Debug.WriteLine("Dodge:\n\tRolled {0}\n\t{1} read as {2}", roll, Name, Stats["Dodge"].ToString());
             if (roll > Stats["Dodge"]) { //dodge check
-                System.Diagnostics.Debug.WriteLine("Succeeded\n");
+                System.Diagnostics.Debug.WriteLine("Failed\n");
 
                 /*
                  * int[,] DOT = new int[,] { { 0, 0 }, { 0, 0 } };
                  * Bleed strength, Bleed Time, Poison Strength, Poison Time
                  */
-
-                for (int i = 0; i < 2; i++) {
-                    System.Diagnostics.Debug.WriteLine("TransferDot[i]: {0}", TransferDot[0].ToString());
-                    if (TransferDot[0] == i) {
-
-                        roll = rnd.Next(0, 100);
-                        System.Diagnostics.Debug.WriteLine("{0}:\n\tRolled {1}\n\tresist read as {2}",Stats.IndexKeys(i+4) , roll, Stats.Indexer(i+4).ToString());
+                System.Diagnostics.Debug.WriteLine("TransferDot[0] (id): "+ TransferDot[0].ToString() + "\n");
+                if(TransferDot[0] != 0){
+                    for (int i = 1; i < 3; i++) {
+                        if (TransferDot[0] == i) {
+                            roll = rnd.Next(0, 100);
+                            System.Diagnostics.Debug.WriteLine("{0}:\n\tRolled {1}\n\tresist read as {2}",Stats.IndexKeys(i+2) , roll, Stats.Indexer(i+2).ToString());
                         
-                        if (roll < Stats.Indexer(i+4)) { //4,5,6
-                            System.Diagnostics.Debug.WriteLine("\tSucceeded");
+                            if (roll > Stats.Indexer(i+2)) { //4,5,6
+                                System.Diagnostics.Debug.WriteLine("Succeeded");
 
-                            if (Dot[i, 0] != 0) {
-                                System.Diagnostics.Debug.Write("{0} is already effected.\n\tStrength: {1} -> ", Name, Dot[i, 0]);
-                                double x = TransferDot[1] / 2;
-                                Dot[i, 0] += (int)Math.Ceiling(x);  //if already poisoned/bled, increment strength by half what's requested (rounded up)
-                                System.Diagnostics.Debug.WriteLine("{0}", Dot[i, 0]);
-                            }
-                            else {
-                                Dot[i, 0] += TransferDot[1]; //if not already poisoned/bled, apply at full strength
-                                if (i == 0) {
-                                    System.Diagnostics.Debug.Write("{0} is now bleeding.\n\tStrength: {1} -> ", Name, Dot[i, 0]);
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Program.BasicBox(Name, Name == Program.Player.Name, " is bleeding!");
+                                if (Dot[i, 0] != 0) {
+                                    System.Diagnostics.Debug.Write(Name + " is already effected.\n\tStrength: "+Dot[i, 0].ToString()+" -> ");
+                                    double x = TransferDot[1] / 2;
+                                    Dot[i, 0] += (int)Math.Ceiling(x);  //if already poisoned/bled, increment strength by half what's requested (rounded up)
+                                    System.Diagnostics.Debug.WriteLine("{0}", Dot[i, 0]);
                                 }
                                 else {
-                                    System.Diagnostics.Debug.Write(Name+ " is now poisoned.\n\tStrength: "+Dot[i, 0].ToString()+" -> ");
-                                    Console.ForegroundColor = ConsoleColor.Green;
-                                    Program.BasicBox(Name, Name == Program.Player.Name, " is poisoned!");
+                                    Dot[i, 0] += TransferDot[1]; //if not already poisoned/bled, apply at full strength
+                                    if (i == 0) {
+                                        System.Diagnostics.Debug.WriteLine(Name+ " is now bleeding.\n\tStrength: "+Dot[i, 0].ToString()+" -> ");
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Program.BasicBox(Name, Name == Program.Player.Name, " is bleeding!");
+                                    }
+                                    else {
+                                        System.Diagnostics.Debug.WriteLine(Name+ " is now poisoned.\n\tStrength: "+Dot[i, 0].ToString());
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Program.BasicBox(Name, Name == Program.Player.Name, " is poisoned!");
+                                    }
                                 }
+                                System.Diagnostics.Debug.Write("Time: {0} -> ", Dot[i, 1].ToString());
+                                Dot[i, 1] += TransferDot[2]; //increment the time, regardless of what already existed
+                                System.Diagnostics.Debug.WriteLine("{0}", Dot[i, 1]);
                             }
-                            System.Diagnostics.Debug.Write("Time: {0} -> ", Dot[i, 1].ToString);
-                            Dot[i, 1] += TransferDot[2]; //increment the time, regardless of what already existed
-                            System.Diagnostics.Debug.WriteLine("{0}", Dot[i, 1]);
+                            else {
+                                System.Diagnostics.Debug.WriteLine("Failed\n");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Program.BasicBox(Name, Name == Program.Player.Name, " Resisted The " + Stats.IndexKeys(i + 2));
+                            }
                         }
                         else {
-                            System.Diagnostics.Debug.WriteLine("\tFailed");
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Program.BasicBox(Name, Name == Program.Player.Name, " Resisted The " + Stats.IndexKeys(i + 4));
+                            System.Diagnostics.Debug.WriteLine("(not id "+i+")\n");
                         }
+                    }
+
+                    roll = rnd.Next(0, 100);
+                    System.Diagnostics.Debug.WriteLine("Stun:\n\tRolled {0}\n\tStun resistance read as {1}", roll, Stats["Stun"].ToString());
+                    if(roll > Stats["Stun"] && TransferDot[0] == 3) {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Program.BasicBox(Name, Name == Program.Player.Name, " Is Stunned!");
+                        System.Diagnostics.Debug.WriteLine("\tis now stunned ", Name);
+                        Stunned = true;
+                    }else if (TransferDot[0] == 3) {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Program.BasicBox(Name, Name == Program.Player.Name, " Resisted The Stun!");
+                        System.Diagnostics.Debug.WriteLine("Failed");
+                    } else {
+                        System.Diagnostics.Debug.WriteLine("Failed (no tDOT stun)");
                     }
                 }
 
-                roll = rnd.Next(0, 100);
-                System.Diagnostics.Debug.WriteLine("Stun:\n\tRolled {0}\n\tStun read as {1}", roll, Stats["Stun"].ToString());
-                if(roll < Stats["Stun"] && TransferDot[0] == 3) {
-                    System.Diagnostics.Debug.WriteLine("\t{0} is now stunned ", Name);
-                    Stunned = true;
-                }else if (TransferDot[0] == 3) {
-                    System.Diagnostics.Debug.WriteLine("\tFailed");
-                }
-                System.Diagnostics.Debug.WriteLine("\tFailed (no tDOT stun)");
-
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Program.BasicBox(Name, Name == Program.Player.Name, " Takes " + damage + " Damage!");
-                System.Diagnostics.Debug.Write("\n{0} takes {1} damage. Health: {2} -> ", Name, damage, Stats["Health"].ToString());
+                System.Diagnostics.Debug.Write("\n"+Name+" takes "+damage+" damage. Health: "+Stats["Health"].ToString()+" -> ");
                 Stats["Health"] -= damage;
-                System.Diagnostics.Debug.WriteLine("{0}", Stats["Health"].ToString());
+                System.Diagnostics.Debug.WriteLine( Stats["Health"].ToString());
 
                 //check for death
                 if(Stats["Health"] <= 0) {
-                    System.Diagnostics.Debug.WriteLine("{0} is dead", Name);
+                    System.Diagnostics.Debug.WriteLine(Name+" is dead", Name);
                     Stats["Health"] = 0;
                     Death(); //make health always 0 rather than a negative on death, to stop weird displays
                 } else {
-                    System.Diagnostics.Debug.WriteLine("{0} is not dead", Name);
+                    System.Diagnostics.Debug.WriteLine(Name+ " is not dead");
                     Display();
                 }
             } else {
-                System.Diagnostics.Debug.WriteLine("Failed\n");
+                System.Diagnostics.Debug.WriteLine("Succeeded\n");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Program.BasicBox(Name, Name == Program.Player.Name, " dodges the attack!");
             }
+            System.Diagnostics.Debug.WriteLine("----------------------\n");
             DamageOverTime();
             //take DOT, outside the dodge because it's already there
         }
@@ -366,10 +376,10 @@ namespace REEEE
         /// applies and degrades active damage over time
         /// </summary>
         public void DamageOverTime(){
-             System.Diagnostics.Debug.WriteLine("\n--- {0} DOT calc --- ", Name);
+             System.Diagnostics.Debug.WriteLine("--- "+Name+" DOT calc --- \n\t0 is bleed, 1 is poison.\n");
 
             for(int i = 0; i < 2; i++) { //only does 0 and 1, for bleed and poison
-                System.Diagnostics.Debug.WriteLine("{0} time: {1}", Dot[i, 0]);
+                System.Diagnostics.Debug.WriteLine("{0} time: {1}", (i), Dot[i, 0].ToString());
                 if(Dot[i, 0] > 0) { //if active time
 
                     if (i == 0) {
@@ -382,7 +392,7 @@ namespace REEEE
                         Program.BasicBox(Name, Name == Program.Player.Name, " Takes " + Dot[i, 1] + " damage from poison!");
                         System.Diagnostics.Debug.WriteLine("{0} takes {1} damage from poison", Name, Dot[i, 1]);
                     }
-                    System.Diagnostics.Debug.Write("\n{0} takes {1} damage. Health: {2} -> ", Name, Dot[i, 1], Stats["Health"].ToString());
+                    System.Diagnostics.Debug.Write("\n"+Name+" takes "+Dot[i, 1]+" damage. Health: "+Stats["Health"].ToString()+" -> ");
                     Stats["Health"] -= Dot[i, 1]; //take the damage
                     System.Diagnostics.Debug.WriteLine("{0}", Stats["Health"].ToString());
 
@@ -407,6 +417,7 @@ namespace REEEE
                     }
                 }
             }
+            System.Diagnostics.Debug.WriteLine("-------------\n");
         }
 
         ///<summary>

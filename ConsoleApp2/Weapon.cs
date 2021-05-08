@@ -237,6 +237,7 @@ namespace REEEE
         /// <param name="debug">if the debus is shown</param>
         public void Display(Weapon weapon, bool moves = false, bool debug = false)
         {
+            debug = false;
             void Tabgroup()
             { //I don't remember why i did it like this
                 Console.Write("\t");

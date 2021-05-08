@@ -110,6 +110,7 @@ namespace REEEE
                     }
 
                 } else { //not in combat
+                    System.Diagnostics.Debug.WriteLine("\n(passiveaction calling dot)");
                     Player.DamageOverTime();
                     Map.PassiveAction();
                 }
@@ -129,21 +130,21 @@ namespace REEEE
             Console.Write("\t ");
             for (int i = 0; i < name.Length + message.Length + 1; i++)
             {
-                Scroll("_", 10, 10, 0, 0);
+                Scroll("_", 5, 10, 0, 0);
             }
-            Scroll("_\n\t| ", 10, 10, 0, 0);
+            Scroll("_\n\t| ", 5, 10, 0, 0);
             Console.ForegroundColor = ConsoleColor.Red;
             if (player) {
                 Console.ForegroundColor = ConsoleColor.Cyan;
             }
-            Scroll(name, finishTime: 0, lineBreak: 0, tabs: 0);
+            Scroll(name, 5, 10, 0, 0);
             Console.ForegroundColor = ConsoleColor.White;
-            Scroll(message, finishTime: 0, lineBreak: 0, tabs: 0);
+            Scroll(message, 5, 10, 0, 0);
             Console.ForegroundColor = colour;
-            Scroll(" |\n\t|", 10, 10, 0, 0);
+            Scroll(" |\n\t|", 5, 10, 0, 0);
             for (int i = 0; i < name.Length + message.Length + 2; i++)
             {
-                Scroll("_", 10, 10, 0, 0);
+                Scroll("_", 5, 10, 0, 0);
             }
             Scroll("|", tabs: 0);
             Console.ForegroundColor = ConsoleColor.White;

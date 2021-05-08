@@ -22,7 +22,7 @@ namespace REEEE
             {3,"West"},
         };
 
-        static int?[] nesw = int?[4];
+        static int?[] nesw = new int?[4];
 
         /// <summary>
         /// prints the map.<para>What did you expect?</para>
