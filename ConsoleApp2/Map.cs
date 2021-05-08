@@ -14,9 +14,6 @@ namespace REEEE
 #pragma warning disable IDE0044 // Add readonly modifier
         public static object[,] MapData = Program.ReadFile("MapData.txt");
 #pragma warning restore IDE0044 // Add readonly modifier
-
-
-        static int?[] nesw = new int?[4];
         static Dictionary<int, string> Nesw = new Dictionary<int, string>
         {
             {0,"North"},
@@ -74,6 +71,33 @@ namespace REEEE
                 System.Diagnostics.Debug.WriteLine("GETDIRECTION nesw[i] : {0}",nesw[i]-1);
             }
             System.Diagnostics.Debug.WriteLine("");
+
+            System.Diagnostics.Debug.WriteLine("PASSIVEACTION Current room ID: {0}\n", currentLocation);
+            //gets all the availale directions in a nullable int list
+
+
+
+            //for loop printing all the available direction, using the dictionary for the sentance
+            //if the value is null on int?[]nesw, it's skipped as there's no doorway in that direction
+            #region print nesw options
+            Console.ForegroundColor = ConsoleColor.Green;
+            Program.Scroll(" ____________________________", scrollTime: 5, finishTime: 20);
+            string hold;
+            for (int i = 0; i < 4; i++)
+            {
+                if (nesw[i].HasValue)
+                {
+                    Program.Scroll("| ", scrollTime: 20, lineBreak: 0, finishTime: 20);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    hold = "There is a " + Nesw[i] + " Door open";
+                    Console.Write("{0, -26}", hold);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Program.Scroll(" |", scrollTime: 20, tabs: 0, finishTime: 20);
+                }
+            }
+            Program.Scroll("|____________________________|", scrollTime: 5);
+            #endregion
+
             return nesw;
         }
 
@@ -111,26 +135,7 @@ namespace REEEE
         {
             int?[] nesw = GetDirection();
 
-            System.Diagnostics.Debug.WriteLine("PASSIVEACTION Current room ID: {0}\n", currentLocation);
-            //gets all the availale directions in a nullable int list
-
-            //for loop printing all the available direction, using the dictionary for the sentance
-            //if the value is null on int?[]nesw, it's skipped as there's no doorway in that direction
-            #region print nesw options
-            Console.ForegroundColor = ConsoleColor.Green;
-            Program.Scroll(" ____________________________", scrollTime:5, finishTime:20);
-            //string str;
-            for(int i = 0; i < 4; i++) {
-                if (nesw[i].HasValue) {
-                    Program.Scroll("| ", scrollTime:20, lineBreak: 0, finishTime:20);
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write("{0,-26}", "There is a "+Nesw[i]+" door open");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Program.Scroll(" |", scrollTime:20, tabs: 0, finishTime:20);
-                }
-            }
-            Program.Scroll("|____________________________|", scrollTime:5);
-            #endregion
+            
             //ask if they want to move, see the map, or inspect
             bool flag = true; //only set to true if the menu wont re-appear that cycle, on move.
             do {
@@ -169,11 +174,7 @@ namespace REEEE
 
                     case "1": //show map
                     DisplayMap();
-                    for(int i = 0; i < 4; i++) {
-                        if(nesw[i].HasValue) {
-                            Program.Scroll("There is a "+ Nesw[i] + " door open");
-                        }
-                    }
+                    _ = GetDirection();
                     break;
 
                     case "2": //move
