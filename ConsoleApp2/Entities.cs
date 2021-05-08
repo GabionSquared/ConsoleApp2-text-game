@@ -198,7 +198,7 @@ namespace REEEE
         /// <param name="Target">the recieving entity</param>
         protected void Attack(int damage, int id, EntityFramework Target)
         {
-            System.Diagnostics.Debug.WriteLine("\n\n--- home attack calc --- ");
+            System.Diagnostics.Debug.WriteLine("\n\n--- {0} attack calc --- ", Name);
 
             int roll = rnd.Next(0, 100);
             System.Diagnostics.Debug.WriteLine("Accuracy:\n\tRolled {0}\n\t{1} read as {2}", roll, Target.Name, WeaponController.AttackData[id, 2].ToString());
@@ -275,9 +275,12 @@ namespace REEEE
         /// <param name="damage">amount of incoming damage</param>
         protected void Damage(int damage, int[] TransferDot)
         {
-            System.Diagnostics.Debug.WriteLine("--- away damage calc --- ");
+            System.Diagnostics.Debug.WriteLine("--- {0} damage calc --- ", Name);
             //try to dodge -> get stunned -> take damage -> see if dead
-            if (rnd.Next(0, 100) > Stats["Dodge"]) { //dodge check
+            int roll = rnd.Next(0, 100);
+            System.Diagnostics.Debug.WriteLine("Dodge:\n\tRolled {0}\n\t{1} read as {2}", roll, Name, Stats["Dodge"].ToString());
+            if (roll > Stats["Dodge"]) { //dodge check
+                System.Diagnostics.Debug.WriteLine("Succeeded\n");
 
                 /*
                  * int[,] DOT = new int[,] { { 0, 0 }, { 0, 0 } };
@@ -285,47 +288,73 @@ namespace REEEE
                  */
 
                 for (int i = 0; i < 2; i++) {
+                    System.Diagnostics.Debug.WriteLine("TransferDot[i]: {0}", TransferDot[0].ToString());
                     if (TransferDot[0] == i) {
-                        if (rnd.Next(0, 100) < Stats.Indexer(i+4)) { //4,5,6
+
+                        roll = rnd.Next(0, 100);
+                        System.Diagnostics.Debug.WriteLine("{0}:\n\tRolled {1}\n\tresist read as {2}",Stats.IndexKeys(i+4) , roll, Stats.Indexer(i+4).ToString());
+                        
+                        if (roll < Stats.Indexer(i+4)) { //4,5,6
+                            System.Diagnostics.Debug.WriteLine("\tSucceeded");
+
                             if (Dot[i, 0] != 0) {
+                                System.Diagnostics.Debug.Write("{0} is already effected.\n\tStrength: {1} -> ", Name, Dot[i, 0]);
                                 double x = TransferDot[1] / 2;
                                 Dot[i, 0] += (int)Math.Ceiling(x);  //if already poisoned/bled, increment strength by half what's requested (rounded up)
+                                System.Diagnostics.Debug.WriteLine("{0}", Dot[i, 0]);
                             }
                             else {
                                 Dot[i, 0] += TransferDot[1]; //if not already poisoned/bled, apply at full strength
                                 if (i == 0) {
+                                    System.Diagnostics.Debug.Write("{0} is now bleeding.\n\tStrength: {1} -> ", Name, Dot[i, 0]);
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Program.BasicBox(Name, Name == Program.Player.Name, " is bleeding!");
                                 }
                                 else {
+                                    System.Diagnostics.Debug.Write(Name+ " is now poisoned.\n\tStrength: "+Dot[i, 0].ToString()+" -> ");
                                     Console.ForegroundColor = ConsoleColor.Green;
                                     Program.BasicBox(Name, Name == Program.Player.Name, " is poisoned!");
                                 }
                             }
+                            System.Diagnostics.Debug.Write("Time: {0} -> ", Dot[i, 1].ToString);
                             Dot[i, 1] += TransferDot[2]; //increment the time, regardless of what already existed
+                            System.Diagnostics.Debug.WriteLine("{0}", Dot[i, 1]);
                         }
                         else {
+                            System.Diagnostics.Debug.WriteLine("\tFailed");
                             Console.ForegroundColor = ConsoleColor.Red;
                             Program.BasicBox(Name, Name == Program.Player.Name, " Resisted The " + Stats.IndexKeys(i + 4));
                         }
                     }
                 }
-                if(rnd.Next(0, 100) < Stats["Stun"] && TransferDot[0] == 3) {
+
+                roll = rnd.Next(0, 100);
+                System.Diagnostics.Debug.WriteLine("Stun:\n\tRolled {0}\n\tStun read as {1}", roll, Stats["Stun"].ToString());
+                if(roll < Stats["Stun"] && TransferDot[0] == 3) {
+                    System.Diagnostics.Debug.WriteLine("\t{0} is now stunned ", Name);
                     Stunned = true;
+                }else if (TransferDot[0] == 3) {
+                    System.Diagnostics.Debug.WriteLine("\tFailed");
                 }
+                System.Diagnostics.Debug.WriteLine("\tFailed (no tDOT stun)");
 
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Program.BasicBox(Name, Name == Program.Player.Name, " Takes " + damage + " Damage!");
+                System.Diagnostics.Debug.Write("\n{0} takes {1} damage. Health: {2} -> ", Name, damage, Stats["Health"].ToString());
                 Stats["Health"] -= damage;
+                System.Diagnostics.Debug.WriteLine("{0}", Stats["Health"].ToString());
 
                 //check for death
                 if(Stats["Health"] <= 0) {
+                    System.Diagnostics.Debug.WriteLine("{0} is dead", Name);
                     Stats["Health"] = 0;
                     Death(); //make health always 0 rather than a negative on death, to stop weird displays
                 } else {
+                    System.Diagnostics.Debug.WriteLine("{0} is not dead", Name);
                     Display();
                 }
             } else {
+                System.Diagnostics.Debug.WriteLine("Failed\n");
                 Console.ForegroundColor = ConsoleColor.Green;
                 Program.BasicBox(Name, Name == Program.Player.Name, " dodges the attack!");
             }
@@ -337,20 +366,28 @@ namespace REEEE
         /// applies and degrades active damage over time
         /// </summary>
         public void DamageOverTime(){
+             System.Diagnostics.Debug.WriteLine("\n--- {0} DOT calc --- ", Name);
+
             for(int i = 0; i < 2; i++) { //only does 0 and 1, for bleed and poison
+                System.Diagnostics.Debug.WriteLine("{0} time: {1}", Dot[i, 0]);
                 if(Dot[i, 0] > 0) { //if active time
 
                     if (i == 0) {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Program.BasicBox(Name, Name == Program.Player.Name, " Takes "+ Dot[i, 1] + " damage from bleed!");
+                        System.Diagnostics.Debug.WriteLine("{0} takes {1} damage from bleed", Name, Dot[i, 1]);
                     }
                     else {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Program.BasicBox(Name, Name == Program.Player.Name, " Takes " + Dot[i, 1] + " damage from poison!");
+                        System.Diagnostics.Debug.WriteLine("{0} takes {1} damage from poison", Name, Dot[i, 1]);
                     }
+                    System.Diagnostics.Debug.Write("\n{0} takes {1} damage. Health: {2} -> ", Name, Dot[i, 1], Stats["Health"].ToString());
                     Stats["Health"] -= Dot[i, 1]; //take the damage
+                    System.Diagnostics.Debug.WriteLine("{0}", Stats["Health"].ToString());
 
                     if(Stats["Health"] <= 0) { //check if dead
+                        System.Diagnostics.Debug.WriteLine("{0} is dead", Name);
                         Death();
                     }
 
@@ -360,10 +397,12 @@ namespace REEEE
                         if (i == 0) {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Program.BasicBox(Name, Name == Program.Player.Name, " is no longer bleeding");
+                            System.Diagnostics.Debug.WriteLine("{0} is no longer bleeding", Name);
                         }
                         else {
                             Console.ForegroundColor = ConsoleColor.Green;
                             Program.BasicBox(Name, Name == Program.Player.Name, " is no longer poisoned");
+                            System.Diagnostics.Debug.WriteLine("{0} is no longer poisoned", Name);
                         }
                     }
                 }
@@ -375,7 +414,7 @@ namespace REEEE
         ///</summary>
         protected virtual void Death()
         {
-            Console.WriteLine("Entity died");
+            Console.WriteLine("{0} died", Name);
         }
     }
 
