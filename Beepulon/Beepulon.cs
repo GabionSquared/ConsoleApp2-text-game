@@ -18,34 +18,17 @@ namespace Beepulon
         static int width = 1000;
         //these values arent local to readfile anymore so we can use them ~elsewhere~ (mainly in for loops)
 
-        static object[,] Data = ReadFile("HostileData.txt");
+        static object[,] Data = ReadFile("AttackData.txt");
+        //[0]>50, 0 < [5] < 30, rnd (2->7)*2
+        //[2]<100, rnd (38->50)*2
+        //[3] = cieling(log[0])
+        //[4] = cieling(cieling(log[0])*1.2)
 
         static void Main()
         {
-            for (int dataIndex = 1; dataIndex < 5; dataIndex++)
-            {
-                Console.Write(dataIndex);
-            }
-            Console.WriteLine();
-            for (int dataIndex = 5; dataIndex < 8; dataIndex++)
-            {
-                Console.Write(dataIndex);
-            }
-            Console.WriteLine();
-            /*
-            ConsoleColor[] consoleColors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor));
-            foreach(var color in consoleColors) {
-                Console.WriteLine(color);
-            }
-            */
-            for (int i = 0; i < 4; i++){
-                Console.Write(rnd.Next(0, 4));
-                Console.Write("  ");
-            }
-            Console.WriteLine();
-
             #region making a new one
             string fileName = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString()).ToString() + @"\ConsoleApp2\BeepulonOutput.txt";
+            Console.WriteLine(fileName);
             if (File.Exists(fileName))
             {
                 File.Delete(fileName);
@@ -56,38 +39,61 @@ namespace Beepulon
             #region writing the shit
             using (StreamWriter file = new StreamWriter(fileName))
             {
-                /*
+                int[] notHit = new int[] { 74,  78, 82, 71, 69, 70, 63, 66, 61, 62, 58, 52, 54};
+
                 for(int y = 0; y < length; y++) {
                     file.Write("");
-
+                    int id = (int)Data[y,0];
                     for(int x = 0; x < width; x++) {
+                        #region processing
+                        switch (x) {
+                            case 5:
+                                if(id>50 && (int)Data[y,5]>0 && (int)Data[y, 5] < 30) {
+                                    Data[y,5] = rnd.Next(2, 7) + rnd.Next(2, 7);
+                                }
+                            break;
+                            case 2:
+                                if((int)Data[y,2]<100) {
+                                    Data[y,2] = rnd.Next(38, 50) + rnd.Next(38, 50);
+                                }
+                            break;
+                            case 3:
+                                if (id > 51 & !notHit.Contains(id)) {
+                                    Data[y,3] = Math.Ceiling(Math.Log((double)Data[y,0]));
+                                }
+                            break;
+                            case 4:
+                                if (id > 51 & !notHit.Contains(id)) {
+                                Data[y,4] = Math.Ceiling((Math.Log((double)Data[y,0]))*1.2);
+                                }
+                            break;
+                        }
+                        //intList.IndexOf(intVariable) != -1;
+
+                        #endregion
                         file.Write(Data[y, x]);
                         if(x < width-1) {
                             file.Write("|");
                         }
                     }
                     file.Write("\n");
-                */
-                for (int i = 0; i < 20; i++)
-                {
-                    file.Write("case {0}:\t\t/*{1}*/", Data[i, 0], Data[i, 1]);
-                    file.Write("\n\tbreak;\n");
                 }
-                file.Write("default:\t\t/*Error*/");
             }
+            Console.WriteLine("Finished.");
             #endregion
 
             
 
         }
 
-        public static object[,] ReadFile(string location1)
+        static object[,] ReadFile(string location1)
         {
-
+            Console.WriteLine(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString()).ToString() + @"\ConsoleApp2\" + location1);
             #region finding the file
             string[] File;
             try
             {
+
                 File = System.IO.File.ReadAllLines(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString()).ToString() + @"\ConsoleApp2\" + location1);
                 //this has been modified from the one in main consoleapp so it can navigate out of /beepulon/ and into /consoleapp/
 
