@@ -18,17 +18,14 @@ namespace Beepulon
         static int width = 1000;
         //these values arent local to readfile anymore so we can use them ~elsewhere~ (mainly in for loops)
 
-        static object[,] Data = ReadFile("AttackData.txt");
-        //[0]>50, 0 < [5] < 30, rnd (2->7)*2
-        //[2]<100, rnd (38->50)*2
-        //[3] = cieling(log[0])
-        //[4] = cieling(cieling(log[0])*1.2)
+        static object[,] Data = ReadFile("MapData.txt");
 
         static void Main()
         {
             #region making a new one
-            string fileName = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString()).ToString() + @"\ConsoleApp2\BeepulonOutput.txt";
-            Console.WriteLine(fileName);
+            //string fileName = Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString()).ToString() + @"\ConsoleApp2\BeepulonOutput.txt";
+            string fileName = @"C:\Users\40139037\source\repos\GabionSquared\ConsoleApp2-text-game\ConsoleApp2\BeepulonOutput.txt";
+            Console.WriteLine("filename: "+ fileName);
             if (File.Exists(fileName))
             {
                 File.Delete(fileName);
@@ -39,40 +36,85 @@ namespace Beepulon
             #region writing the shit
             using (StreamWriter file = new StreamWriter(fileName))
             {
-                int[] notHit = new int[] { 74,  78, 82, 71, 69, 70, 63, 66, 61, 62, 58, 52, 54};
+                int[] notHit = new int[] { 74, 78, 81, 82, 71, 69, 70, 63, 66, 61, 62, 58, 52, 54 };
+                int[] BossIds = new int[] { 3, 8, 9, 11, 12, 14, 15, 19 };
 
-                for(int y = 0; y < length; y++) {
+                for (int y = 0; y < length; y++)
+                {
                     file.Write("");
-                    int id = (int)Data[y,0];
-                    for(int x = 0; x < width; x++) {
+                    object test = Data[y, 0];
+                    int id = (int)test;
+                    //Console.WriteLine("ID: " + id);
+
+                    Console.WriteLine("\t" + Data[y, 6].ToString());
+                    if(BossIds.Contains((int)Data[y, 6]))
+                    {
+                        Console.WriteLine(Data[y, 0].ToString());
+                    }
+
+
+
+                    /*
+                    object final = Data[y, 12];
+                    Data[y, 12] = "Declare";
+                    Data[y, 10] = final;
+                    */
+                    for (int x = 0; x < width; x++)
+                    {
                         #region processing
+                        /*
+                        //[0]>50, 0 < [5] < 30, rnd (2->7)*2
+                        //[2]<100, rnd (38->50)*2
+                        //[3] = cieling(log[0])
+                        //[4] = cieling(cieling(log[0])*1.2)
+
                         switch (x) {
                             case 5:
-                                if(id>50 && (int)Data[y,5]>0 && (int)Data[y, 5] < 30) {
-                                    Data[y,5] = rnd.Next(2, 7) + rnd.Next(2, 7);
+                                if (id > 50 && (int)Data[y, 5] > 0 && (int)Data[y, 5] < 30) {
+                                    Console.WriteLine("\tCritical: ");
+                                    Console.Write("\t\t{0} -> ", Data[y, 5].ToString());
+                                    Data[y, 5] = rnd.Next(2, 7) + rnd.Next(2, 7);
+                                    Console.WriteLine("{0}", Data[y, 5].ToString());
                                 }
-                            break;
+                                break;
                             case 2:
-                                if((int)Data[y,2]<100) {
-                                    Data[y,2] = rnd.Next(38, 50) + rnd.Next(38, 50);
+                                if ((int)Data[y, 2] < 100) {
+                                    Console.WriteLine("\tAccuracy: ");
+                                    Console.Write("\t\t{0} -> ", Data[y, 2].ToString());
+                                    Data[y, 2] = rnd.Next(38, 50) + rnd.Next(38, 50);
+                                    Console.WriteLine("{0}", Data[y, 2].ToString());
                                 }
-                            break;
+                                break;
                             case 3:
                                 if (id > 51 & !notHit.Contains(id)) {
-                                    Data[y,3] = Math.Ceiling(Math.Log((double)Data[y,0]));
+                                    Console.WriteLine("\tDmg Lower: ");
+                                    Console.Write("\t\t{0} -> ", Data[y, 3].ToString());
+
+                                    Data[y, 3] = Math.Round(Math.Sqrt((Math.Log((int)Data[y, 0])) * 100) / 2);
+
+                                    Console.WriteLine("{0}", Data[y, 3].ToString());
                                 }
-                            break;
+                                break;
                             case 4:
                                 if (id > 51 & !notHit.Contains(id)) {
-                                Data[y,4] = Math.Ceiling((Math.Log((double)Data[y,0]))*1.2);
+                                    Console.WriteLine("\tDmg Upper: ");
+                                    Console.Write("\t\t{0} -> ", Data[y, 4].ToString());
+
+                                    Data[y, 4] = Math.Round(Math.Sqrt((Math.Log((int)Data[y, 0])) * 100)/2*1.2);
+
+                                    Console.WriteLine("{0}", Data[y, 4].ToString());
+                                    Console.WriteLine("\t\t\t{0}", Math.Log((int)Data[y, 0]).ToString());
                                 }
-                            break;
+                                break;
                         }
-                        //intList.IndexOf(intVariable) != -1;
+                        */
+
+
 
                         #endregion
                         file.Write(Data[y, x]);
-                        if(x < width-1) {
+                        if (x < width - 1)
+                        {
                             file.Write("|");
                         }
                     }
@@ -82,20 +124,22 @@ namespace Beepulon
             Console.WriteLine("Finished.");
             #endregion
 
-            
+
 
         }
 
         static object[,] ReadFile(string location1)
         {
-            Console.WriteLine(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString()).ToString() + @"\ConsoleApp2\" + location1);
+            //Console.WriteLine(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString()).ToString() + @"\ConsoleApp2\" + location1);
             #region finding the file
             string[] File;
             try
             {
-
-                File = System.IO.File.ReadAllLines(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString()).ToString()).ToString() + @"\ConsoleApp2\" + location1);
-                //this has been modified from the one in main consoleapp so it can navigate out of /beepulon/ and into /consoleapp/
+                location1 = @"C:\Users\40139037\source\repos\GabionSquared\ConsoleApp2-text-game\ConsoleApp2\" + location1;
+                //Console.WriteLine("Search directory: "+Path.Combine( Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString(), location1));
+                //File = System.IO.File.ReadAllLines(Path.Combine(Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString(), location1));   
+                Console.WriteLine("Search directory: "+location1);
+                File = System.IO.File.ReadAllLines(location1);//this has been modified from the one in main consoleapp so it can navigate out of /beepulon/ and into /consoleapp/
 
                 System.Diagnostics.Debug.WriteLine(location1, " found");
                 //get the name of the file in question for the debug

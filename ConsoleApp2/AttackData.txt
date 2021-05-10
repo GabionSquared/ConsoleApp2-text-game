@@ -16,73 +16,73 @@
 15|Shatter|100|90|0|0|0|0|-1
 16|Blunt|100|90|0|0|0|0|-1
 17|Shank|70|4|8|6|2|1|1
-17|Goes To Shank!		|70|4|8|6|2|1|1
-18|Gives A Fast Poke!		|50|2|4|3|0|0|0
-19|Bludgeons You!		|60|1|1|0|3|1|1
+17|Goes To Shank!|84|4|8|6|2|1|1
+18|Gives A Fast Poke!|84|2|4|3|0|0|0
+19|Bludgeons You!|88|1|1|0|3|1|1
 20|Gives A blood-Curdling Scream!|100|0|0|3|3|1|1
-21|Does A Quick Slash!		|82|3|8|6|0|0|0		
-22|Swipes A Knife in The Dark!	|60|2|4|6|0|0|0
-23|Impales You!			|88|3|5|16|0|0|0
-24|Launches A Crushing Blow!	|50|8|16|16|3|1|1
-25|Is Empowered In Rightious Fury!|92|4|6|3|0|0|0
-26|Brands The Tainted!		|100|4|6|3|0|0|0
-27|Flails The Heritic!		|90|0|0|8|1|1|1
-28|Vomit On You!		|82|1|1|5|1|1|1
-29|Grapples You!		|100|3|5|12|3|1|1
-30|Dashs and Stabs!		|100|5|6|90|0|0|0
-31|Grapples You!		|100|1|2|10|3|1|1
-32|Goes To Shank!		|70|4|8|6|0|0|0
-33|Rends for the King!		|75|1|2|12|1|1|1
-34|Smites You!			|82|3|6|3|0|0|0
-35|Taunts!			|100|0|0|30|6|1|1
-36|Declares Judgement!		|85|4|8|1|0|0|0
-37|Flashes A Dazzling Light!	|100|0|0|5|3|1|1
-38|Calls For Divine Grace!	|100|0|0|0|4|1|1
-39|Calls For Help!		|100|0|0|0|5|1|1
-40|Rends For The King!		|75|1|2|12|1|1|1
-41|Smites You!			|82|5|8|3|0|0|0
-42|Taunts!			|100|0|0|30|6|1|1
-43|Blocks! 			|100|0|0|0|7|1|1
-44|Rends For The King!		|75|2|3|12|2|1|1
-45|Smites You!			|82|5|8|3|0|0|0
-46|Taunts!			|100|0|0|30|6|1|1
-47|Is On Guard! 		|100|0|0|0|7|1|1
-48|Parrys! 			|90|0|0|5|3|1|1
-49|Lets Out A Flurry of Claws!	|90|4|5|12|1|1|1
-50|Gives A Lash of The Tail!	|90|3|4|12|3|1|1
-51|Hardens!			|100|0|0|0|7|1|1
+21|Does A Quick Slash!|82|3|8|6|0|0|0
+22|Swipes A Knife in The Dark!|89|2|4|6|0|0|0
+23|Impales You!|88|3|5|16|0|0|0
+24|Launches A Crushing Blow!|83|8|16|16|3|1|1
+25|Is Empowered In Rightious Fury!|84|4|6|3|0|0|0
+26|Brands The Tainted!|100|4|6|3|0|0|0
+27|Flails The Heritic!|88|0|0|8|1|1|1
+28|Vomit On You!|85|1|1|5|1|1|1
+29|Grapples You!|100|3|5|12|3|1|1
+30|Dashs and Stabs!|100|5|6|90|0|0|0
+31|Grapples You!|100|1|2|10|3|1|1
+32|Goes To Shank!|80|4|8|6|0|0|0
+33|Rends for the King!|77|1|2|12|1|1|1
+34|Smites You!|83|3|6|3|0|0|0
+35|Taunts!|100|0|0|30|6|1|1
+36|Declares Judgement!|95|4|8|1|0|0|0
+37|Flashes A Dazzling Light!|100|0|0|5|3|1|1
+38|Calls For Divine Grace!|100|0|0|0|4|1|1
+39|Calls For Help!|100|0|0|0|5|1|1
+40|Rends For The King!|86|1|2|12|1|1|1
+41|Smites You!|84|5|8|3|0|0|0
+42|Taunts!|100|0|0|30|6|1|1
+43|Blocks!|100|0|0|0|7|1|1
+44|Rends For The King!|81|2|3|12|2|1|1
+45|Smites You!|96|5|8|3|0|0|0
+46|Taunts!|100|0|0|30|6|1|1
+47|Is On Guard!|100|0|0|0|7|1|1
+48|Parrys!|87|0|0|5|3|1|1
+49|Lets Out A Flurry of Claws!|86|4|5|12|1|1|1
+50|Gives A Lash of The Tail!|92|3|4|12|3|1|1
+51|Hardens!|100|0|0|0|7|1|1
 52|Gives A blood-Curdling Scream!|100|0|0|0|3|1|1
-53|Weakly Bats You Away		|80|2|3|1|1|1|1
-54|Covers His Face		|100|0|0|0|7|1|1
-55|Unleashes A Dying Scream!	|100|0|0|5|0|0|0
-56|Staps Their Feet!		|80|6|8|5|0|0|0
-57|Brings Down Divine Judgement!|100|2|3|5|6|1|1
-58|Retores Their Lifeforce!	|100|0|0|5|4|1|1
-59|Rends For The King!		|80|0|0|5|2|1|1
-60|Carves Open Your Veins!	|80|0|0|5|2|1|1
-61|Is On Guard! 		|100|0|0|5|7|1|1
-62|Parrys! 			|80|0|0|5|3|1|1
-63|Snarls!			|100|0|0|5|6|1|1
-64|Lashes Out!			|80|0|0|5|0|0|0
-65|Stamps On The Ground!	|80|0|0|5|0|0|0
-66|Flys Into The Air!		|100|0|0|0|7|1|1
-67|Roars!			|100|0|0|5|6|1|1
-68|Charges At You!		|80|0|0|5|0|0|0
-69|Bellows A Poison Miasma!	|80|0|0|5|1|1|1
-70|Restores Their Lifeforce!	|100|0|0|5|4|1|1
-71|Wobles			|100|0|0|0|0|0|0
-72|Wraps Around You!		|80|0|0|90|0|0|0
-73|Seeps Into Your Veins!	|80|0|0|90|1|1|1
-74|Sticks To Your Feet!		|80|0|0|90|3|1|1
-75|Stabs Into You!		|80|0|0|90|0|0|0
-76|Wraps Around You!		|80|0|0|90|0|0|0
-77|Seeps Into Your Veins!	|80|0|0|90|1|1|1
-78|Sticks To Your Feet!		|80|0|0|90|3|1|1
-79|Stabs Into You!		|80|0|0|90|0|0|0
-80|Wraps Around You!		|80|0|0|90|0|0|0
-81|Seeps Into Your Veins!	|80|0|0|90|1|1|1
-82|Sticks To Your Feet!		|80|0|0|90|3|1|1
-83|Stabs Into You!		|80|0|0|90|0|0|0
+53|Weakly Bats You Away|87|10|12|6|1|1|1
+54|Covers His Face|100|0|0|0|7|1|1
+55|Unleashes A Dying Scream!|100|10|12|11|0|0|0
+56|Staps Their Feet!|83|10|12|10|0|0|0
+57|Brings Down Divine Judgement!|100|10|12|8|6|1|1
+58|Retores Their Lifeforce!|100|0|0|8|4|1|1
+59|Rends For The King!|80|10|12|6|2|1|1
+60|Carves Open Your Veins!|89|10|12|10|2|1|1
+61|Is On Guard!|100|0|0|6|7|1|1
+62|Parrys! |90|0|0|9|3|1|1
+63|Snarls!|100|0|0|11|6|1|1
+64|Lashes Out!|84|10|12|4|0|0|0
+65|Stamps On The Ground!|81|10|12|7|0|0|0
+66|Flys Into The Air!|100|0|0|0|7|1|1
+67|Roars!|100|10|12|11|6|1|1
+68|Charges At You!|91|10|12|8|0|0|0
+69|Bellows A Poison Miasma!|78|0|0|9|1|1|1
+70|Restores Their Lifeforce!|100|0|0|7|4|1|1
+71|Wobles|100|0|0|0|0|0|0
+72|Wraps Around You!|92|10|12|90|0|0|0
+73|Seeps Into Your Veins!|86|10|12|90|1|1|1
+74|Sticks To Your Feet!|79|0|0|90|3|1|1
+75|Stabs Into You!|96|10|12|90|0|0|0
+76|Wraps Around You!|92|10|12|90|0|0|0
+77|Seeps Into Your Veins!|85|10|13|90|1|1|1
+78|Sticks To Your Feet!|94|0|0|90|3|1|1
+79|Stabs Into You!|88|10|13|90|0|0|0
+80|Wraps Around You!|94|10|13|90|0|0|0
+81|Seeps Into Your Veins!|85|10|13|90|1|1|1
+82|Sticks To Your Feet!	|92|0|0|90|3|1|1
+83|Stabs Into You!|91|11|13|90|0|0|0
 id|name|Accuracy|Damage Mod|Crit Mod|EffectType|Strength|Duration|FlavourERROR
 %EOF%
 ^ player moves v AI moves. player moves are on the valid side of eof because it's used in weapondisplay

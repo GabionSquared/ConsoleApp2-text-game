@@ -1,27 +1,41 @@
-0|Prisoner|31|1|10|5|0|0|0|0|A prisoner rushes at you!|You hear the rattling of chains...|The light scrape of chain on the cold ground echos through the room...|%EOF%
-1|Merchant|2|1|50|5|5|0|5|0|The merchant grabs you from across the table|You've really done it now...|You raise your weapon above your head|%EOF%
-2|Skeleton|32|1|10|10|10|10|10|10|Declare|Declare|Spawn
-3|The Jailer|33|1|10|10|10|10|10|10|Declare|Declare|Spawn
-4|Dog|34|1|10|10|10|10|10|10|Declare|Declare|Spawn
-5|Thrall|35|1|10|10|10|10|10|10|Declare|Declare|Spawn
-6|Knight|36|1|10|10|10|10|10|10|Declare|Declare|Spawn
-7|Priest|37|1|10|10|10|10|10|10|Declare|Declare|Spawn
-8|The Gargoyle|38|1|10|10|10|10|10|10|Declare|Declare|Spawn
-9|The Entombed God|39|1|10|10|10|10|10|10|Declare|Declare|Spawn
-10|Upper Knight|40|1|10|10|10|10|10|10|Declare|Declare|Spawn
-11|The Captian|41|1|10|10|10|10|10|10|Declare|Declare|Spawn
-12|The King|42|1|10|10|10|10|10|10|Declare|Declare|Spawn
-13|Bloodtinged Knight|43|1|10|10|10|10|10|10|Declare|Declare|Spawn
-14|The Young Drake|44|1|10|10|10|10|10|10|Declare|Declare|Spawn
-15|The Poisoned Dragon|45|1|10|10|10|10|10|10|Declare|Declare|Spawn
-16|Egg|46|1|10|10|10|10|10|10|Declare|Declare|Spawn
-17|Crawling Black Sludge|47|1|10|10|10|10|10|10|Declare|Declare|Spawn
-18|Greater Black Sludge|48|1|10|10|10|10|10|10|Declare|Declare|Spawn
-19|The Black Mass|49|1|10|10|10|10|10|10|Declare|Declare|Spawn
+0|Prisoner|31|1|10|5|0|0|0|0|A Prisoner Rushes At You!				|You hear the rattling of chains...|The light scrape of chain on the cold ground echos through the room...|%EOF%
+1|Merchant|2|1|50|5|5|0|5|0|The Merchant Grabs You From Across The Table!	|You've really done it now...|You raise your weapon above your head|
+2|Skeleton|32|1|10|10|10|10|10|10|A Living Skeleton Approaches!			|The bones strewn across the floor gather themselves...|In The Distance, Is that the sound of... Trumpeting?
+
+3|The Jailer|33|1|10|10|10|10|10|10|She Has Spotted you!			[ boss ] |This is the final room of the jail. The jailer is in the corner, enamored by a corpse defiled with rusted instruments. As you creep past, a prisoner reaches through the bars and grapples onto you!|Declare
+
+4|Dog|34|1|10|10|10|10|10|10|A Rabid Dog Scampers Toward You!			|You hear a low snarling...|The miasma of rotting flesh fills the room...
+5|Thrall|35|1|10|10|10|10|10|10|The Hooded Figure Rushes You!			|The pattering of calloused feet on the cold stone ground. They're running straight for you!|Who on earth is that?
+6|Knight|36|1|10|10|10|10|10|10|The Knight Raises His Sword!			|An ironclad figure calmly approaches.|From behind you, you hear a sword scrape out of it's sheath
+7|Priest|37|1|10|10|10|10|10|10|The Priest Clutches His Chime Close To His Chest[ make this say 'acts' rather than 'lunges'] |A robed man is cowering in the corner|Someone is hiding behind a pew...
+
+8|The Gargoyle|38|1|10|10|10|10|10|10|It Raises Its Stonework Halberd!		[ boss ] |Stone dust sprinkles into your hair and eyes. You look up... A great beast decorating the tower has come alive!|Declare
+
+9|The Entombed God|39|1|10|10|10|10|10|10|This Might Be a Challenge.		[ boss ] |The great deity raises his head. Blood streams from his eyes. |Declare
+
+10|Upper Knight|40|1|10|10|10|10|10|10|They Raise Their Sword!			|This knight seems stronger than those downstairs...|A swipe at your neck from a gleeming sword misses by an inch!
+
+11|The Captian|41|1|10|10|10|10|10|10|He Has Challenged You To Duel!		[ boss ] |The captian of the guard looks down at you from the top of the stairs. He bows deeply.|Declare
+12|The King|42|1|10|10|10|10|10|10|He Tries To Defend Himself...		[ boss ] |Declare|Declare
+
+13|Bloodtinged Knight|43|1|10|10|10|10|10|10|The Knight Snaps To Look At You!	[ boss?] |The walls are caked in dry blood. The stench is unbelivable. A knight stands over an evicerated corpse, barbed sword drawn and stained crimson.|Declare
+
+14|The Young Drake|44|1|10|10|10|10|10|10|It Stares At You, Flashing It's Teeth.[ boss ] |A Drake rears up and spreads its wings wide.|Declare
+15|The Poisoned Dragon|45|1|10|10|10|10|10|10|This Might Be a Challenge.	[ boss ] |Declare|Declare
+
+16|Egg|46|1|10|10|10|10|10|10|The Dragon Egg Doesn't Move.			[ boss ] |Is this what it was defending?|Declare
+17|Crawling Black Sludge|47|1|10|10|10|10|10|10|It Seems Hostile...		|The slime oozes down the wall and gathers.|What is this, stuck to your legs?
+18|Greater Black Sludge|48|1|10|10|10|10|10|10|Ready Your Weapon...		|These shapeless masses seem to be getting stronger...|How much more of them are there?
+
+19|The Black Mass|49|1|10|10|10|10|10|10|Best To Destroy It, To Be Safe...	[ boss] |Is this... the source?|Declare
 %EOF%
 
 ID|Name|WeaponID|ItemID|Max Health|dodge|physical|psn|bld|stun|DeclareMessage|spawn message(s)
 0   1   2         3       4          5      6      7   8   9        10           11
+					 [rdndt]
+boss Ids  : 3, 8, 9, 11, 12, 14, 15, 19, 16 (16, 13?)
+boss rooms: 10, 25, 31, 36, 38, 41, 44, 51, (42, 39?)
+make 7 say 'acts' rather than 'lunges'
 
 all armour does is hp and dodge
 	once i actually impliment it kappa
@@ -30,22 +44,22 @@ all armour does is hp and dodge
 	thats where most the combat system is stolen from
 
 0|Prisoner|31|1|		10|5|0|		0|0|0|		A prisoner lunges at you!|You hear the rattling of chains...|The light scrape of chain on the cold ground echos through the room...|%EOF%
-1|Merchant|2|1|			50|5|5|		0|5|0|		The merchant grabs you from across the table|You've really done it now...|You raise your weapon above your head|%EOF%
-2|Skeleton|32|1|		10|10|10|	10|10|10|	Declare|Declare|Spawn
-3|The Jailer|33|1|		10|10|10|	10|10|10|	Declare|Declare|Spawn
-4|Dog|34|1|			10|10|10|	10|10|10|	Declare|Declare|Spawn
-5|Thrall|35|1|			10|10|10|	10|10|10|	Declare|Declare|Spawn
-6|Knight|36|1|			10|10|10|	10|10|10|	Declare|Declare|Spawn
-7|Priest|37|1|			10|10|10|	10|10|10|	Declare|Declare|Spawn
-8|The Gargoyle|38|1|		10|10|10|	10|10|10|	Declare|Declare|Spawn
-9|The Entombed God|39|1|	10|10|10|	10|10|10|	Declare|Declare|Spawn
-10|Upper Knight|40|1|		10|10|10|	10|10|10|	Declare|Declare|Spawn
-11|The Captian|41|1|		10|10|10|	10|10|10|	Declare|Declare|Spawn
-12|The King|42|1|		10|10|10|	10|10|10|	Declare|Declare|Spawn
-13|Bloodtinged Knight|43|1|	10|10|10|	10|10|10|	Declare|Declare|Spawn
-14|The Young Drake|44|1|	10|10|10|	10|10|10|	Declare|Declare|Spawn
-15|The Poisoned Dragon|45|1|	10|10|10|	10|10|10|	Declare|Declare|Spawn
-16|Egg|46|1|			10|10|10|	10|10|10|	Declare|Declare|Spawn
-17|Crawling Black Sludge|47|1|	10|10|10|	10|10|10|	Declare|Declare|Spawn
-18|Greater Black Sludge|48|1|	10|10|10|	10|10|10|	Declare|Declare|Spawn
-19|The Black Mass|49|1|		10|10|10|	10|10|10|	Declare|Declare|Spawn
+1|Merchant|2|1|			50|5|5|		0|5|0|		The merchant grabs you from across the table|You've really done it now...|You raise your weapon above your head|
+2|Skeleton|32|1|		10|10|10|	10|10|10|	A Living Skeleton Approaches!|The bones strewn across the floor gather themselves...|In The Distance, Is that the sound of... Trumpeting?
+3|The Jailer|33|1|		10|10|10|	10|10|10|	She Has Spotted you!|This is the final room of the jail. The jailer is in the corner, enamored by a corpse defiled with rusted instruments. As you creep past, a prisoner reaches through the bars and grapples onto you!|Declare
+4|Dog|34|1|			10|10|10|	10|10|10|	A Rabid Dog Scampers Toward You!|You hear a low snarling...|The miasma of rotting flesh fills the room...
+5|Thrall|35|1|			10|10|10|	10|10|10|	The Hooded Figure Rushes You!|The pattering of calloused feet on the cold stone ground. They're running straight for you!|Who on earth is that?
+6|Knight|36|1|			10|10|10|	10|10|10|	The Knight Raises His Sword!|An ironclad figure calmly approaches.|From behind you, you hear a sword scrape out of it's sheath
+7|Priest|37|1|			10|10|10|	10|10|10|	The Priest Clutches His Chime Close To His Chest|A robed man is cowering in the corner|Someone is hiding behind a pew...
+8|The Gargoyle|38|1|		10|10|10|	10|10|10|	It Raises Its Stonework Halberd!|Stone dust sprinkles into your hair and eyes. You look up... A great beast decorating the tower has come alive!|Declare
+9|The Entombed God|39|1|	10|10|10|	10|10|10|	This Might Be a Challenge.|The great deity raises his head. Blood streams from his eyes.|Declare
+10|Upper Knight|40|1|		10|10|10|	10|10|10|	They Raise Their Sword!|This knight seems stronger than those downstairs...|A swipe at your neck from a gleeming sword misses by an inch!
+11|The Captian|41|1|		10|10|10|	10|10|10|	He Has Challenged You To Duel!|The captian of the guard looks down at you from the top of the stairs. He bows deeply.|Declare
+12|The King|42|1|		10|10|10|	10|10|10|//	He Tries To Defend Himself...|Declare|Declare
+13|Bloodtinged Knight|43|1|	10|10|10|	10|10|10|	The Knight Snaps To Look At You!|The walls are caked in dry blood. The stench is unbelivable. A knight stands over an evicerated corpse, barbed sword drawn and stained crimson.|Declare
+14|The Young Drake|44|1|	10|10|10|	10|10|10|	It Stares At You, Flashing It's Teeth.|A Drake rears up and spreads its wings wide.|Declare
+15|The Poisoned Dragon|45|1|	10|10|10|	10|10|10|//	This Might Be a Challenge.|Declare|Declare
+16|Egg|46|1|			10|10|10|	10|10|10|	The Dragon Egg Doesn't Move.|Is this what it was defending?|Declare
+17|Crawling Black Sludge|47|1|	10|10|10|	10|10|10|	It Seems Hostile...|The slime oozes down the wall and gathers.|What is this, stuck to your legs?
+18|Greater Black Sludge|48|1|	10|10|10|	10|10|10|	Ready Your Weapon...|These shapeless masses seem to be getting stronger...|How much more of this is there?
+19|The Black Mass|49|1|		10|10|10|	10|10|10|	Best To Destroy It, To Be Safe...|Is this... the source?|Declare

@@ -26,16 +26,22 @@ namespace REEEE
      *          specifically,
      *             > AttackData
      *             > HostileData
-     *      > armour (increases health and dodge)
      *          ========The Progress Line=======    ^ cba to do, basically
-     *      > merchants can restore durability
-     *      > merchants can upgrade weapons
-     *      > merchant tutorial on first meeting
      *      > merchants marked on the map
      *          > curio system?
      *      > Loot tables
      *      > give things sensible prices
-     *  
+     *      
+     *      ===do today==
+     *      > basic curio system
+     *      > things drop money
+     *      > make inspection automatic, with a brief description of the room
+     *      > the inspection option repeates it
+     *      > boss declarations also have description, so dont do it on their rooms.
+     *          > MAYBE very rough text art for the boss rooms
+     *          
+     *          > These would be another example of boss rooms having their own description
+     *            
      *  Less important ToDo:
      *      > special effect on moves (debuff or bonus vs type)
      *      > multi-enemy encounters
