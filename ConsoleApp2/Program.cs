@@ -16,7 +16,7 @@ namespace REEEE
      * The FontStruction “7:12 Serif Italic” (https://fontstruct.com/fontstructions/show/413872) by Christian Munk is
      * licensed under a Creative Commons Attribution Share Alike license (http://creativecommons.org/licenses/by-sa/3.0/)
      *  UNTESTED:
-     *      lierally all real data
+     *      literally all real data
      *      new attack & DOT method
      *      AI
      *      Speed
@@ -27,10 +27,21 @@ namespace REEEE
      *             > AttackData
      *             > HostileData
      *          ========The Progress Line=======    ^ cba to do, basically
-     *      > merchants marked on the map
-     *          > curio system?
+     *      > curio system?
      *      > Loot tables
      *      > give things sensible prices
+     *      
+     *  TODO V2 ELECTRIC BOOGALOO:
+     *      > there seems to be a bug with special effects not lining up with the input, ie press 4, do 3s dot effect.
+     *          > overcompensating or unaccounted 0 index?
+     *      > make it clearer when a turn starts & what the ai is doing
+     *      > starter weapon needs more durability, or a faster replacement (loot tables?)
+     *      > merchant menu needs a reskin
+     *      > AI misses a suspicious amount of the time
+     *      > add display to passive action
+     *      > some things damage the player as well?
+     *      > check what else can use the basic box function
+     *  
      *      
      *      ===do today==
      *      > basic curio system
@@ -44,7 +55,6 @@ namespace REEEE
      *            
      *  Less important ToDo:
      *      > special effect on moves (debuff or bonus vs type)
-     *      > multi-enemy encounters
      *      > .txt -> .xml
      *  
      *  Map Rework Idea:
@@ -76,25 +86,80 @@ namespace REEEE
                 {
                     System.Diagnostics.Debug.WriteLine("MAIN New combat turn");
 
+                    #region declare a new turn
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    for (int i = 0; i < Console.WindowWidth - 1; i++)
+                    {
+                        Scroll("-", 10, 0, 0, 0);
+                    }
+                    Scroll("-", 5, 5, 0, 0);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Scroll("\t NEW COMBAT TURN!", 5, 0);
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    for (int i = 0; i < Console.WindowWidth - 1; i++)
+                    {
+                        Scroll("-", 5, 0, 0, 0);
+                    }
+                    Scroll("-", 5, 2000, 2, 0);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    #endregion
+
                     //calculating speed. this method gives a weighted chance rather than flat > or <
                     int PRnd = rnd.Next(0,10) + Globals.HeldWeapon.Speed;
                     int AIRnd = rnd.Next(0,10) + Globals.Target.Speed;
                     if(PRnd > AIRnd) {
-                        Scroll("\nYou lunge in first!");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        BasicBox(Player.Name, true);
                         Player.DecideAttack();
                         Globals.Target.DecideAttack();
-                    } else {
-                        string output = "\n"+ Globals.Target.Name + " lunges in first!";
-                        Scroll("\n"+ Globals.Target.Name + " lunges in first!");
+                    }
+                    else {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        BasicBox(Globals.Target.Name);
                         Globals.Target.DecideAttack();
                         Player.DecideAttack();
                     }
 
                 } else { //not in combat
+                    System.Diagnostics.Debug.WriteLine("\n(passiveaction calling dot)");
                     Player.DamageOverTime();
                     Map.PassiveAction();
                 }
             } while(true);
+        }
+
+        /// <summary>
+        /// the colour set before calling this function will be the colour of the box
+        /// </summary>
+        /// <param name="name">name of the entity</param>
+        /// <param name="player">if the entity is the player (defaults to no)</param>
+        /// <param name="message">the message in the box (defaults to "lunges in first!")</param>
+        public static void BasicBox(string name, bool player = false, string message = " lunges in first!")
+        {
+            ConsoleColor colour = Console.ForegroundColor;
+            #region speed message
+            Console.Write("\t ");
+            for (int i = 0; i < name.Length + message.Length + 1; i++)
+            {
+                Scroll("_", 5, 10, 0, 0);
+            }
+            Scroll("_\n\t| ", 5, 10, 0, 0);
+            Console.ForegroundColor = ConsoleColor.Red;
+            if (player) {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+            }
+            Scroll(name, 5, 10, 0, 0);
+            Console.ForegroundColor = ConsoleColor.White;
+            Scroll(message, 5, 10, 0, 0);
+            Console.ForegroundColor = colour;
+            Scroll(" |\n\t|", 5, 10, 0, 0);
+            for (int i = 0; i < name.Length + message.Length + 2; i++)
+            {
+                Scroll("_", 5, 10, 0, 0);
+            }
+            Scroll("|", tabs: 0);
+            Console.ForegroundColor = ConsoleColor.White;
+            #endregion
         }
 
         /// <summary>

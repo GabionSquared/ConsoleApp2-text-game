@@ -20,6 +20,7 @@ namespace Beepulon
 
         static object[,] Data = ReadFile("MapData.txt");
 
+
         static void Main()
         {
             #region making a new one
