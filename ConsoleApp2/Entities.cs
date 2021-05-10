@@ -18,7 +18,10 @@ namespace REEEE
         //names, default gear and resistances
         protected readonly static int hostileWidth = 12;
         protected readonly static object[,] HostileData = Program.ReadFile("HostileData.txt");
-        protected static StatDictionary Stats;
+        public static StatDictionary Stats;
+
+        protected int buffSelf = 0;
+        protected bool block = false;
 
         public bool Stunned = false;
         public int ID{ get; set; }
@@ -67,7 +70,7 @@ namespace REEEE
         /// <summary>
         /// name, health as an integer and percentage based health bar
         /// </summary>
-        protected void Display()
+        public void Display()
         { //print({0, -10}, "ass") would be `ass-------`
             int toggle = 1;
             void Toggle()
@@ -207,7 +210,7 @@ namespace REEEE
             if (roll < (int)WeaponController.AttackData[id, 2]) { //accuracy check
                 System.Diagnostics.Debug.WriteLine("Succeeded\n");
                 int AISpacer = 0; //because how much damage the AI does is decided here, all the data has been shifted by 1 for them
-
+                #region actual damage calc
                 if(id < 17) {   //player attacks
                     damage *= (int)Math.Round(Convert.ToSingle(WeaponController.AttackData[id, 3]) / 100);
                     //int             double                        object          int
@@ -245,7 +248,7 @@ namespace REEEE
                     // multiplying by a float returns a double or float, damage is an int.
                 }
                 System.Diagnostics.Debug.WriteLine("Failed\n");
-
+                #endregion
                 #region debug shizz
                 System.Diagnostics.Debug.WriteLine("\n--- Attack DOT packaging ---");
                 System.Diagnostics.Debug.WriteLine("chosen attack is "+ id);
@@ -256,21 +259,58 @@ namespace REEEE
                 }
                 System.Diagnostics.Debug.WriteLine("");
                 #endregion
-
+                #region effects
                 int[] TransferDot = new int[3];
                 int r = (int)WeaponController.AttackData[id, 5 + AISpacer];
-                System.Diagnostics.Debug.WriteLine("\tDot id slot: " + r);
-                if (r > 0) {
-                    System.Diagnostics.Debug.WriteLine("\t\t[r is a valid DOT effect]");
+                System.Diagnostics.Debug.WriteLine("\tEffect id slot: " + r);
+                if (r > 0 && r < 4) {
+                    System.Diagnostics.Debug.WriteLine("\t\t[r is a valid DOT effect. packaging...]");
                     for (int i = 0; i < 3; i++) {
                         TransferDot[i] = (int)WeaponController.AttackData[id, 5 + AISpacer + i];
                         System.Diagnostics.Debug.WriteLine("\tTransfer[{0}]: {1}", i.ToString(), TransferDot[i].ToString());
                     }
                 }
+                switch (r) {
+                    case 4:  //self heal (AI only)
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Program.BasicBox(Name, Name == Program.Player.Name, "'s wounds start to close");
+                        Program.BasicBox(Name, false, "The Attack Missed!");
+                        Stats["Health"] = (int)Math.Floor(Stats["Health"]* 1.20);
+                        if (Stats["Health"]> Stats["MaxHealth"])
+                        {
+                            Stats["Health"] = Stats["MaxHealth"];
+                        }
+                    break;
+                    case 5:  //buff nearby enemies (priest only)
+                        Program.BasicBox("", message:"A strange force strengthens nearby beings...");
+                        Program.buffNext++;
+                    break;
+                    case 6:  //dmg buff self (both)
+                        Program.BasicBox(Name, Name == Program.Player.Name, " prepares their next attack!");
+                        buffSelf++;
+                    break;
+                    case 7: //block (both)
+                        block = true;
+                    break;
+                    case 8: //lose weapon (player only)
+                        Program.thrownWeapon = Globals.HeldWeapon;
+                        Globals.HeldWeapon = default(Weapon);
+                        /*
+                        do
+                        {
+                            //map.inventory
+                        }while(WeaponInventory[i].Equals(default(Weapon)));
+                        */
+                    break;
+                }
                 System.Diagnostics.Debug.WriteLine("");
                 //puts all the effect data into a transfer, but only if the ID is 1-3 (poison, bleed, stun)
                 //[id][strength][duration]
-
+                #endregion
+                if(buffSelf > 0 & r != 6){
+                    Math.Ceiling(damage*(buffSelf*1.2));  
+                    buffSelf = 0;    
+                }
                 Target.Damage(damage, TransferDot);
                 //taking damage is a seperate function so it's easier to access their own dodge and prot values.
                 //this could plausably be done using the Using(x) function, but thats bad conpartmentalisation.
@@ -286,98 +326,105 @@ namespace REEEE
         /// Recieve Damage
         /// </summary>
         /// <param name="damage">amount of incoming damage</param>
-        protected void Damage(int damage, int[] TransferDot)
+        public void Damage(int damage, int[] TransferDot)
         {
             System.Diagnostics.Debug.WriteLine("--- "+Name+" damage calc --- ");
             //try to dodge -> get stunned -> take damage -> see if dead
             int roll = rnd.Next(0, 100);
             System.Diagnostics.Debug.WriteLine("Dodge:\n\tRolled {0}\n\t{1} read as {2}", roll, Name, Stats["Dodge"].ToString());
-            if (roll > Stats["Dodge"]) { //dodge check
-                System.Diagnostics.Debug.WriteLine("Failed\n");
+            if (!block) {
+                if (roll > Stats["Dodge"]) { //dodge check
+                    System.Diagnostics.Debug.WriteLine("Failed\n");
 
-                /*
-                 * int[,] DOT = new int[,] { { 0, 0 }, { 0, 0 } };
-                 * Bleed strength, Bleed Time, Poison Strength, Poison Time
-                 */
-                System.Diagnostics.Debug.WriteLine("TransferDot[0] (id): "+ TransferDot[0].ToString() + "\n");
-                if(TransferDot[0] != 0){
-                    for (int i = 1; i < 3; i++) {
-                        if (TransferDot[0] == i) {
-                            roll = rnd.Next(0, 100);
-                            System.Diagnostics.Debug.WriteLine("{0}:\n\tRolled {1}\n\tresist read as {2}",Stats.IndexKeys(i+2) , roll, Stats.Indexer(i+2).ToString());
+                    /*
+                     * int[,] DOT = new int[,] { { 0, 0 }, { 0, 0 } };
+                     * Bleed strength, Bleed Time, Poison Strength, Poison Time
+                     */
+                    System.Diagnostics.Debug.WriteLine("TransferDot[0] (id): "+ TransferDot[0].ToString() + "\n");
+                    if(TransferDot[0] != 0){
+                        for (int i = 0; i < 2; i++) {
+                            if (TransferDot[0] == i) {
+                                roll = rnd.Next(0, 100);
+                                System.Diagnostics.Debug.WriteLine("{0}:\n\tRolled {1}\n\tresist read as {2}",Stats.IndexKeys(i+3) , roll, Stats.Indexer(i+3).ToString());
                         
-                            if (roll > Stats.Indexer(i+2)) { //4,5,6
-                                System.Diagnostics.Debug.WriteLine("Succeeded");
+                                if (roll > Stats.Indexer(i+3)) { //4,5,6
+                                    System.Diagnostics.Debug.WriteLine("Succeeded");
 
-                                if (Dot[i, 0] != 0) {
-                                    System.Diagnostics.Debug.Write(Name + " is already effected.\n\tStrength: "+Dot[i, 0].ToString()+" -> ");
-                                    double x = TransferDot[1] / 2;
-                                    Dot[i, 0] += (int)Math.Ceiling(x);  //if already poisoned/bled, increment strength by half what's requested (rounded up)
-                                    System.Diagnostics.Debug.WriteLine("{0}", Dot[i, 0]);
-                                }
-                                else {
-                                    Dot[i, 0] += TransferDot[1]; //if not already poisoned/bled, apply at full strength
-                                    if (i == 0) {
-                                        System.Diagnostics.Debug.WriteLine(Name+ " is now bleeding.\n\tStrength: "+Dot[i, 0].ToString()+" -> ");
-                                        Console.ForegroundColor = ConsoleColor.Red;
-                                        Program.BasicBox(Name, Name == Program.Player.Name, " is bleeding!");
+                                    if (Dot[i, 0] != 0) {
+                                        System.Diagnostics.Debug.Write(Name + " is already effected.\n\tStrength: "+Dot[i, 0].ToString()+" -> ");
+                                        double x = TransferDot[1] / 2;
+                                        Dot[i, 0] += (int)Math.Ceiling(x);  //if already poisoned/bled, increment strength by half what's requested (rounded up)
+                                        System.Diagnostics.Debug.WriteLine("{0}", Dot[i, 0]);
                                     }
                                     else {
-                                        System.Diagnostics.Debug.WriteLine(Name+ " is now poisoned.\n\tStrength: "+Dot[i, 0].ToString());
-                                        Console.ForegroundColor = ConsoleColor.Green;
-                                        Program.BasicBox(Name, Name == Program.Player.Name, " is poisoned!");
+                                        Dot[i, 0] += TransferDot[1]; //if not already poisoned/bled, apply at full strength
+                                        if (i == 0) {
+                                            System.Diagnostics.Debug.WriteLine(Name+ " is now bleeding.\n\tStrength: "+Dot[i, 0].ToString()+" -> ");
+                                            Console.ForegroundColor = ConsoleColor.Red;
+                                            Program.BasicBox(Name, Name == Program.Player.Name, " is bleeding!");
+                                        }
+                                        else {
+                                            System.Diagnostics.Debug.WriteLine(Name+ " is now poisoned.\n\tStrength: "+Dot[i, 0].ToString());
+                                            Console.ForegroundColor = ConsoleColor.Green;
+                                            Program.BasicBox(Name, Name == Program.Player.Name, " is poisoned!");
+                                        }
                                     }
+                                    System.Diagnostics.Debug.Write("Time: {0} -> ", Dot[i, 1].ToString());
+                                    Dot[i, 1] += TransferDot[2]; //increment the time, regardless of what already existed
+                                    System.Diagnostics.Debug.WriteLine("{0}", Dot[i, 1]);
                                 }
-                                System.Diagnostics.Debug.Write("Time: {0} -> ", Dot[i, 1].ToString());
-                                Dot[i, 1] += TransferDot[2]; //increment the time, regardless of what already existed
-                                System.Diagnostics.Debug.WriteLine("{0}", Dot[i, 1]);
+                                else {
+                                    System.Diagnostics.Debug.WriteLine("Failed\n");
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Program.BasicBox(Name, Name == Program.Player.Name, " Resisted The " + Stats.IndexKeys(i + 2));
+                                }
                             }
                             else {
-                                System.Diagnostics.Debug.WriteLine("Failed\n");
-                                Console.ForegroundColor = ConsoleColor.Red;
-                                Program.BasicBox(Name, Name == Program.Player.Name, " Resisted The " + Stats.IndexKeys(i + 2));
+                                System.Diagnostics.Debug.WriteLine("(not id "+i+")\n");
                             }
                         }
-                        else {
-                            System.Diagnostics.Debug.WriteLine("(not id "+i+")\n");
+
+                        roll = rnd.Next(0, 100);
+                        System.Diagnostics.Debug.WriteLine("Stun:\n\tRolled {0}\n\tStun resistance read as {1}", roll, Stats["Stun"].ToString());
+                        if(roll > Stats["Stun"] && TransferDot[0] == 3) {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Program.BasicBox(Name, Name == Program.Player.Name, " Is Stunned!");
+                            System.Diagnostics.Debug.WriteLine("\tis now stunned ", Name);
+                            Stunned = true;
+                        }else if (TransferDot[0] == 3) {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Program.BasicBox(Name, Name == Program.Player.Name, " Resisted The Stun!");
+                            System.Diagnostics.Debug.WriteLine("Failed");
+                        } else {
+                            System.Diagnostics.Debug.WriteLine("Failed (no tDOT stun)");
                         }
                     }
 
-                    roll = rnd.Next(0, 100);
-                    System.Diagnostics.Debug.WriteLine("Stun:\n\tRolled {0}\n\tStun resistance read as {1}", roll, Stats["Stun"].ToString());
-                    if(roll > Stats["Stun"] && TransferDot[0] == 3) {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Program.BasicBox(Name, Name == Program.Player.Name, " Is Stunned!");
-                        System.Diagnostics.Debug.WriteLine("\tis now stunned ", Name);
-                        Stunned = true;
-                    }else if (TransferDot[0] == 3) {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Program.BasicBox(Name, Name == Program.Player.Name, " Resisted The Stun!");
-                        System.Diagnostics.Debug.WriteLine("Failed");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Program.BasicBox(Name, Name == Program.Player.Name, " Takes " + damage + " Damage!");
+                    System.Diagnostics.Debug.Write("\n"+Name+" takes "+damage+" damage. Health: "+Stats["Health"].ToString()+" -> ");
+                    Stats["Health"] -= damage;
+                    System.Diagnostics.Debug.WriteLine( Stats["Health"].ToString());
+
+                    //check for death
+                    if(Stats["Health"] <= 0) {
+                        System.Diagnostics.Debug.WriteLine(Name+" is dead", Name);
+                        Stats["Health"] = 0;
+                        Death(); //make health always 0 rather than a negative on death, to stop weird displays
                     } else {
-                        System.Diagnostics.Debug.WriteLine("Failed (no tDOT stun)");
+                        System.Diagnostics.Debug.WriteLine(Name+ " is not dead");
+                        Display();
                     }
-                }
-
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Program.BasicBox(Name, Name == Program.Player.Name, " Takes " + damage + " Damage!");
-                System.Diagnostics.Debug.Write("\n"+Name+" takes "+damage+" damage. Health: "+Stats["Health"].ToString()+" -> ");
-                Stats["Health"] -= damage;
-                System.Diagnostics.Debug.WriteLine( Stats["Health"].ToString());
-
-                //check for death
-                if(Stats["Health"] <= 0) {
-                    System.Diagnostics.Debug.WriteLine(Name+" is dead", Name);
-                    Stats["Health"] = 0;
-                    Death(); //make health always 0 rather than a negative on death, to stop weird displays
                 } else {
-                    System.Diagnostics.Debug.WriteLine(Name+ " is not dead");
-                    Display();
+                    System.Diagnostics.Debug.WriteLine("Succeeded\n");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Program.BasicBox(Name, Name == Program.Player.Name, " dodges the attack!");
                 }
             } else {
                 System.Diagnostics.Debug.WriteLine("Succeeded\n");
-                Console.ForegroundColor = ConsoleColor.Green;
-                Program.BasicBox(Name, Name == Program.Player.Name, " dodges the attack!");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Program.BasicBox(Name, Name == Program.Player.Name, " blocks the attack!");
+                block = false;
             }
             System.Diagnostics.Debug.WriteLine("----------------------\n");
             DamageOverTime();
@@ -449,7 +496,7 @@ namespace REEEE
 
         public static Weapon[] WeaponInventory = new Weapon[2];
         //this NEEDS to be extendable
-        public static int Funds { get; set; }
+        static public int Funds { get; set; }
         public static int MxHealth
         {
             get
@@ -470,6 +517,28 @@ namespace REEEE
             set
             {
                 Stats["Dodge"] = value;
+            }
+        }
+        public static int Health
+        {
+            get
+            {
+                return Stats["Health"];
+            }
+            set
+            {
+                Stats["Health"] = value;
+            }
+        }
+        public static int MaxHealth
+        {
+            get
+            {
+                return Stats["MaxHealth"];
+            }
+            set
+            {
+                Stats["MaxHealth"] = value;
             }
         }
 
@@ -702,6 +771,9 @@ namespace REEEE
         {
             Console.WriteLine("You have died!\nThese were your final stats:");
             Display();
+            while (true) { 
+                System.Threading.Thread.Sleep(99999);
+            }
         }
     }
 
@@ -724,21 +796,111 @@ namespace REEEE
         /// <param name="passedID">the id of the entity. aligns to HostileData</param>
         public void Generate(int passedID)
         {
-            Globals.InCombat = true;
-            //lock combat
+            Globals.InCombat = true;  //lock combat
+
+            ID = (int)HostileData[passedID, 0];  //give an ID
 
             //spawning notifications
-            System.Diagnostics.Debug.WriteLine("ID {0} has spawned\n", passedID);                                   //the debug one
-            Program.Scroll((string)HostileData[passedID, Program.rnd.Next(11, hostileWidth - 1)], scrollTime: 200); //the randomised, slow, ambient message
-            Program.Scroll((string)HostileData[passedID, 10] + "\n");                                               //the actually useful one
-            ID = (int)HostileData[passedID, 0];                              //give an ID
-            Name = (string)HostileData[passedID, 1];                         //give it a name
-            AddWeapon((int)HostileData[passedID, 2], WeaponInventory, Name); //give it a weapon
-            AddItem((int)HostileData[passedID, 3], Inventory);               //give it an item
+            #region intro
+            System.Diagnostics.Debug.WriteLine("ID {0} has spawned\n", ID);
+
+            int[] BossIds = new int[] { 3, 8, 9, 11, 12, 14, 15, 19, 16, 13 };
+            if (BossIds.Contains(ID)) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                for(int i = 0; i < Console.WindowWidth-1; i++) {
+                    Console.Write("-");
+                }
+                Program.Scroll("-", 10, 2000, 2, 0);
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+            switch (ID)
+            {
+                case 3:     //jailer
+                    Console.WriteLine((string)HostileData[ID, 13]);
+                    Program.Scroll("This is the final room of the jail.");
+                    Program.Scroll("The jailer is in the corner, enamored by a corpse defiled with rusted instruments.");
+                    Program.Scroll("As you creep past, a prisoner reaches through the bars and grapples onto you!");
+                    Console.WriteLine((string)HostileData[ID, 10]);
+                    break;
+                case 8:     //The Gargoyle
+                    Program.Scroll("You step out an unassuming door into a courtyard.");
+                    Program.Scroll("Stone dust sprinkles into your hair and eyes.");
+                    Program.Scroll("You look up...", lineBreak:0);
+                    Program.Scroll("A great beast decorating the tower has come alive!", tabs: 0);
+                    Console.WriteLine((string)HostileData[ID, 13]);
+                    Console.WriteLine((string)HostileData[ID, 10]);
+                    break;
+                case 9:     //The Entombed God
+                    Program.Scroll("A collosal being is chained and pinned to the wall.");
+                    Program.Scroll("The great deity raises his head.");
+                    Program.Scroll("Blood streams from his eyes.");
+                    Console.WriteLine((string)HostileData[ID, 13]);
+                    Console.WriteLine((string)HostileData[ID, 10]);
+                    break;
+                case 11: //The Captian
+                    Program.Scroll("The captian of the guard looks down at you from the top of the stairs.");
+                    Program.Scroll("He bows deeply.");
+                    Console.WriteLine((string)HostileData[ID, 13]);
+                    Console.WriteLine((string)HostileData[ID, 10]);
+                    break;
+                case 12: //The King
+                    Program.Scroll("The room is dark,", lineBreak:0);
+                    Program.Scroll("and smells of damp decay and dust.", tabs: 0);
+                    Program.Scroll("A decrepid King weakly looks up at you.");
+                    Console.WriteLine((string)HostileData[ID, 13]);
+                    Console.WriteLine((string)HostileData[ID, 10]);
+                    break;
+                case 13: //Bloodtinged Knight
+                    Program.Scroll("The walls are caked in dry blood. ", lineBreak:0);
+                    Program.Scroll("The stench is unbelivable. ", tabs: 0);
+                    Program.Scroll("A knight stands over an evicerated corpse, ", lineBreak:0);
+                    Program.Scroll("barbed sword drawn and stained crimson.", tabs: 0);
+                    Console.WriteLine((string)HostileData[ID, 13]);
+                    Console.WriteLine((string)HostileData[ID, 10]);
+                    break;
+                case 14: //The Young Drake
+                    Program.Scroll("A drake rears up, ", lineBreak:0);
+                    Program.Scroll("and spreads its wings wide.", tabs: 0);
+                    Console.WriteLine((string)HostileData[ID, 13]);
+                    Console.WriteLine((string)HostileData[ID, 10]);
+                    break;
+                case 15: //The Poisoned Drago
+                    Program.Scroll("An ancient dragon slowly raises his head.");
+                    Console.WriteLine((string)HostileData[ID, 13]);
+                    Console.WriteLine((string)HostileData[ID, 10]);
+                    break;
+                case 16: //Egg
+                    Console.WriteLine((string)HostileData[ID, 13]);
+                    Program.Scroll("Is this what it was defending?");
+                    Console.WriteLine((string)HostileData[ID, 10]);
+                    break;
+                case 19: //The Black Mass
+                    Program.Scroll("Is this", lineBreak: 0);
+                    Program.Scroll(".", lineBreak: 0, tabs: 0);
+                    Program.Scroll(".", lineBreak: 0, tabs: 0);
+                    Program.Scroll(". ", tabs: 0);
+                    Program.Scroll("The source?");
+                    Console.WriteLine((string)HostileData[ID, 13]);
+                    Console.WriteLine((string)HostileData[ID, 10]);
+                    break;
+                default:
+                    Program.Scroll((string)HostileData[ID, Program.rnd.Next(11, hostileWidth - 1)], scrollTime: 200); //the randomised, slow, ambient message
+                    Program.Scroll((string)HostileData[ID, 10], lineBreak:2);                                               //the actually useful one
+                    break;
+            }
+            #endregion
+            Name = (string)HostileData[ID, 1];                         //give it a name
+            AddWeapon((int)HostileData[ID, 2], WeaponInventory, Name); //give it a weapon
+            AddItem((int)HostileData[ID, 3], Inventory);               //give it an item
             //instead of using a global heldweapon, just directly reference the singular inventory slot
 
-            Stats = CompileInt((int)HostileData[passedID, 4], (int)HostileData[passedID, 5], (int)HostileData[passedID, 6], (int)HostileData[passedID, 7], (int)HostileData[passedID, 8], (int)HostileData[passedID, 9]);
-            //                             health                           dodge                   physical                        posion                         bleed                               stun
+            Stats = CompileInt((int)HostileData[ID, 4], (int)HostileData[ID, 5], -1, (int)HostileData[ID, 7], (int)HostileData[ID, 8], (int)HostileData[ID, 9]);
+            //                           health                    dodge       physical        posion                    bleed                     stun
+
+            if(Program.buffNext > 0){
+                Math.Ceiling(Stats["Health"]*(Program.buffNext*1.2));  
+                Program.buffNext = 0;    
+            }
 
             Speed = WeaponInventory[0].Speed;
 
@@ -873,7 +1035,7 @@ namespace REEEE
             System.Diagnostics.Debug.WriteLine("relevant ID: {0}", attack);
             //0-3 (weapon attacks) to 18-60something (real value)
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Program.BasicBox(Name, false, " Goes to "+ WeaponController.AttackData[attack, 1] + " You!");
+            Program.BasicBox(Name, false, " "+WeaponController.AttackData[attack, 1].ToString());
             Attack(0, attack, Program.Player);
 
         }
@@ -886,9 +1048,26 @@ namespace REEEE
             if(ID == 9) { //the "death of a god" thing
                 Attack(rnd.Next(WeaponInventory[0].DmgUp, WeaponInventory[0].DmgDwn), 0, Program.Player);
             }
+
+            if (!Program.thrownWeapon.Equals(default(Weapon)))
+            {
+                Program.BasicBox("", message: "You recollect your thrown weapon.");
+                AddWeapon(0, Player.WeaponInventory, "thrown", true, Program.thrownWeapon);
+                Program.thrownWeapon = default(Weapon);
+            }
+
             Globals.InCombat = false;
             //override for a new message
-            Console.WriteLine("{0} has been vanquished", Name);
+            Program.BasicBox(Name, false, " has been vanquished");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Program.BasicBox(HostileData[ID, 7].ToString(), true, " Gold Is Yours!");
+            Player.Funds += (int)HostileData[ID, 7];
+            for (int i = 0; i < Console.WindowWidth - 1; i++)
+            {
+                Program.Scroll("-", 2, 0, 0, 0);
+            }
+            Program.Scroll("-", 5, 5, 0, 0);
+            Map.PassiveAction(); //forces the game to continue. stops bug where ai would still take second go.
         }
     }
 
@@ -1180,25 +1359,6 @@ namespace REEEE
                 5 => this["Stun"],
                 _ => throw new InvalidOperationException("Index not found.\n Possible incorrect assignment of this type of dict?"),
             };
-
-            /*
-            switch(index){
-                case 0:
-                    return this["MaxHealth"];
-                case 1:
-                    return this["Dodge"];
-                case 2:
-                    return this["Protection"];
-                case 3:
-                    return this["Poison"];
-                case 4:
-                    return this["Bleed"];
-                case 5:
-                    return this["Stun"];
-                default:
-                    throw new InvalidOperationException("Index not found.\n Possible incorrect assignment of this type of dict?");
-            }
-            */
         }
 
         public string IndexKeys(int index)
@@ -1212,24 +1372,6 @@ namespace REEEE
                 5 => "Stun",
                 _ => throw new InvalidOperationException("Index not found.\n Possible incorrect assignment of this type of dict?"),
             };
-            /*
-            switch(index){
-                case 0:
-                    return "MaxHealth";
-                case 1:
-                    return "Dodge";
-                case 2:
-                    return "Protection";
-                case 3:
-                    return "Poison";
-                case 4:
-                    return "Bleed";
-                case 5:
-                    return "Stun";
-                default:
-                    throw new InvalidOperationException("Index not found.\n Possible incorrect assignment of this type of dict?");
-            }
-            */
         }
     }
 }

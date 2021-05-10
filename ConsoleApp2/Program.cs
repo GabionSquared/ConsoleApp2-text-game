@@ -15,47 +15,37 @@ namespace REEEE
      * 
      * The FontStruction “7:12 Serif Italic” (https://fontstruct.com/fontstructions/show/413872) by Christian Munk is
      * licensed under a Creative Commons Attribution Share Alike license (http://creativecommons.org/licenses/by-sa/3.0/)
-     *  UNTESTED:
-     *      literally all real data
+     *  
+     *  UNTESTED: (imagine running your code, couldn't be me)
+     *      most real data
      *      new attack & DOT method
-     *      AI
+     *      most AI
      *      Speed
+     *      weapon throwing
+     *      curios
+     *      blocking
+     *      buffing
      *      
-     *  TODO:        
-     *      > real data
+     *  Bug Fixing:
+     *      > AI misses a suspicious amount of the time
+     *      > some things damage the player as well?     
+     *      
+     *  To Do (Scripting):        
+     *      > balancing
      *          specifically,
      *             > AttackData
      *             > HostileData
-     *          ========The Progress Line=======    ^ cba to do, basically
-     *      > curio system?
      *      > Loot tables
      *      > give things sensible prices
-     *      
-     *  TODO V2 ELECTRIC BOOGALOO:
-     *      > there seems to be a bug with special effects not lining up with the input, ie press 4, do 3s dot effect.
-     *          > overcompensating or unaccounted 0 index?
-     *      > make it clearer when a turn starts & what the ai is doing
+     *     
+     *  To Do (Design):
      *      > starter weapon needs more durability, or a faster replacement (loot tables?)
      *      > merchant menu needs a reskin
-     *      > AI misses a suspicious amount of the time
      *      > add display to passive action
-     *      > some things damage the player as well?
      *      > check what else can use the basic box function
-     *  
-     *      
-     *      ===do today==
-     *      > basic curio system
-     *      > things drop money
      *      > make inspection automatic, with a brief description of the room
-     *      > the inspection option repeates it
-     *      > boss declarations also have description, so dont do it on their rooms.
-     *          > MAYBE very rough text art for the boss rooms
-     *          
-     *          > These would be another example of boss rooms having their own description
-     *            
-     *  Less important ToDo:
-     *      > special effect on moves (debuff or bonus vs type)
-     *      > .txt -> .xml
+     *      
+     *      > text art when kappa
      *  
      *  Map Rework Idea:
      *      > make it based around player orentation rather than the sterotypical omniciance
@@ -71,6 +61,12 @@ namespace REEEE
 
         public static Player Player = new Player();
         //make the player
+
+        public static int buffNext = 0;
+        //used by priest
+
+        public static Weapon thrownWeapon = default(Weapon);
+        //used by player, with daggers.
 
         /// <summary>
         /// Hey kids wanna buy some OOP? (DOP when kappa)<para>The main game loop</para>
@@ -90,7 +86,7 @@ namespace REEEE
                     Console.ForegroundColor = ConsoleColor.Blue;
                     for (int i = 0; i < Console.WindowWidth - 1; i++)
                     {
-                        Scroll("-", 10, 0, 0, 0);
+                        Scroll("-", 2, 0, 0, 0);
                     }
                     Scroll("-", 5, 5, 0, 0);
                     Console.ForegroundColor = ConsoleColor.White;
@@ -98,7 +94,7 @@ namespace REEEE
                     Console.ForegroundColor = ConsoleColor.Blue;
                     for (int i = 0; i < Console.WindowWidth - 1; i++)
                     {
-                        Scroll("-", 5, 0, 0, 0);
+                        Scroll("-", 2, 0, 0, 0);
                     }
                     Scroll("-", 5, 2000, 2, 0);
                     Console.ForegroundColor = ConsoleColor.White;
@@ -141,9 +137,9 @@ namespace REEEE
             Console.Write("\t ");
             for (int i = 0; i < name.Length + message.Length + 1; i++)
             {
-                Scroll("_", 5, 10, 0, 0);
+                Scroll("_", 2, 0, 0, 0);
             }
-            Scroll("_\n\t| ", 5, 10, 0, 0);
+            Scroll("_\n\t| ", 2, 0, 0, 0);
             Console.ForegroundColor = ConsoleColor.Red;
             if (player) {
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -152,10 +148,10 @@ namespace REEEE
             Console.ForegroundColor = ConsoleColor.White;
             Scroll(message, 5, 10, 0, 0);
             Console.ForegroundColor = colour;
-            Scroll(" |\n\t|", 5, 10, 0, 0);
+            Scroll(" |\n\t|", 2, 0, 0, 0);
             for (int i = 0; i < name.Length + message.Length + 2; i++)
             {
-                Scroll("_", 5, 10, 0, 0);
+                Scroll("_", 2, 0, 0, 0);
             }
             Scroll("|", tabs: 0);
             Console.ForegroundColor = ConsoleColor.White;

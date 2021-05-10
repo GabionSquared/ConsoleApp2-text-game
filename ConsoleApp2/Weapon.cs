@@ -345,18 +345,18 @@ namespace REEEE
             switch (FlavourBracket(weapon.Flavour))
             {
                 case 20:
-                    Console.Write("\t|"); Toggle(); Console.Write(" {0,-22}", weapon.name);                                Toggle(); Console.Write("|\n");//name
-                    Console.Write("\t|"); Toggle(); Console.Write(" {0,-22}", "(" + WeaponCatagories[weapon.type] + ")"); Toggle(); Console.Write("|\n"); //type
+                    Console.Write("\t|"); Toggle(); Console.Write(" {0,-43}", weapon.name);                                Toggle(); Console.Write("|\n");//name
+                    Console.Write("\t|"); Toggle(); Console.Write(" {0,-43}", "(" + WeaponCatagories[weapon.type] + ")"); Toggle(); Console.Write("|\n"); //type
                     Console.Write("\t|");
                     for(int i = 0; i < totalWidth; i++)
                     {
                         Console.Write("-");
                     }
                     Console.Write("|\n");
-                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "Durability"); DChck(); Console.Write("  {0,-5}", weapon.Durability);                Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-39}", weapon.BrokenFlavour[0]); Toggle(); Console.Write(" |\n"); //durability
-                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "DMG Base"); Upgrade(); Console.Write("{0,2}-{1,-3} ", weapon.DmgDwn, weapon.DmgUp); Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-39}", weapon.BrokenFlavour[1]); Toggle(); Console.Write(" |\n"); //damage
-                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "CRT base"); Upgrade(); Console.Write("  {0,-5}", weapon.Crit);                      Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-39}", weapon.BrokenFlavour[2]); Toggle(); Console.Write(" |\n"); //crit
-                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "SPD base"); Upgrade(); Console.Write("  {0,-5}", weapon.Speed);                     Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-39}", weapon.BrokenFlavour[3]); Toggle(); Console.Write(" |\n"); //speed
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "Durability"); DChck(); Console.Write("  {0,-5}", weapon.Durability);                Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-20}", weapon.BrokenFlavour[0]); Toggle(); Console.Write(" |\n"); //durability
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "DMG Base"); Upgrade(); Console.Write("{0,2}-{1,-3} ", weapon.DmgDwn, weapon.DmgUp); Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-20}", weapon.BrokenFlavour[1]); Toggle(); Console.Write(" |\n"); //damage
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "CRT base"); Upgrade(); Console.Write("  {0,-5}", weapon.Crit);                      Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-20}", weapon.BrokenFlavour[2]); Toggle(); Console.Write(" |\n"); //crit
+                    Console.Write("\t|"); Toggle(); Console.Write("{0,11}:\t", "SPD base"); Upgrade(); Console.Write("  {0,-5}", weapon.Speed);                     Toggle(); Console.Write("|"); Toggle(); Console.Write("{0,-20}", weapon.BrokenFlavour[3]); Toggle(); Console.Write(" |\n"); //speed
                     break;
                 case 36:
                     Console.Write("\t|"); Toggle(); Console.Write(" {0,-59}", weapon.name);                                Toggle(); Console.Write("|\n");//name
@@ -399,12 +399,12 @@ namespace REEEE
 
             if (moves)
             {
-                DisplayMoves();
+                DisplayMoves(weapon);
             }
         }
         #endregion
 
-        void DisplayMoves()
+        void DisplayMoves(Weapon weapon)
         {
             //System.Diagnostics.Debug.WriteLine("\t DisplayMoves");
             Console.Write("\t ____________________    ____________________    ____________________    ____________________\n");
@@ -416,15 +416,16 @@ namespace REEEE
                 System.Diagnostics.Debug.WriteLine("ATTACK new dataIndex {0}/12", dataIndex);
                 for (int attackIndex = 0; attackIndex < 4; attackIndex++) //each attack
                 {
+                    int attackID = weapon.attacks[attackIndex];
                     //System.Diagnostics.Debug.WriteLine("\tATTACK new attackIndex {0}/3", attackIndex);
                     try
                     {
-                        int hold = (int)AttackData[attacks[attackIndex], dataIndex];
+                        int hold = (int)AttackData[attackID, dataIndex];
                         //if the data is string, this will throw an exception.
-                        Console.Write("|{0,11}:\t{1,-5}|\t", AttackData[finalAddress, dataIndex], AttackData[attackIndex, dataIndex] + "%");
+                        Console.Write("|{0,11}:\t{1,-5}|\t", AttackData[finalAddress, dataIndex], AttackData[attackID, dataIndex] + "%");
                     } catch //it wasn't an int; and is therefore the name
                     {
-                        Console.Write("| {0,-19}|\t", AttackData[attackIndex, dataIndex]);
+                        Console.Write("| {0,-19}|\t", AttackData[attackID, dataIndex]);
                         //unique print so it isn't `|Name:   name|` and get the name from the id
                         //(was having issues with it printing the names in the order they're in on the list, even though they're randomised on the weapon) 
 
@@ -452,7 +453,8 @@ namespace REEEE
             
             for (int attackIndex = 0; attackIndex < 4; attackIndex++) //each attack
             {
-                int hold = (int)AttackData[attackIndex, 5]; //the data
+                int attackID = weapon.attacks[attackIndex];
+                int hold = (int)AttackData[attackID, 5]; //the data
 
                 if (hold == 0) //if there is no effect
                 {
@@ -465,7 +467,7 @@ namespace REEEE
                     switch (hold)
                     {
                         case 0: //note that to get here, hold =! 0, so this is free for operations
-                            Console.Write (" {0,6}: {1,-1}, {2,-1} turns ", Strings[hold], (int)AttackData[attackIndex, 6], (int)AttackData[attackIndex, 7]);
+                            Console.Write (" {0,6}: {1,-1}, {2,-1} turns ", Strings[hold], (int)AttackData[attackID, 6], (int)AttackData[attackID, 7]);
                             Console.ForegroundColor = ConsoleColor.White;
                             break;
                         case 1: //poison
@@ -476,10 +478,24 @@ namespace REEEE
                             goto case 0;
                         case 3: //stun
                             Console.ForegroundColor = ConsoleColor.Yellow;
-                            goto case 0;
+                            Console.Write(" {0,6}: {1,4} turns ", Strings[hold], (int)AttackData[attackID, 7]);
+                            break;
+                        case 6: //buff self
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            Console.Write(" Next Attack + 20%  ");
+                            break;
+                        case 7: //block
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write(" Block Incoming Hit ");
+                            break;
+                        case 8: //throw
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("   THROWS WEAPON    ");
+                            break;
                         default:
                             throw new Exception("Unrecognised Special Effect");
                     }
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.Write("|  ");
                 }
             }
@@ -494,9 +510,8 @@ namespace REEEE
                     Console.Write(BoxBottom);
                 }
             }
-            Console.WriteLine();
             #endregion
-            Console.WriteLine();
+            Console.WriteLine("\n");
         }
 
         public Weapon UpgradeWeapon(Weapon passed)

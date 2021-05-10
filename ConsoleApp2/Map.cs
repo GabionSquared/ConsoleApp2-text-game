@@ -124,9 +124,11 @@ namespace REEEE
             {
                 System.Diagnostics.Debug.WriteLine("SETLOCATION enemy present\n", (int)MapData[currentLocation, 6]);
                         
-             Hostile hostile = new Hostile();
-             hostile.Generate((int)MapData[currentLocation, 6]);
-             //generates a hostile AI using the mapdata as an ID
+                Hostile hostile = new Hostile();
+                hostile.Generate((int)MapData[currentLocation, 6]);
+                MapData[currentLocation, 6] = -1;
+                //generates a hostile AI using the mapdata as an ID
+
             }else{
                 System.Diagnostics.Debug.WriteLine("SETLOCATION no enemy spawned\n");
             }
@@ -199,6 +201,7 @@ namespace REEEE
 
                     case "5": //save
                     Program.Scroll("[This feature is under construction]");
+                        //this will probably work by vomiting all of mapdata and the player data onto a .txt
                     break;
                 }
             } while(flag);
@@ -250,22 +253,155 @@ namespace REEEE
         /// </summary>
         static void InspectionEvent()
         {
-            if((int)MapData[currentLocation, 7] >= 0) {
-                System.Diagnostics.Debug.WriteLine("INSPECTEVENT inspect event {0} present", (int)MapData[currentLocation, 6]);
-                //if there's something in the inspection data location, put the int in debug
-                #pragma warning disable IDE0066 //keep this while theres nothing in the switch
-                switch((int)MapData[currentLocation, 7]) {
-                #pragma warning restore IDE0066
-                    case 0:
+            if((int)MapData[currentLocation, 7] == -1)
+            {
+                MapData[currentLocation, 7] = Program.rnd.Next(1, 10);
+            }
+            //this should be hard-written into mapdata, but i have more press matters. 7, 8 & 9 will give no detail.
+
+            int randomat = Program.rnd.Next(1, 101);
+            bool selection()
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Program.Scroll("Interact?");
+                Program.Scroll("[Y / N]", 0, 0, 2, 2);
+                Console.Write("> ");
+                string ans = Console.ReadLine();
+                Console.WriteLine();
+
+                if(ans == "Y" || ans == "y") //input validation. could add more.
+                {
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+            System.Diagnostics.Debug.WriteLine("INSPECTEVENT inspect event {0} present", (int)MapData[currentLocation, 6]);
+
+            switch ((int)MapData[currentLocation, 7]) {
+                case -2:
+                    Program.BasicBox("", message:"You've already scavinged this room.");
+                    break;
+                case 0:
                     Merchant merchant = new Merchant();
                     merchant.Generate();
                     break;
-                    default:
-                    Program.Scroll("This room seems unintresting");
-                    System.Diagnostics.Debug.WriteLine("\nNo event\n");
+                case 1:
+                    Program.BasicBox("", message:"There is a crate in the corner.");
+                    if (selection()) {
+                        if(randomat < 26)
+                        {
+                            Program.BasicBox("", message:"The crate is empty.");
+                        } else if(randomat < 46)
+                        {
+                            Program.BasicBox("", message:"The crate contains supplies.");
+                            if(Player.Health > (Player.MaxHealth * 0.66))
+                            {
+                                Player.MaxHealth = (int)Math.Floor(Player.MaxHealth* 1.2);
+                            }
+                            else {
+                                Player.Health = (int)Math.Floor(Player.Health*1.3);
+                            }
+                            Program.Player.Display();
+                        }else
+                        {
+                            Program.BasicBox("", message:"You cut your finger in the crumbled wood.");
+                            int[] DOT = new int[] {1, 2, 3};
+                            Program.Player.Damage(0, DOT);
+                        }
+                        MapData[currentLocation, 7] = -2;
+                    }
                     break;
-                    //throw new Exception("Relevant inspection event was not found");
-                }
+                case 2:
+                    if (selection()) {
+                        if(randomat < 61)
+                        {
+                            Program.BasicBox("", message:"The bag is empty.");
+                        }else
+                        {
+                            Program.BasicBox("", message:"The bag contains supplies!");
+                            int gold = Program.rnd.Next(10, 12) + Program.rnd.Next(10, 12);
+                            Player.Funds += gold;
+                            Player.Health = (int)Math.Floor(Player.Health* 1.25);
+                            if (Player.Health> Player.MaxHealth)
+                            {
+                                Player.Health = Player.MaxHealth;
+                            }
+                        }
+                        MapData[currentLocation, 7] = -2;
+                    }
+                    break;
+                case 3:
+                    Program.BasicBox("", message:"A large, iron chest stands to one side.");
+                    if (selection()) {
+                        if(randomat < 31)
+                        {
+                            Program.BasicBox("", message:"Treasure!");
+                            int gold = Program.rnd.Next(15, 30) + Program.rnd.Next(15, 30);
+                            Player.Funds += gold;
+                        }else if(randomat < 66)
+                        {
+                            Program.BasicBox("", message:"The chest is trapped!");
+                            int[] DOT = new int[] {1, 2, 3};
+                            Program.Player.Damage(0, DOT);
+                        }
+                        else {
+                            Program.BasicBox("", message:"The chest is trapped!");
+                            int[] DOT = new int[] {2, 2, 3};
+                            Program.Player.Damage(0, DOT);
+                        }
+                        MapData[currentLocation, 7] = -2;
+                    }
+                    break;
+                case 4:
+                    Program.BasicBox("", message:"The brightly lit room provides minor relaxation for your weary bones.");
+                    Player.Health = (int)Math.Floor(Player.Health* 1.25);
+                    if (Player.Health> Player.MaxHealth)
+                    {
+                        Player.Health = Player.MaxHealth;
+                    }
+                    Player.Dodge = (int)Math.Floor(Player.Dodge* 1.3);
+                    MapData[currentLocation, 7] = -2;
+                    break;
+                case 5:
+                    Program.BasicBox("", message:"A great statue of an angel stands in the center.");
+                    if (selection()) {
+                        if(randomat < 50)
+                        {
+                            Program.BasicBox("", message:"It gazes deep into your soul.");
+                            Player.Dodge = (int)Math.Floor(Player.Dodge* 0.6);
+                        }
+                        else {
+                            Program.BasicBox("", message:"you feel envigorated!");
+                            Player.Dodge = (int)Math.Floor(Player.Dodge* 1.3);
+                        }
+                        MapData[currentLocation, 7] = -2;
+                    }
+                    break;
+                case 6:
+                    Program.BasicBox("", message:"The room is decorated with large urns.");
+                    if (selection()) {
+                        if(randomat < 21)
+                        {
+                            Program.BasicBox("", message:"They're all empty.");
+                        }
+                        else if(randomat < 41)
+                        {
+                            Program.BasicBox("", message:"They're filled with offerings to the dead. better off in your hands.");
+                            int gold = Program.rnd.Next(15, 25) + Program.rnd.Next(15, 25);
+                            Player.Funds += gold;
+                        }else {
+                            int[] DOT = new int[] {1, 2, 3};
+                            Program.Player.Damage(0, DOT);
+                        }
+                        MapData[currentLocation, 7] = -2;
+                    }
+                    break;
+                default:
+                    Program.BasicBox("", message:"The room is devoid of detail.");
+                    break;
             }
         }
 
@@ -282,5 +418,6 @@ namespace REEEE
             previousMarker = "M";
             DisplayMap();
         }
+        
     }
 }

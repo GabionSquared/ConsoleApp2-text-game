@@ -15,8 +15,7 @@
 14|Sweep|90|60|3|0|0|0|-1|
 15|Shatter|90|60|4|0|0|0|-1|
 16|Blunt|90|60|5|0|0|0|-1|
-17|Shank|70|4|8|6|2|1|1
-17|Goes To Shank!|84|4|8|6|2|1|1
+17|Goes To Shank!|70|4|8|6|2|1|1
 18|Gives A Fast Poke!|84|2|4|3|0|0|0
 19|Bludgeons You!|88|1|1|0|3|1|1
 20|Gives A blood-Curdling Scream!|100|0|0|3|3|1|1
