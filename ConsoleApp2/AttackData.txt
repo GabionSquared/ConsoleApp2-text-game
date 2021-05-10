@@ -1,20 +1,20 @@
-0|Grapple|100|90|0|1|2|3|-1|%EOF%
-1|Hew|101|90|0|3|2|1|-1
-2|Zealous Plunge|102|90|0|2|3|1|-1
-3|Bludgeon|103|90|0|0|0|0|-1
-4|Parry|100|90|0|0|0|0|-1
-5|Puncture|100|90|0|0|0|0|-1
-6|Guardbreak|100|90|0|0|0|0|-1
-7|Lacerate|100|90|0|0|0|0|-1
-8|Feint|100|90|0|0|0|0|-1
-9|Throw|100|90|0|0|0|0|-1
-10|Withstand|100|90|0|0|0|0|-1
-11|Intimidate|100|90|0|0|0|0|-1
-12|Crush|100|90|0|0|0|0|-1
-13|Charge|100|90|0|0|0|0|-1
-14|Sweep|100|90|0|0|0|0|-1
-15|Shatter|100|90|0|0|0|0|-1
-16|Blunt|100|90|0|0|0|0|-1
+0|Grapple|60|0|0|3|1|1|-1|%EOF%
+1|Hew|90|60|5|2|3|2|-1|
+2|Zealous Plunge|80|120|10|0|0|0|-1|
+3|Bludgeon|90|60|6|3|1|1|-1|
+4|Parry|60|50|3|3|1|1|-1|
+5|Puncture|90|100|10|1|3|2|-1|
+6|Guardbreak|100|10|0|3|1|1|-1|
+7|Lacerate|90|70|4|2|9|1|-1|
+8|Feint|85|0|3|3|1|1|-1|
+9|Throw|75|150|10|8|1|1|-1|
+10|Withstand|100|0|4|7|50|1|-1|
+11|Intimidate|100|0|0|3|1|1|-1|
+12|Crush|90|60|1|0|0|0|-1|
+13|Charge|90|60|2|0|0|0|-1|
+14|Sweep|90|60|3|0|0|0|-1|
+15|Shatter|90|60|4|0|0|0|-1|
+16|Blunt|90|60|5|0|0|0|-1|
 17|Shank|70|4|8|6|2|1|1
 17|Goes To Shank!|84|4|8|6|2|1|1
 18|Gives A Fast Poke!|84|2|4|3|0|0|0
@@ -91,31 +91,32 @@ EffectType 1 = poison; 2 = bleed; 3 = stun
 - unimplimented -
 4 = self heal
 5 = buff nearby enemies (?), priest. (maybe make a knight spawn instead)
-6 = dmg buff self
-7 = block
+6 = dmg buff self (player can use)
+7 = block		  (player can use)
+8 = loose weapon  (player can use)
 
 more complex damage effects like "+20% DMG vs Poisoned" should use the same system, and a flavour text dictionary in weaponcontroller.
 
 sludge gang, blood knight and good all need more moves
 dragons, god and the player need real data in the variables
 
-0|Grapple|		100|90|0|	0|0|0|-1|%EOF%
-1|Hew|			100|90|0|	0|0|0|-1|
-2|Zealous Plunge|	100|90|0|	0|0|0|-1|
-3|Bludgeon|		100|90|0|	0|0|0|-1|
-4|Parry|		100|90|0|	0|0|0|-1|
-5|Puncture|		100|90|0|	0|0|0|-1|
-6|Guardbreak|		100|90|0|	0|0|0|-1|
-7|Lacerate|		100|90|0|	0|0|0|-1|
-8|Feint|		100|90|0|	0|0|0|-1|
-9|Throw|		100|90|0|	0|0|0|-1|
-10|Withstand|		100|90|0|	0|0|0|-1|
-11|Intimidate|		100|90|0|	0|0|0|-1|
-12|Crush|		100|90|0|	0|0|0|-1|
-13|Charge|		100|90|0|	0|0|0|-1|
-14|Sweep|		100|90|0|	0|0|0|-1|
-15|Shatter|		100|90|0|	0|0|0|-1|
-16|Blunt|		100|90|0|	0|0|0|-1|
+0|Grapple|			60|0|0|		3|1|1|-1|%EOF%
+1|Hew|				90|60|5|	2|3|2|-1|
+2|Zealous Plunge|	80|120|10|	0|0|0|-1|
+3|Bludgeon|			90|60|6|	3|1|1|-1|
+4|Parry|			60|50|3|	3|1|1|-1|
+5|Puncture|			90|100|10|	1|3|2|-1|
+6|Guardbreak|		100|10|0|	3|1|1|-1|
+7|Lacerate|			90|70|4|	2|9|1|-1|
+8|Feint|			85|0|3|		3|1|1|-1|
+9|Throw|			75|150|10|	8|1|1|-1|
+10|Withstand|		100|0|4|	7|50|1|-1|
+11|Intimidate|		100|0|0|	3|1|1|-1|
+12|Crush|			90|60|1|	0|0|0|-1|
+13|Charge|			90|60|2|	0|0|0|-1|
+14|Sweep|			90|60|3|	0|0|0|-1|
+15|Shatter|			90|60|4|	0|0|0|-1|
+16|Blunt|			90|60|5|	0|0|0|-1|
 17|Goes To Shank!		|70|4|8|6|	2|1|1	prisoner
 18|Gives A Fast Poke!		|50|2|4|3|	0|0|0
 19|Bludgeons You!		|60|1|1|0|	3|1|1
